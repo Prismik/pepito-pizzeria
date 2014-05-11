@@ -1,0 +1,27 @@
+{
+  "name": "pepito-pizzeria",
+  "version": "0.0.0",
+  "description": "TP1 LOG210",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Prismik/pepito-pizzeria.git"
+  },
+  "keywords": [
+    "Heroku",
+    "tp1"
+  ],
+  "author": "francis",
+  "license": "BSD",
+  "gitHead": "f138a7b0559fb4455d2c2b25cb8b94721bf771df",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/Prismik/pepito-pizzeria/issues"
+  },
+  "dependencies": {
+    "express": "~4.1.2"
+  }
+}
