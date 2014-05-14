@@ -22,12 +22,14 @@
     "url": "https://github.com/Prismik/pepito-pizzeria/issues"
   },
   "dependencies": {
+    "mongodb": "~1.4.4",
     "express": "~4.0.0",
     "static-favicon": "~1.0.0",
     "morgan": "~1.0.0",
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
-    "jade": "~1.3.0"
+    "jade": "~1.3.0",
+    "monk": "~0.9.0"
   }
 }
