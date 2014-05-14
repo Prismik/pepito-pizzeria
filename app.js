@@ -1,3 +1,5 @@
+var env = process.env.NODE_ENV || 'development';
+var config = require('./config/' + env);
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
@@ -8,7 +10,7 @@ var bodyParser = require('body-parser');
 // MongoDB
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/pepito-pizzeria');
+var db = monk(config.db);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
