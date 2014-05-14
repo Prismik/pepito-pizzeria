@@ -3,13 +3,13 @@ pepito-pizzeria
 
 TP1 - LOG2010
 
-** Branches
+## Branches
 
 * Master: Should be the working app UTD version
 * [yourName]-branch: Should be each programmer's testing branch. You commit and push on it. When everything works perfectly, we merge on Master.
 * heroku: You probably won't ever see this branch. It is our remote git repo used to handle the production version of our application.
 
-** Aww maww gawwwd 
+## Aww maww gawwwd 
 You will need to install MongoDB and several modules in order to make the app work.
 
 To do so, look into package.json, then for everything in the dependencies node, do (from the root of the project) `npm install [dependency]`
