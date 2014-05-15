@@ -1,8 +1,23 @@
 body {
-  padding: 50px;
+  padding: 0px;
+  margin: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+a 			{ color: #515151; text-decoration: none }
+a:hover {	color: #818181; }
+
+header {
+	background-color: #FF5F69;
+	width: 100%;
+	padding: 10px;
+	margin: 0;
 }
+header ul { list-style: none; }
+header li { margin-left: 10px; display:inline; }
+li.first { margin-left: 0; }
+header a {
+	font-weight: bold;
+	font-size: 16px;
+}
+.content { margin: 20px; }
