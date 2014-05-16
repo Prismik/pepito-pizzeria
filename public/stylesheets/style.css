@@ -11,13 +11,14 @@ header{
     box-shadow:         0px 3px 13px 0px rgba(50, 50, 50, 0.75);
 }
 
-div.content{
+div.content, footer{
     margin-left: 30px;
 }
 
 footer{
     font-size: 10px;
     text-align: center;
+    padding-top: 10px;
 }
 
 header ul{
@@ -56,4 +57,26 @@ header .title{
 
 header .title>span{
     font-size: 30px;
+}
+
+.loginPage{
+    text-align:center;
+    margin: auto;
+    width: 250px;
+}
+
+.loginPage input{
+    height: 30px;
+    padding-left:35px;
+    margin-bottom: 8px;
+}
+
+.loginPage input[type="text"]{
+     background: url(../images/pizza_pencil.png) no-repeat scroll 0px 1px;
+     background-size:32px 32px;
+}
+
+.loginPage input[type="password"]{
+     background: url(../images/pizza_lock.png) no-repeat scroll 0px 1px;
+     background-size:32px 32px;
 }

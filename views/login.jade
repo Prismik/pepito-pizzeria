@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    div.loginPage
+        h1= title
+        form#formLogin(name="adduser",method="post",action="add")
+            input#inputUsername(type="text", placeholder="Username", name="username")
+            br
+            input#inputUserPassword(type="password", placeholder="Password", name="userpassword")
+            br
+            button#btnSubmit(type="submit") Login
