@@ -13,8 +13,8 @@ router.get('/', function(req, res) {
 });
 
 /* GET New User page. */
-router.get('/new', function(req, res) {
-    res.render('users/new', { title: 'Add New User' });
+router.get('/create', function(req, res) {
+    res.render('users/create', { title: 'Add New User' });
 });
 
 /* POST to Add User Service */
