@@ -1,23 +1,24 @@
 doctype html
 html
   head
-    title= title
+    title= "Pepito Pizzeria"
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     header
-      ul
+      div.title
+          span= "Pepito Pizzeria"
+      ul.menu
         li.first 
           a(href='/') Home
         li 
-          a(href='/users') Users
-        li  
-          a(href='/users/new') Add new user
-        li  
-          a(href='#') A link
-        li  
-          a(href='#') A link
+          a(href='/users/create') Create user
+        li 
+          a(href='/users/update') Update user
+        li 
+          a(href='/users/list') List user
+         
     div.content
       block content
 
     footer
-      p A very sexy footer
+      p Copyright © 2014 Pepito-Pizzeria. All rights reserved.
