@@ -4,44 +4,6 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/*a { 
-    color: #515151; 
-    text-decoration: none 
-}
-
-a:hover {
-    color: #818181; 
-}
-
-header {
-	background-color: #FF5F69;
-	width: 100%;
-	padding: 10px;
-	margin: 0;
-}
-
-header ul { 
-    list-style: none; 
-}
-
-header li { 
-    margin-left: 10px; 
-    display:inline; 
-}
-
-li.first { 
-    margin-left: 0; 
-}
-
-header a {
-	font-weight: bold;
-	font-size: 16px;
-}
-
-.content { 
-    margin: 20px; 
-}*/
-
 header{
     background-color: black;
     -webkit-box-shadow: 0px 3px 13px 0px rgba(50, 50, 50, 0.75);
