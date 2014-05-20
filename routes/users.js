@@ -17,6 +17,17 @@ router.get('/create', function(req, res) {
     res.render('users/create', { title: 'Add New User' });
 });
 
+/* GET Manage User page. */
+router.get('/update', function(req, res) {
+var db = req.db;
+    var collection = db.get('usercollection');
+    collection.find({},{},function(e,docs){
+        res.render('users/update', {
+            "userlist" : docs
+        });
+    });
+});
+
 /* POST to Add User Service */
 router.post('/add', function(req, res) {
 
@@ -47,5 +58,45 @@ router.post('/add', function(req, res) {
         }
     });
 });
+
+/* POST to Update User */
+router.post('/updateuser', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Get our form values. These rely on the "name" attributes
+    var userName = req.body.username;
+    var userEmail = req.body.useremail;
+    var userId = req.body.userid;
+
+    // Set our collection
+    var collection = db.get('usercollection');
+
+    // Submit to the DB
+    collection.update(
+    {
+	    "_id" : userId
+    },
+    {
+    "$set":
+    	{
+	    	"username" : userName,
+			"email" : userEmail
+    	}
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem updatiig the information in the database.");
+        }
+        else {
+            // If it worked, set the header so the address bar doesn't still say /adduser
+            res.location("/users/update");
+            // And forward to success page
+            res.redirect("/users/update");
+        }
+    });
+});
+
 
 module.exports = router;

@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+    h1.
+        User List
+    
+    each user, i in userlist
+        h4    
+            form#formUpdateUser(name="adduser",method="post",action="updateuser")
+                input#inputUserName(type="text", placeholder="username", name="username", value=user.username)
+                input#inputUserEmail(type="text", placeholder="useremail", name="useremail", value=user.email)
+                input#inputUserId(type="hidden", placeholder="userid", name="userid", value=user._id)
+                button#btnSubmit(type="submit") submit
+            
