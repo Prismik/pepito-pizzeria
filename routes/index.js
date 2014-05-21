@@ -25,20 +25,19 @@ router.post('/authenticate', function(req, res) {
     var collection = db.get('usercollection');
     
     //Find user that matches the username and password
-    collection.findOne({username : userName , password : userPassword},{},function(e,docs){
-        if(docs != null){
-        	//Add the user _id to a session variable
-      		req.session.uid = docs._id;
-      		
-            res.location("/users");
-            res.redirect("/users");
-    	}else{
-    		//Redirect to the login page with a "Bad credentials" error
-    		res.location("/login");
-			res.redirect("/login?e=1");
-    	}
-    });
-
+    var user = collection.findOne({username : userName , password : userPassword});
+    if (user != null) {
+        //Add the user _id to a session variable
+          req.session.uid = user._id;
+          
+        res.location("/users");
+        res.redirect("/users");
+    } 
+    else {
+        //Redirect to the login page with a "Bad credentials" error
+        res.location("/login");
+        res.redirect("/login?e=1");
+    }
 });
 
 
