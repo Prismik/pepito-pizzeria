@@ -1,10 +1,11 @@
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config/' + env);
 var express = require('express');
+var cookieParser = require('cookie-parser');
+var session = require('cookie-session')
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 // MongoDB
@@ -26,6 +27,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(session({ 
+    keys: ['uid']
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router

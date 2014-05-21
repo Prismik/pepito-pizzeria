@@ -1,4 +1,5 @@
 var express = require('express');
+var crypto = require('crypto');
 var router = express.Router();
 
 /* GET home page. */
@@ -7,7 +8,41 @@ router.get('/', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
-  res.render('login', { title: 'Login' });
+    res.render('login', { title: 'Login' });
+});
+
+router.get('/test', function(req, res) {
+    res.send(req.session.uid);
+});
+
+/* POST to authentificate users */
+router.post('/authenticate', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Get our form values. These rely on the "name" attributes
+    var userName = req.body.username;
+    var userPassword = req.body.password;//crypto.createHash('md5').update(req.body.password).digest('hex');
+
+    // Set our collection
+    var collection = db.get('usercollection');
+    
+    //Find user that matches the username and password
+    var user = collection.findOne({username: userName, password: userPassword});
+    if (user != null) {
+        //Add the user_id to a session variable
+        var sess = req.session;
+        sess.uid = userName;
+        sess.save();
+
+        res.location("/users");
+        res.redirect("/users");
+    } else {
+        //Redirect to the login page with a "Bad credentials" error
+        res.location("/login");
+        res.redirect("/login?e=1");
+    }
 });
 
 
