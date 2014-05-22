@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
     collection.find({},{},function(e,docs){
         res.render('users/list', {
             title: 'Pepito Pizzeria - Users',
-            docs: 'userlist'
+            userlist: docs
         });
     });
 });
