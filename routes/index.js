@@ -8,16 +8,18 @@ router.get('/', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
-    res.render('login', { title: 'Login' });
+    if (res.app.settings['globals'].logged)
+        res.redirect("/");
+    else
+        res.render('login', { title: 'Login', authRequired: true });
 });
 
 router.get('/test', function(req, res) {
-    res.send(req.session.uid);
+    res.send(req.session.logged);
 });
 
 /* POST to authentificate users */
 router.post('/authenticate', function(req, res) {
-
     // Set our internal DB variable
     var db = req.db;
 
@@ -27,13 +29,14 @@ router.post('/authenticate', function(req, res) {
 
     // Set our collection
     var collection = db.get('usercollection');
-    
     //Find user that matches the username and password
     var user = collection.findOne({username: userName, password: userPassword});
     if (user != null) {
+
         //Add the user_id to a session variable
         var sess = req.session;
         sess.uid = userName;
+        sess.logged = true;
         sess.save();
 
         res.location("/users");

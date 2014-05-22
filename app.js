@@ -22,13 +22,16 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// General setup
+app.set('globals', { logged: false });
+
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(session({ 
-    keys: ['uid']
+    keys: ['uid', 'logged']
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -38,8 +41,20 @@ app.use(function(req,res,next){
     next();
 });
 
+// Pre routing functions
+function authChecker(req, res, next) {
+    if (req.session.logged || req.path === '/login' || req.path === '/authenticate') {
+        next();
+    }
+    else {
+       res.redirect("/login");
+    }
+}
+
+app.use(authChecker);
 app.use('/', routes);
 app.use('/users', users);
+
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -71,6 +86,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
