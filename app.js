@@ -41,9 +41,17 @@ app.use(function(req,res,next){
     next();
 });
 
+// Init stuff - TO BE MOVED IN ANOTHER CLASS
+Array.prototype.contains = function (element) {
+   for (i in this)
+       if (this[i] == element) return true;
+   
+   return false;
+}
+
 // Pre routing functions
 function authChecker(req, res, next) {
-    if (req.session.logged || req.path === '/login' || req.path === '/authenticate') {
+    if (req.session.logged ||  ['/login', '/authenticate', '/register'].contains(req.path)) {
         next();
     }
     else {

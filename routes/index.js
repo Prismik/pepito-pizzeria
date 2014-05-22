@@ -11,11 +11,20 @@ router.get('/login', function(req, res) {
     if (res.app.settings['globals'].logged)
         res.redirect("/");
     else
-        res.render('login', { title: 'Login', authRequired: true });
+        res.render('login', { 
+            title: 'Pepito Pizzeria - Login', 
+            authRequired: true});
 });
 
 router.get('/test', function(req, res) {
     res.send(req.session.logged);
+});
+
+router.get('/register', function(req, res) {
+    res.render('register', {
+         title: 'Pepito Pizzeria - Register' , 
+         authRequired: true
+    });
 });
 
 /* POST to authentificate users */
