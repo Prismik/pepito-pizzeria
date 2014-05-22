@@ -7,6 +7,7 @@ html
     header
       div.title
           span= "Pepito Pizzeria"
+      
       ul.menu
         li.first 
           a(href='/') Home
@@ -16,6 +17,9 @@ html
           a(href='/users/update') Update user
         li 
           a(href='/users') List user
+      
+    div.loginfo
+      span= "You are logged in as pepito (logout)"
          
     div.content
       block content
