@@ -7,14 +7,15 @@ router.get('/', function(req, res) {
     var collection = db.get('usercollection');
     collection.find({},{},function(e,docs){
         res.render('users/list', {
-            "userlist" : docs
+            title: 'Pepito Pizzeria - Users',
+            docs: 'userlist'
         });
     });
 });
 
 /* GET New User page. */
 router.get('/create', function(req, res) {
-    res.render('users/create', { title: 'Add New User' });
+    res.render('users/create', { title: 'Pepito Pizzeria - Add New User' });
 });
 
 /* GET Manage User page. */

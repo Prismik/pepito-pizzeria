@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    div.loginPage
+        h1= title
+
+        div.formError
+
+        form#formLogin(name="login",method="post",action="authenticate")
+            input#inputUsername(type="text", placeholder="Username", name="username")
+            br
+            input#inputUserPassword(type="password", placeholder="Password", name="password")
+            br
+            button#btnSubmit(type="submit") Login
+
+        br 
+        
+        form(name="login",action="/register")
+            button(type="submit") Register
