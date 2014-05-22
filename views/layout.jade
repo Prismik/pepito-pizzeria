@@ -1,25 +1,23 @@
 doctype html
 html
   head
-    title= "Pepito Pizzeria"
+    title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     header
       div.title
           span= "Pepito Pizzeria"
-      
-      ul.menu
-        li.first 
-          a(href='/') Home
-        li 
-          a(href='/users/create') Create user
-        li 
-          a(href='/users/update') Update user
-        li 
-          a(href='/users') List user
-      
-    div.loginfo
-      span= "You are logged in as pepito (logout)"
+
+      unless (authRequired)
+        ul.menu
+          li.first
+            a(href='/') Home
+          li 
+            a(href='/users/create') Create user
+          li 
+            a(href='/users/update') Update user
+          li 
+            a(href='/users') List user
          
     div.content
       block content
