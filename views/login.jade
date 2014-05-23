@@ -4,6 +4,11 @@ block content
     div.loginPage
         h1= header
 
+        - if (locals.error)
+            div#error
+                span= error
+        
+
         form#formLogin(name="login",method="post",action="authenticate")
             input#inputUsername(type="text", placeholder="Email", name="email")
             br

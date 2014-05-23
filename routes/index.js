@@ -65,8 +65,15 @@ router.post('/authenticate', function(req, res) {
                 res.redirect("/users");
             } else {
                 //Redirect to the login page with a "Bad credentials" error
-                res.location("/login");
-                res.redirect("/login?e=1");
+                
+                res.render('login', {
+                    error: 'Bad credentials',
+                    title: 'Pepito Pizzeria - Login', 
+                    header: 'Login',
+                    authRequired: true
+                });
+                //res.location("/login");
+                //res.redirect("/login?e=1");
             }
         }
     );
