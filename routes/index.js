@@ -13,6 +13,7 @@ router.get('/login', function(req, res) {
     else
         res.render('login', { 
             title: 'Pepito Pizzeria - Login', 
+            header: 'Login',
             authRequired: true});
 });
 
@@ -22,7 +23,8 @@ router.get('/test', function(req, res) {
 
 router.get('/register', function(req, res) {
     res.render('register', {
-         title: 'Pepito Pizzeria - Register' , 
+         title: 'Pepito Pizzeria - Register',
+         header: 'Register', 
          authRequired: true
     });
 });
