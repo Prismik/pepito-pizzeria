@@ -2,7 +2,7 @@ var env = process.env.NODE_ENV || 'development';
 var config = require('./config/' + env);
 var express = require('express');
 var cookieParser = require('cookie-parser');
-var session = require('cookie-session')
+var session = require('cookie-session');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
@@ -51,7 +51,8 @@ Array.prototype.contains = function (element) {
 
 // Pre routing functions
 function authChecker(req, res, next) {
-    if (req.session.logged ||  ['/login', '/authenticate', '/register'].contains(req.path)) {
+    if (req.session.logged ||  ['/login', '/authenticate', '/register', '/users/add'].contains(req.path)) {
+    
         next();
     }
     else {

@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+    script(type='text/javascript').
+        function validatePassword(){
+            var password1 = document.getElementById('password');
+            var password1 = document.getElementById('password2');
+            var message = document.getElementById('message');
+            var btnSubmit = document.getElementById("btnSubmit");
+            if (password.value == password2.value) {
+                message.innerHTML = "Passwords match";
+                btnSubmit.disabled=false;
+            }else{
+                message.innerHTML = "Passwords don't match";
+                btnSubmit.disabled=true;
+            }
+        }
+    h1.
+        Manage account
+    h4    
+        form#formUpdateUser(name="adduser",method="post",action="updateuser")
+            label User name : 
+            input#inputUserName(type="text", placeholder="username", name="username", value=username)
+            br
+            label User email : 
+            input#inputUserEmail(type="text", placeholder="useremail", name="useremail", value=useremail)
+            br
+            h3 change password
+            label password :
+            input#password(type="password", name="password", value=userpassword)
+            br
+            label password (again) :
+            input#password2(type="password", name="userpassword2", onchange="validatePassword();")
+            span(id="message")
+            br
+            input#inputUserId(type="hidden", placeholder="userid", name="userid", value=userid)
+            button#btnSubmit(type="submit") submit
+            
