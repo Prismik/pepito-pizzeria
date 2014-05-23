@@ -21,14 +21,14 @@ router.get('/create', function(req, res) {
 
 /* GET Manage User page. */
 router.get('/update', function(req, res) {
-var db = req.db;
-var collection = db.get('usercollection');
-    collection.findOne({username: req.session.uid}, function(e,docs){
+    var db = req.db;
+    var collection = db.get('usercollection');
+    collection.findOne({ _id: req.session.uid }, function(e,docs) {
         res.render('users/update', {
-            "username" : docs.username,
-            "useremail" : docs.email,
-            "userpassword" : docs.password,
-            "userid" : docs._id
+            username: docs.username,
+            useremail: docs.email,
+            userpassword: docs.password,
+            userid: docs._id
         });
     });
 });
