@@ -1,14 +1,41 @@
 extends layout
 
 block content
+    script(type='text/javascript').
+        function validatePassword(){
+            var password1 = document.getElementById('password');
+            var password1 = document.getElementById('password2');
+            var message = document.getElementById('message');
+            var btnSubmit = document.getElementById("btnSubmit");
+            if (password.value == password2.value) {
+                message.innerHTML = "Passwords match";
+                btnSubmit.disabled=false;
+            }else{
+                message.innerHTML = "Passwords don't match";
+                btnSubmit.disabled=true;
+            }
+        }
+
     h1= title
     form#formAddUser(name="adduser",method="post",action="add")
         input#inputUserName(type="text", placeholder="username", name="username")
 
         br
 
-        input#inputUserEmail(type="text", placeholder="password", name="password")
+        input#inputUserEmail(type="text", placeholder="email", name="email")
 
+        br
+        
+        label password
+        input#password(type="password", name="password")
+        
+        br
+        
+        label password (again)
+        input#password2(type="password", name="userpassword2", onchange="validatePassword();")
+        
+        span(id="message")
+        
         br
         
         button#btnSubmit(type="submit") submit

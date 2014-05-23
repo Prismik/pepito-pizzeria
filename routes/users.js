@@ -8,21 +8,22 @@ router.get('/', function(req, res) {
     collection.find({},{},function(e,docs){
         res.render('users/list', {
             title: 'Pepito Pizzeria - Users',
-            docs: 'userlist'
+            header: 'Users',
+            userlist: docs
         });
     });
 });
 
 /* GET New User page. */
 router.get('/create', function(req, res) {
-    res.render('users/create', { title: 'Pepito Pizzeria - Add New User' });
+    res.render('register', { title: 'Pepito Pizzeria - Add New User' });
 });
 
 /* GET Manage User page. */
 router.get('/update', function(req, res) {
 var db = req.db;
 var collection = db.get('usercollection');
-    collection.findOne({username: req.session.uid},function(e,docs){
+    collection.findOne({username: req.session.uid}, function(e,docs){
         res.render('users/update', {
             "username" : docs.username,
             "useremail" : docs.email,
@@ -37,18 +38,18 @@ router.post('/add', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
-
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
-    var userEmail = req.body.useremail;
+    var userEmail = req.body.email;
+    var userPassword = req.body.password;
 
     // Set our collection
     var collection = db.get('usercollection');
-
     // Submit to the DB
     collection.insert({
         "username" : userName,
-        "email" : userEmail
+        "email" : userEmail,
+        "password" : userPassword
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
