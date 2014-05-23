@@ -47,13 +47,13 @@ router.post('/authenticate', function(req, res) {
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
-    var userName = req.body.username;
+    var userEmail = req.body.email;
     var userPassword = req.body.password;//crypto.createHash('md5').update(req.body.password).digest('hex');
 
     // Set our collection
     var collection = db.get('usercollection');
     //Find user that matches the username and password
-    collection.findOne({username: userName, password: userPassword}, function(e,docs){
+    collection.findOne({email: userEmail, password: userPassword}, function(e,docs){
             if (docs != null){
                 //Add the user_id to a session variable
                 var sess = req.session;
