@@ -99,3 +99,18 @@ div.loginfo{
     font-size: 10px;
     font-style: italic;
 }
+
+div#error{
+    margin:auto;
+    width: 200px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    font-size: 11px;
+
+    color: #555;
+
+    background-color: #FFC2DA;
+    border: 1px solid #DB4848;
+}
