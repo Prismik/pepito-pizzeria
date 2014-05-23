@@ -27,6 +27,18 @@ router.get('/register', function(req, res) {
     });
 });
 
+router.get('/logout', function(req, res) {
+    //Add the user_id to a session variable
+    var sess = req.session;
+    sess.uid = null;
+    sess.logged = false;
+    sess.save();
+
+    // Redirect user
+    res.location("/login");
+    res.redirect("/login");
+});
+
 /* POST to authentificate users */
 router.post('/authenticate', function(req, res) {
     // Set our internal DB variable
