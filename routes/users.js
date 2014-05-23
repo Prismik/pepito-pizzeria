@@ -1,4 +1,5 @@
 var express = require('express');
+var crypto = require('crypto');
 var router = express.Router();
 
 /* GET users listing. */
@@ -49,7 +50,7 @@ router.post('/add', function(req, res) {
     collection.insert({
         "username" : userName,
         "email" : userEmail,
-        "password" : userPassword
+        "password" : crypto.createHash('md5').update(req.body.password).digest('hex')
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
