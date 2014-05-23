@@ -21,10 +21,13 @@ router.get('/create', function(req, res) {
 /* GET Manage User page. */
 router.get('/update', function(req, res) {
 var db = req.db;
-    var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
+var collection = db.get('usercollection');
+    collection.findOne({username: req.session.uid},function(e,docs){
         res.render('users/update', {
-            "userlist" : docs
+            "username" : docs.username,
+            "useremail" : docs.email,
+            "userpassword" : docs.password,
+            "userid" : docs._id
         });
     });
 });
@@ -70,6 +73,7 @@ router.post('/updateuser', function(req, res) {
     var userName = req.body.username;
     var userEmail = req.body.useremail;
     var userId = req.body.userid;
+    var userPassword = req.body.password;
 
     // Set our collection
     var collection = db.get('usercollection');
@@ -83,12 +87,13 @@ router.post('/updateuser', function(req, res) {
     "$set":
     	{
 	    	"username" : userName,
-			"email" : userEmail
+			"email" : userEmail,
+			"password" : userPassword
     	}
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
-            res.send("There was a problem updatiig the information in the database.");
+            res.send("There was a problem updating the information in the database.");
         }
         else {
             // If it worked, set the header so the address bar doesn't still say /adduser
