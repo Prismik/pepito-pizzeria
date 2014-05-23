@@ -8,6 +8,7 @@ router.get('/', function(req, res) {
     collection.find({},{},function(e,docs){
         res.render('users/list', {
             title: 'Pepito Pizzeria - Users',
+            header: 'Users',
             userlist: docs
         });
     });
@@ -15,7 +16,7 @@ router.get('/', function(req, res) {
 
 /* GET New User page. */
 router.get('/create', function(req, res) {
-    res.render('users/create', { title: 'Pepito Pizzeria - Add New User' });
+    res.render('users/create', { title: 'Pepito Pizzeria - Add New User' , header: 'Create user'});
 });
 
 /* POST to Add User Service */
