@@ -79,15 +79,15 @@ block content
         
         br
 
-        input#inputUserEmail(type="text", placeholder="Email", name="email" onchange="validateEmail();")
+        input#inputUserEmail(type="text", placeholder="Email", name="email", onkeyup="validateEmail();", onchange="validateEmail();")
 
         br
         
-        input#password(type="password", placeholder="Password", name="password", onchange="validatePassword();")
+        input#password(type="password", placeholder="Password", name="password", onkeyup="validatePassword();", onchange="validatePassword();")
         
         br
         
-        input#password2(type="password", placeholder="Password (again)", name="userpassword2", onchange="validatePassword();")
+        input#password2(type="password", placeholder="Password (again)", name="userpassword2", onkeyup="validatePassword();", onchange="validatePassword();")
         
         br
         
