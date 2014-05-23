@@ -1,38 +1,95 @@
 extends layout
 
 block content
+
+    link(rel="stylesheet", href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css")
+    script(src="//code.jquery.com/jquery-1.10.2.js")
+    script(src="//code.jquery.com/ui/1.10.4/jquery-ui.js")
+    link(rel="stylesheet" href="/resources/demos/style.css")
+    script.
+        $(function() {
+        $( "#datepicker" ).datepicker({
+        changeMonth:true, 
+        changeYear:true, 
+        buttonImageOnly:true,
+        showOn: "button",
+        buttonImage: "../public/images/pizza_clock.png",
+        buttonImageOnly: true
+        });
+        });
+        
     script(type='text/javascript').
+        var validePassword;
+        var valideEmail;
+        
         function validatePassword(){
-            var password1 = document.getElementById('password');
+            var password = document.getElementById('password');
             var password1 = document.getElementById('password2');
             var message = document.getElementById('message');
-            var btnSubmit = document.getElementById("btnSubmit");
-            if (password.value == password2.value) {
+            if (password.value == password1.value) {
                 message.innerHTML = "Passwords match";
-                btnSubmit.disabled=false;
+                validePassword = true;
             }else{
                 message.innerHTML = "Passwords don't match";
+                validePassword = false;
+            }
+            validateForm();
+        }
+        
+        function validateEmail(){
+            var mail=document.getElementById('inputUserEmail').value;
+            var at=mail.indexOf("@");
+            var dot=mail.lastIndexOf(".");
+            if (at<1 || dot<at+2 || dot+2>=mail.length)
+            {
+                message.innerHTML = "Not a valide email address";
+                valideEmail = false;
+            }else{
+                valideEmail = true;
+                message.innerHTML = "";
+            }  
+            validateForm();  
+        }
+        function validateForm(){
+            var btnSubmit = document.getElementById("btnSubmit");
+            if (valideEmail && validePassword)
+            {
+                btnSubmit.disabled=false;
+            }else{
                 btnSubmit.disabled=true;
             }
         }
 
     h1= header
     form#formAddUser(name="adduser",method="post",action="users/add")
-        input#inputUserName(type="text", placeholder="username", name="username")
-
-        br
-
-        input#inputUserEmail(type="text", placeholder="email", name="email")
+    
+        input#inputUserName(type="text", placeholder="Complete name", name="username")
 
         br
         
-        label password
-        input#password(type="password", name="password")
+        input#datepicker(type="text", name="date", disabled="true")
+            
+        br
+        
+        input#inputUseraddress(type="text", placeholder="Complete address", name="address")
         
         br
         
-        label password (again)
-        input#password2(type="password", name="userpassword2", onchange="validatePassword();")
+        input#inputUserPhone(type="text", placeholder="Phone number", name="phone")
+        
+        br
+
+        input#inputUserEmail(type="text", placeholder="Email", name="email" onchange="validateEmail();")
+
+        br
+        
+        input#password(type="password", placeholder="Password", name="password", onchange="validatePassword();")
+        
+        br
+        
+        input#password2(type="password", placeholder="Password (again)", name="userpassword2", onchange="validatePassword();")
+        
+        br
         
         span(id="message")
         

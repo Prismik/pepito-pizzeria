@@ -36,14 +36,14 @@ router.get('/update', function(req, res) {
 
 /* POST to Add User Service */
 router.post('/add', function(req, res) {
-
+console.log("test new user ! ");
     // Set our internal DB variable
     var db = req.db;
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
     var userEmail = req.body.email;
     var userPassword = req.body.password;
-
+console.log("test new user ! ");
     // Set our collection
     var collection = db.get('usercollection');
     // Submit to the DB
@@ -83,15 +83,15 @@ router.post('/updateuser', function(req, res) {
     // Submit to the DB
     collection.update(
     {
-        _id: userId
+	    _id : userId
     },
     {
     "$set":
-        {
-            username: userName,
-            email: userEmail,
-            password: userPassword
-        }
+    	{
+	    	username : userName,
+			email : userEmail,
+			password : userPassword
+    	}
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
