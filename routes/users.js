@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
 
 /* GET New User page. */
 router.get('/create', function(req, res) {
-    res.render('register', { title: 'Pepito Pizzeria - Add New User' });
+    res.render('users/create', { title: 'Pepito Pizzeria - Add New User' , header: 'Create user'});
 });
 
 /* GET Manage User page. */
@@ -82,15 +82,15 @@ router.post('/updateuser', function(req, res) {
     // Submit to the DB
     collection.update(
     {
-	    "_id" : userId
+        "_id" : userId
     },
     {
     "$set":
-    	{
-	    	"username" : userName,
-			"email" : userEmail,
-			"password" : userPassword
-    	}
+        {
+            "username" : userName,
+            "email" : userEmail,
+            "password" : userPassword
+        }
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
