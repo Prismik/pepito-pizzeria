@@ -82,14 +82,14 @@ router.post('/updateuser', function(req, res) {
     // Submit to the DB
     collection.update(
     {
-        "_id" : userId
+        _id: userId
     },
     {
     "$set":
         {
-            "username" : userName,
-            "email" : userEmail,
-            "password" : userPassword
+            username: userName,
+            email: userEmail,
+            password: userPassword
         }
     }, function (err, doc) {
         if (err) {
