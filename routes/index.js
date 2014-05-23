@@ -48,7 +48,7 @@ router.post('/authenticate', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var userEmail = req.body.email;
-    var userPassword = req.body.password;//crypto.createHash('md5').update(req.body.password).digest('hex');
+    var userPassword = crypto.createHash('md5').update(req.body.password).digest('hex');
 
     // Set our collection
     var collection = db.get('usercollection');
