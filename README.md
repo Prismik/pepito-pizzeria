@@ -1,9 +1,8 @@
 pepito-pizzeria
 ===============
 
-TP1 - LOG2010
+TP - LOG2010
 
-Change 
 ## Branches
 
 * Master: Should be the working app UTD version
@@ -36,3 +35,12 @@ You will also need to create the db locally. To do so, you need to install mongo
     db.usercollection.find().pretty()
 
     // Cool
+
+## Migrate data
+First you will need to do a `npm install mongo-migrate --save` at the project root
+
+You will find a folder called `miscs`. Take all the content and paste it in the `node_modules` folder. 
+
+Then go into `node_modules` folder in your terminal and run the command `node mongo-migrate -runmmnode mongo-migrate -runmm`
+
+GG, you have migrated the sexy data 
