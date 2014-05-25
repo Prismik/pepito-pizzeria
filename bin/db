@@ -1,5 +1,6 @@
-restaurants = [
-	{
+#!/usr/bin/env node
+// npm install mongo-migrate
+var restaurants = [{
 		name: "Pepito Pizzeria",
 		adress: "378 Jackson street",
 		postal_code: "J2Z 1B6",
@@ -11,16 +12,14 @@ restaurants = [
 	}
 ];
 
-menus = [
-	{
+var menus = [{
 		_id: 123,
 		name: "Pepito menu",
 		plates: [
 			"abc",
 			"def"
 		]
-	},
-	{
+	},{
 		_id: 456,
 		name: "Pepito special menu",
 		plates: [
@@ -30,7 +29,7 @@ menus = [
 	}
 ]
 
-plates  = [{
+var plates  = [{
 		_id: "abc"
 		name: "All dressed",
 		price: 17.28,
