@@ -39,8 +39,8 @@ You will also need to create the db locally. To do so, you need to install mongo
 ## Migrate data
 First you will need to do a `npm install mongo-migrate --save` at the project root
 
-You will find a folder called `miscs`. Take all the content and paste it in the `node_modules` folder. 
+You will find a folder called `miscs` from the latest master pull. Take all the content and paste it in the `node_modules` folder. 
 
-Then go into `node_modules` folder in your terminal and run the command `node mongo-migrate -runmmnode mongo-migrate -runmm`
+Then go into `node_modules` folder in your terminal and run the command `node mongo-migrate -runmm`
 
 GG, you have migrated the sexy data 
