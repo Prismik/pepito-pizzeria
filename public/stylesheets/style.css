@@ -126,6 +126,7 @@ div#message {
  * BUTTONS
  */
  button.sexybutton {
+    cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     width: 90px;
     font-size: 14px;
