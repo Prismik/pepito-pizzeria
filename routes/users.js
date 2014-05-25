@@ -43,7 +43,7 @@ console.log("test new user ! ");
     var userName = req.body.username;
     var userEmail = req.body.email;
     var userPassword = req.body.password;
-console.log("test new user ! ");
+
     // Set our collection
     var collection = db.get('usercollection');
     // Submit to the DB
@@ -57,10 +57,12 @@ console.log("test new user ! ");
             res.send("There was a problem adding the information to the database.");
         }
         else {
-            // If it worked, set the header so the address bar doesn't still say /adduser
-            res.location("/login");
-            // And forward to success page
-            res.redirect("/login");
+            res.render('login', {
+                success: 'Account successfully created',
+                title: 'Pepito Pizzeria - Login', 
+                header: 'Login',
+                authRequired: true
+            });
         }
     });
 });
