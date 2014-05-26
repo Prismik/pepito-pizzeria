@@ -141,3 +141,31 @@ div#message {
  button.sexybutton:hover{
     background-color: #e6e6e6;
  }
+
+/***
+ * Tables
+ */
+
+table{
+    border-collapse: collapse;
+    width: 90%;
+}
+
+table th {
+    background-color: black;
+    color: white;
+   padding: 5px 10px;
+   border: 1px solid black;
+   text-align: left;
+}
+
+table td {
+   padding: 5px 10px;
+   text-align: left;
+   border-right: 1px solid gray;
+   border-left: 1px solid gray;
+}
+
+table{
+    border-bottom: 1px solid black;
+}

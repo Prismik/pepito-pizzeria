@@ -36,7 +36,6 @@ router.get('/update', function(req, res) {
 
 /* POST to Add User Service */
 router.post('/add', function(req, res) {
-console.log("test new user ! ");
     // Set our internal DB variable
     var db = req.db;
     // Get our form values. These rely on the "name" attributes
