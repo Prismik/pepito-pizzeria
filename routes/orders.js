@@ -5,7 +5,7 @@ router.get('/', function(req, res) {
     
 });
 
-router.get('/pass', function(req, res){
+router.get('/create', function(req, res){
     var db = req.db;
     var restaurantCollection = db.get('restaurants');
     
@@ -44,6 +44,24 @@ router.post('/updatePlates', function(req, res){
             res.send(pdocs);
         });
     });
+});
+
+router.post('/getPlate', function(req,res){
+    var db = req.db;
+    var plateCollection = db.get('plates');
+
+    //TODO: retreive right element from ID
+
+    res.send({
+        "_id" : "def",
+        "name" : "Epic load of meat",
+        "price" : 21.12,
+        "description" : "A pizza with a shit load of meat on it"
+    });
+});
+
+router.post('/confirmOrder', function(req,res){
+
 });
 
 module.exports = router;
