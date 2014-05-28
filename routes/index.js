@@ -4,7 +4,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Pepito Pizzeria' });
+    res.render('index', { 
+        title: 'Pepito Pizzeria',
+        active: 'home'
+    });
 });
 
 router.get('/login', function(req, res) {
@@ -14,7 +17,8 @@ router.get('/login', function(req, res) {
         res.render('login', { 
             title: 'Pepito Pizzeria - Login', 
             header: 'Login',
-            authRequired: true});
+            authRequired: true
+        });
 });
 
 router.get('/test', function(req, res) {
