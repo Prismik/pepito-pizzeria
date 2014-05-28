@@ -27,6 +27,9 @@ var collection = db.get('usercollection');
         res.render('users/update', {
             "username" : docs.username,
             "useremail" : docs.email,
+            "userbirthdate" : docs.birthdate,
+            "useraddress" : docs.address,
+            "userphone" : docs.phone,
             "userpassword" : docs.password,
             "userid" : docs._id
         });
@@ -41,7 +44,7 @@ console.log("test new user ! ");
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
     var userEmail = req.body.email;
-    var userBirthDate = req.body.birthDate;
+    var userBirthDate = req.body.birthdate;
     var userAddress = req.body.address;
     var userPhone = req.body.phone;
     var userPassword = req.body.password;
@@ -77,9 +80,12 @@ router.post('/updateuser', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
-    var userEmail = req.body.useremail;
-    var userId = req.body.userid;
+    var userEmail = req.body.email;
+    var userBirthDate = req.body.birthdate;
+    var userAddress = req.body.address;
+    var userPhone = req.body.phone;
     var userPassword = req.body.password;
+    var userId = req.body.userid;
 
     // Set our collection
     var collection = db.get('usercollection');
@@ -92,9 +98,12 @@ router.post('/updateuser', function(req, res) {
     {
     "$set":
     	{
-	    	username : userName,
-			email : userEmail,
-			password : userPassword
+	    	"username" : userName,
+            "email" : userEmail,
+            "birthdate" : userBirthDate,
+            "address" : userAddress,
+            "phone" : userPhone,
+            "password" : userPassword
     	}
     }, function (err, doc) {
         if (err) {
