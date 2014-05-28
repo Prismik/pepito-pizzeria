@@ -41,14 +41,19 @@ console.log("test new user ! ");
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
     var userEmail = req.body.email;
+    var userBirthDate = req.body.birthDate;
+    var userAddress = req.body.address;
+    var userPhone = req.body.phone;
     var userPassword = req.body.password;
-console.log("test new user ! ");
     // Set our collection
     var collection = db.get('usercollection');
     // Submit to the DB
     collection.insert({
         "username" : userName,
         "email" : userEmail,
+        "birthdate" : userBirthDate,
+        "address" : userAddress,
+        "phone" : userPhone,
         "password" : userPassword
     }, function (err, doc) {
         if (err) {
