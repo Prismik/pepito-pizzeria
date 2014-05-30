@@ -47,16 +47,11 @@ router.post('/add', function(req, res) {
     var collection = db.get('usercollection');
     // Submit to the DB
     collection.insert({
-<<<<<<< HEAD
-        "username": userName,
-        "email": userEmail,
-        "password": userPassword
 
-=======
         "username" : userName,
         "email" : userEmail,
         "password" : crypto.createHash('md5').update(req.body.password).digest('hex')
->>>>>>> origin/master
+
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
