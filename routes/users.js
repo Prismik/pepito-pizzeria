@@ -2,7 +2,7 @@ var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
 
-
+var userschema = require('./schema/userSchema');
 
 /* GET users listing. */
 router.get('/', function(req, res) {
@@ -37,7 +37,9 @@ router.get('/update', function(req, res) {
 });
 
 /* POST to Add User Service */
-router.post('/add', function(req, res) {
+router.post('/add', function (req, res) {
+    //connect the schema
+    user = userschema.getUserSchema(req.db);
     // Set our internal DB variable
     var db = req.db;
     // Get our form values. These rely on the "name" attributes
@@ -50,9 +52,9 @@ router.post('/add', function(req, res) {
     // Submit to the DB
     collection.insert({
 
-        "username" : userName,
-        "email" : userEmail,
-        "password" : crypto.createHash('md5').update(req.body.password).digest('hex')
+        "username": userName,
+        "email": userEmail,
+        "password": crypto.createHash('md5').update(req.body.password).digest('hex')
 
     }, function (err, doc) {
         if (err) {
@@ -62,7 +64,7 @@ router.post('/add', function(req, res) {
         else {
             res.render('login', {
                 success: 'Account successfully created',
-                title: 'Pepito Pizzeria - Login', 
+                title: 'Pepito Pizzeria - Login',
                 header: 'Login',
                 authRequired: true
             });
