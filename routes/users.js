@@ -47,9 +47,10 @@ router.post('/add', function(req, res) {
     var collection = db.get('usercollection');
     // Submit to the DB
     collection.insert({
-        "username" : userName,
-        "email" : userEmail,
-        "password" : userPassword
+        "username": userName,
+        "email": userEmail,
+        "password": userPassword
+
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -75,6 +76,7 @@ router.post('/updateuser', function(req, res) {
     var userEmail = req.body.useremail;
     var userId = req.body.userid;
     var userPassword = req.body.password;
+
 
     // Set our collection
     var collection = db.get('usercollection');
