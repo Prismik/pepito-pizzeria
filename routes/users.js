@@ -28,10 +28,14 @@ router.get('/update', function(req, res) {
     var collection = db.get('usercollection');
     collection.findOne({ _id: req.session.uid }, function(e,docs) {
         res.render('users/update', {
-            username: docs.username,
-            useremail: docs.email,
-            userpassword: docs.password,
-            userid: docs._id
+
+            "username" : docs.username,
+            "useremail" : docs.email,
+            "userbirthdate" : docs.birthdate,
+            "useraddress" : docs.address,
+            "userphone" : docs.phone,
+            "userpassword" : docs.password,
+            "userid" : docs._id
         });
     });
 });
@@ -45,6 +49,9 @@ router.post('/add', function (req, res) {
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
     var userEmail = req.body.email;
+    var userBirthDate = req.body.birthdate;
+    var userAddress = req.body.address;
+    var userPhone = req.body.phone;
     var userPassword = req.body.password;
 
     // Set our collection
@@ -52,10 +59,12 @@ router.post('/add', function (req, res) {
     // Submit to the DB
     collection.insert({
 
-        "username": userName,
-        "email": userEmail,
-        "password": crypto.createHash('md5').update(req.body.password).digest('hex')
-
+        "username" : userName,
+        "email" : userEmail,
+        "birthdate" : userBirthDate,
+        "address" : userAddress,
+        "phone" : userPhone,
+        "password" : userPassword
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -80,9 +89,12 @@ router.post('/updateuser', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
-    var userEmail = req.body.useremail;
-    var userId = req.body.userid;
+    var userEmail = req.body.email;
+    var userBirthDate = req.body.birthdate;
+    var userAddress = req.body.address;
+    var userPhone = req.body.phone;
     var userPassword = req.body.password;
+    var userId = req.body.userid;
 
 
     // Set our collection
@@ -96,9 +108,12 @@ router.post('/updateuser', function(req, res) {
     {
     "$set":
     	{
-	    	username : userName,
-			email : userEmail,
-			password : userPassword
+	    	"username" : userName,
+            "email" : userEmail,
+            "birthdate" : userBirthDate,
+            "address" : userAddress,
+            "phone" : userPhone,
+            "password" : userPassword
     	}
     }, function (err, doc) {
         if (err) {
