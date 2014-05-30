@@ -1,4 +1,25 @@
 extends ../layout
 
 block content
+    h1= "Confirm order"
 
+    table#order
+        thead
+            tr 
+                th Plate
+                th Quantity
+                th Unit price
+                th Price
+        tbody
+            each entry, i in orderList
+                tr
+                    td #{entry.plate.name}
+                    td #{entry.quantity}
+                    td #{entry.plate.price}$
+                    td #{entry.plate.price*entry.quantity}$
+            tr  
+                td(colspan=3)= "Sub"
+                td= subtotal
+            tr  
+                td(colspan=3)= "Total"
+                td= total

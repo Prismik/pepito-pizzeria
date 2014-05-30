@@ -56,4 +56,6 @@ block content
             br
             br
 
-            button(type="submit", name="sendOrder")= "Order completed"
+            form#submitForm(method="post", action="/orders/confirmOrder")
+                input(type="hidden", name="arrayOrder")
+                button(type="submit")= "Order completed"
