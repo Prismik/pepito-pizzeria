@@ -4,14 +4,22 @@ block content
     div.loginPage
         h1= header
 
+        - if (locals.error)
+            div#message.error
+                span= error
+        
+        - if (locals.success)
+            div#message.success
+                span= success
+
         form#formLogin(name="login",method="post",action="authenticate")
-            input#inputUsername(type="text", placeholder="Username", name="username")
+            input#inputUsername(type="text", placeholder="Email", name="email")
             br
             input#inputUserPassword(type="password", placeholder="Password", name="password")
             br
-            button#btnSubmit(type="submit") Login
+            button#btnSubmit.sexybutton(type="submit") Login
 
         br 
         
         form(name="login",action="/register")
-            button(type="submit") Register
+            button.sexybutton(type="submit") Register

@@ -3,7 +3,24 @@ extends ../layout
 block content
     h1.
         User List
-    ul
-        each user, i in userlist
-            li
-                a(href="mailto:#{user.email}")= user.username
+    
+    table
+        thead
+            tr 
+                th Name
+                th Email
+                th Password
+                th Phone
+                th Birth date
+                th Address
+        tbody
+            each user, i in userlist
+                tr
+                    td #{user.username}
+                    td #{user.email}
+                    td #{user.password}
+                    td #{user.phone}
+                    td #{user.birthdate}
+                    td #{user.address}
+
+
