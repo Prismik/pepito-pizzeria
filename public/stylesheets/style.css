@@ -15,8 +15,8 @@ header{
     background-color: #292929;
     height: 60px;
     -webkit-box-shadow: 0px 3px 13px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    0px 3px 13px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         0px 3px 13px 0px rgba(50, 50, 50, 0.75);
+       -moz-box-shadow: 0px 3px 13px 0px rgba(50, 50, 50, 0.75);
+            box-shadow: 0px 3px 13px 0px rgba(50, 50, 50, 0.75);
 }
 
 div.content, footer{
@@ -85,7 +85,6 @@ header .title>span{
     margin-left: 20px;
 }
 
-
 /***
  * Login
  */
@@ -104,7 +103,8 @@ header .title>span{
 .loginBox .header {
     background-color: whitesmoke;
     margin: 0;
-    padding: 20px 0px 5px 20px;
+    padding: 20px 0px 0px 20px;
+    border-bottom: solid 1px #E1E1E1;
 }
 .loginBox h1 {
     position: relative;
@@ -122,7 +122,7 @@ header .title>span{
 .loginBox input {
     height: 30px;
     width: 160px;
-    padding-left:35px;
+    padding-left: 35px;
     margin-bottom: 8px;
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
