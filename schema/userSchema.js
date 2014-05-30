@@ -7,12 +7,13 @@ module.export = function (db) {
     var Schema = mongoose.Schema;
 
     var User = new Schema({
-        id: { type: Number}
+        id: { type: Number }
       , username: { type: String }
-      , date: { type: Date }
-      , address: { type: String }
-      , phone: { type: String }
-      , email: {type: String }
+//      , date: { type: Date }
+//      , address: { type: String }
+//      , phone: { type: String }
+      , email: { type: String }
+      , password: { type: String}
     });
 
     return User;
