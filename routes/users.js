@@ -27,6 +27,8 @@ router.get('/update', function(req, res) {
     var collection = db.get('usercollection');
     collection.findOne({ _id: req.session.uid }, function(e,docs) {
         res.render('users/update', {
+            title: 'Pepito Pizzeria - Users',
+            header: 'Update user',
             username: docs.username,
             useremail: docs.email,
             userpassword: docs.password,

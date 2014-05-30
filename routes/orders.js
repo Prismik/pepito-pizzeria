@@ -12,7 +12,8 @@ router.get('/create', function(req, res){
     restaurantCollection.find({},{},function(e,docs){
         if(docs){
             res.render('orders/create', {
-                restaurantList: docs
+                restaurantList: docs,
+                active: 'createorder'
             });
         }else{
             res.render('orders/create', {
@@ -50,18 +51,28 @@ router.post('/getPlate', function(req,res){
     var db = req.db;
     var plateCollection = db.get('plates');
 
-    //TODO: retreive right element from ID
-
-    res.send({
-        "_id" : "def",
-        "name" : "Epic load of meat",
-        "price" : 21.12,
-        "description" : "A pizza with a shit load of meat on it"
+    plateCollection.findOne({_id:parseInt(req.body.plateid)},function(e,docs){
+        res.send(docs);
     });
 });
 
 router.post('/confirmOrder', function(req,res){
+    var orders = JSON.parse(req.body.arrayOrder);
 
+    var subtotal = 0;
+    var orderElements = [];
+
+    orders.forEach(function(entry) {
+        console.log(entry);
+        subtotal+=entry.quantity*entry.plate.price;
+    });
+
+    res.render('orders/confirmation', {
+        orderList: orders,
+        subtotal: subtotal,
+        total: subtotal*2,
+        active: 'createorder'
+    });
 });
 
 module.exports = router;

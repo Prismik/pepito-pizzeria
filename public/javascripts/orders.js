@@ -21,7 +21,7 @@ $(document).ready(function() {
                 }
             }); 
         }else{
-            $('#plateSelection').hide();
+            $('#plateSelection').fadeOut("slow");
         }
     });
 
@@ -37,7 +37,7 @@ $(document).ready(function() {
                 success: function(encoded_json){
                     $('select[name="plate"]').html("<option value>Select a plate</option>");
                     $.each(encoded_json, function(i, item) {
-                        $('#plateSelection').show();
+                        $('#plateSelection').fadeIn("slow");
                         $('select[name="plate"]').append("<option value='"+encoded_json[i]._id+"'>"+encoded_json[i].name+" - "+encoded_json[i].description+" ("+encoded_json[i].price+")"+"</option>");
                     });
                 }
@@ -59,13 +59,15 @@ $(document).ready(function() {
 
                     $('table#order tbody').html('');
                     $.each(orders, function(i, item) {
-                        $('table#order tbody').append("<tr><td class='name'>"+item.plate.name+"</td><td class='quantity'>"+item.quantity+"</td><td class='unitprice'>"+item.plate.price+"</td><td class='price'>"+(item.quantity*item.plate.price)+"</td></tr>");
+                        $('table#order tbody').append("<tr><td class='name'>"+item.plate.name+"</td><td class='quantity'>"+item.quantity+"</td><td class='unitprice'>"+item.plate.price+"$</td><td class='price'>"+parseFloat(item.quantity*item.plate.price).toFixed(2)+"$</td></tr>");
                     });
+
+                    $('input[name="arrayOrder"]').val(JSON.stringify(orders));
                 }
             }); 
         }else{
             alert('Missing some parameters');
         }
-    });   
+    }); 
 });
 

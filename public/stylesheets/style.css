@@ -89,23 +89,26 @@ header .title>span{
     width: 250px;
 }
 
-.loginPage input{
+input{
     height: 30px;
-    padding-left:35px;
     margin-bottom: 8px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    padding-left: 10px;
+    width: 200px;
 }
 
 .loginPage input[type="text"]{
      background: url(../images/pizza_pencil.png) no-repeat scroll 0px 1px;
      background-size:32px 32px;
+     padding-left:35px;
 }
 
 .loginPage input[type="password"]{
      background: url(../images/pizza_lock.png) no-repeat scroll 0px 1px;
      background-size:32px 32px;
+     padding-left:35px;
 }
 
 div.loginfo {
@@ -158,6 +161,13 @@ div#message {
 }
  button.sexybutton:hover{
     background-color: #e6e6e6;
+ }
+
+ label{
+    font-style: none;
+    font-size: 13px;
+    display: inline-block;
+    min-width: 120px;
  }
 
 /***
