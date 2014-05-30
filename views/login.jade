@@ -2,8 +2,6 @@ extends layout
 
 block content
     div.loginPage
-        h1= header
-
         - if (locals.error)
             div#message.error
                 span= error
@@ -12,14 +10,19 @@ block content
             div#message.success
                 span= success
 
-        form#formLogin(name="login",method="post",action="authenticate")
-            input#inputUsername(type="text", placeholder="Email", name="email")
-            br
-            input#inputUserPassword(type="password", placeholder="Password", name="password")
-            br
-            button#btnSubmit.sexybutton(type="submit") Login
+        div.loginBox
+            div.header
+                h1= header
 
-        br 
-        
-        form(name="login",action="/register")
-            button.sexybutton(type="submit") Register
+            div.footer
+                form#formLogin.center(name="login",method="post",action="authenticate")
+                    input#inputUsername(type="text", placeholder="Email", name="email")
+                    br
+                    input#inputUserPassword(type="password", placeholder="Password", name="password")
+                    br
+                    button.sexybutton.left(type="submit") Login
+
+                
+                
+                form#formRegister.center(name="login",action="/register")
+                    button.sexybutton(type="submit") Register

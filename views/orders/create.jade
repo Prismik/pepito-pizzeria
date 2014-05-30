@@ -1,0 +1,59 @@
+extends ../layout
+
+block content
+    script(type='text/javascript' src='http://code.jquery.com/jquery-latest.min.js')
+    script(type='text/javascript' src='/javascripts/orders.js')
+
+    h1= "Pass an order"
+
+    if (locals.error)
+        div#message.error
+            span= error
+    else
+        h2= "Menu selection"
+
+        label= "Restaurant: "
+        select(name="restaurant")
+            option(value='')='Select a restaurant'
+            each restaurant, i in restaurantList
+                    option(value=restaurant._id)= restaurant.name
+
+        br
+
+        label= "Menu: "
+        select(name="menu")
+            option(value='')='Select a menu'
+
+        div#plateSelection
+
+            h2= "Plate selection"
+
+            label= "Plate: "
+            select(name="plate")
+                option(value='')='Select a plate'
+
+            br
+
+            label= "Quantity: "
+            input(type="number", value="1", min="1", max="99", name="quantity")
+
+            br
+            
+            button(type="submit", name="addToOrder")= "Add to order"
+
+            br
+            br
+
+            table#order
+                thead
+                    tr 
+                        th Plate
+                        th Quantity
+                        th Unit price
+                        th Price
+                tbody
+
+            br
+            br
+
+            button(type="submit", name="sendOrder")= "Order completed"

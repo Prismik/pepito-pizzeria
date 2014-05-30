@@ -12,6 +12,7 @@ router.get('/', function(req, res) {
         res.render('users/list', {
             title: 'Pepito Pizzeria - Users',
             header: 'Users',
+            active: 'listuser',
             userlist: docs
         });
     });
@@ -36,6 +37,8 @@ router.get('/update', function(req, res) {
             "userphone" : docs.phone,
             "userpassword" : docs.password,
             "userid" : docs._id
+
+
         });
     });
 });

@@ -3,6 +3,11 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="//code.jquery.com/jquery-1.10.2.js")
+    script.
+      var active_tab= !{JSON.stringify(active)}
+
+    script(src="/javascripts/active.js")
   body
     header
       div.title
@@ -10,13 +15,13 @@ html
 
       unless (authRequired)
         ul.menu
-          li.first
+          li.first#home
             a(href='/') Home
-          li 
+          li#account
             a(href='/users/update') My account
-          li 
+          li#listuser
             a(href='/users') List user
-          li
+          li#logout
             a(href='/logout') Logout
          
     div.content

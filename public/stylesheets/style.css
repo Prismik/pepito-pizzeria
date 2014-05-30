@@ -4,8 +4,15 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/**
+ * General
+ */
+.left   { float: left;      }
+.right  { float: right;     }
+.center { margin: 0 auto;   }
+
 header{
-    background-color: black;
+    background-color: #292929;
     height: 60px;
     -webkit-box-shadow: 0px 3px 13px 0px rgba(50, 50, 50, 0.75);
     -moz-box-shadow:    0px 3px 13px 0px rgba(50, 50, 50, 0.75);
@@ -13,7 +20,8 @@ header{
 }
 
 div.content, footer{
-    margin-left: 30px;
+    margin: 0 auto;
+    width: 1000px;
 }
 
 footer{
@@ -25,6 +33,7 @@ footer{
 header ul{
     margin: 0px;
     padding: 0px;
+    float: right;
 }
 
 header li{
@@ -33,12 +42,28 @@ header li{
     padding-top: 21px;
     padding-right: 10px;
     margin-right: 10px;
-    height: 39px;
+    height: 38px;
     cursor: pointer;
+    transition: .4s;
 }
 
 header li:hover{
     background-color: rgba(255,255,255,0.25);
+    height: 39px;
+
+}
+
+header li:hover a {
+    color: #FF5F69;
+    transition: .5s;
+}
+
+header li.active {
+    border-bottom: 2px solid #FF5F69;
+}
+
+header li.active:hover {   
+    height: 38px;
 }
 
 header li>a{
@@ -63,29 +88,65 @@ header .title{
 
 header .title>span{
     font-size: 30px;
+    margin-left: 20px;
 }
 
-.loginPage{
+
+/***
+ * Login
+ */
+ .loginPage {
     text-align:center;
-    margin: auto;
-    width: 250px;
+    margin: 0 auto;
+    width: 300px;
 }
 
-.loginPage input{
+.loginBox {
+    border: solid 1px #EBEBEB;
+    width: 300px;
+    margin-top: 80px;
+ }
+
+.loginBox .header {
+    background-color: whitesmoke;
+    margin: 0;
+    padding: 20px 0px 5px 20px;
+}
+.loginBox h1 {
+    position: relative;
+    left: -67px;
+    margin-top: 0px;
+    line-height: 15px;
+    color: #5C5C5C !important;
+}
+
+.loginBox .footer { padding: 30px; }
+
+
+
+#formLogin    { width: 200px; }
+#formRegister { width: 237px; }
+
+.loginBox input {
     height: 30px;
+    width: 160px;
     padding-left:35px;
     margin-bottom: 8px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
 }
 
-.loginPage input[type="text"]{
+.loginBox button {
+    margin-right: 10px;
+}
+
+.loginBox input[type="text"] {
      background: url(../images/pizza_pencil.png) no-repeat scroll 0px 1px;
      background-size:32px 32px;
 }
 
-.loginPage input[type="password"]{
+.loginBox input[type="password"] {
      background: url(../images/pizza_lock.png) no-repeat scroll 0px 1px;
      background-size:32px 32px;
 }
@@ -100,6 +161,9 @@ div.loginfo {
     font-style: italic;
 }
 
+/***
+ * Messages
+ */
 div#message {
     margin:auto;
     width: 200px;
@@ -123,7 +187,7 @@ div#message {
 }
 
 /***
- * BUTTONS
+ * Buttons
  */
  button.sexybutton {
     cursor: pointer;

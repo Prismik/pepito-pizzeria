@@ -15,6 +15,7 @@ var db = monk(config.db);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var orders = require('./routes/orders');
 
 var app = express();
 
@@ -63,6 +64,7 @@ function authChecker(req, res, next) {
 app.use(authChecker);
 app.use('/', routes);
 app.use('/users', users);
+app.use('/orders', orders);
 
 
 /// catch 404 and forwarding to error handler
