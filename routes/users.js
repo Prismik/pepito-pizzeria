@@ -100,18 +100,12 @@ router.post('/updateuser', function(req, res) {
     {
     "$set":
     	{
-<<<<<<< Updated upstream
 	    	"username" : userName,
             "email" : userEmail,
             "birthdate" : userBirthDate,
             "address" : userAddress,
             "phone" : userPhone,
             "password" : userPassword
-=======
-	    	username : userName,
-			email : userEmail,
-			password : userPassword
->>>>>>> Stashed changes
     	}
     }, function (err, doc) {
         if (err) {

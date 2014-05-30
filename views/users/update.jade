@@ -24,9 +24,11 @@ block content
             var password1 = document.getElementById('password2');
             var message = document.getElementById('message');
             if (password.value == password1.value) {
+                message.style.color="#135F07";
                 message.innerHTML = "Passwords match";
                 btnSubmit.disabled=false;
             }else{
+                message.style.color="#9C000B";
                 message.innerHTML = "Passwords don't match";
                 btnSubmit.disabled=true;
             }
@@ -61,8 +63,6 @@ block content
         br
         
         input#password2(type="password", placeholder="Password (again)", name="userpassword2", onkeyup="validatePassword();", onchange="validatePassword();")
-        
-        br
         
         span(id="message")
         

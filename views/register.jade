@@ -24,11 +24,13 @@ block content
         function validatePassword(){
             var password = document.getElementById('password');
             var password1 = document.getElementById('password2');
-            var message = document.getElementById('message');
+            var message = document.getElementById('messagePass');
             if (password.value == password1.value) {
+                message.style.color="#135F07";
                 message.innerHTML = "Passwords match";
                 validePassword = true;
             }else{
+                message.style.color="#9C000B";
                 message.innerHTML = "Passwords don't match";
                 validePassword = false;
             }
@@ -37,15 +39,18 @@ block content
         
         function validateEmail(){
             var mail=document.getElementById('inputUserEmail').value;
+            var message2 = document.getElementById('messageEmail');
             var at=mail.indexOf("@");
             var dot=mail.lastIndexOf(".");
             if (at<1 || dot<at+2 || dot+2>=mail.length)
             {
-                message.innerHTML = "Not a valide email address";
+                message2.style.color="#9C000B";
+                message2.innerHTML = "Not a valide email address";
                 valideEmail = false;
             }else{
                 valideEmail = true;
-                message.innerHTML = "";
+                message2.style.color="#135F07";
+                message2.innerHTML = "Valide email address";
             }  
             validateForm();  
         }
@@ -79,7 +84,7 @@ block content
         br
 
         input#inputUserEmail(type="text", placeholder="Email", name="email", onkeyup="validateEmail();", onchange="validateEmail();")
-
+        span(id="messageEmail")
         br
         
         input#password(type="password", placeholder="Password", name="password", onkeyup="validatePassword();", onchange="validatePassword();")
@@ -88,9 +93,7 @@ block content
         
         input#password2(type="password", placeholder="Password (again)", name="userpassword2", onkeyup="validatePassword();", onchange="validatePassword();")
         
-        br
-        
-        span(id="message")
+        span(id="messagePass")
         
         br
         
