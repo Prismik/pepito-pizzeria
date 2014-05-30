@@ -48,8 +48,12 @@ console.log("test new user ! ");
     var userAddress = req.body.address;
     var userPhone = req.body.phone;
     var userPassword = req.body.password;
+<<<<<<< Updated upstream
 
 
+=======
+console.log("test new user ! ");
+>>>>>>> Stashed changes
     // Set our collection
     var collection = db.get('usercollection');
     // Submit to the DB
