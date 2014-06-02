@@ -66,6 +66,7 @@ header li.active:hover {
 header li>a{
     text-decoration: none;
     color: white;
+    padding: 20px 0px 20px 0px;
 }
 
 header .title{
