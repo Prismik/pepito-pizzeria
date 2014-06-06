@@ -2,20 +2,21 @@ var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
 
-var userschema = require('./schema/userSchema');
+var userschema = require('../schema/userSchema');
 
 /* GET users listing. */
-router.get('/', function(req, res) {
-    var db = req.db;
-    var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
+router.get('/', function (req, res) {
+
+    var usermodel = userschema.getUserModel(req.db);
+    usermodel.find().exec(function (err, users) {
         res.render('users/list', {
             title: 'Pepito Pizzeria - Users',
             header: 'Users',
             active: 'listuser',
-            userlist: docs
+            userlist: users
         });
     });
+
 });
 
 /* GET New User page. */
@@ -24,52 +25,45 @@ router.get('/create', function(req, res) {
 });
 
 /* GET Manage User page. */
-router.get('/update', function(req, res) {
-    var db = req.db;
-    var collection = db.get('usercollection');
-    collection.findOne({ _id: req.session.uid }, function(e,docs) {
+router.get('/update', function (req, res) {
+
+    var usermodel = userschema.getUserModel(req.db)
+
+    user = usermodel.findOne({ userid: req.session.uid }).exec(function (err, user) {
         res.render('users/update', {
 
-            "username" : docs.username,
-            "useremail" : docs.email,
-            "userbirthdate" : docs.birthdate,
-            "useraddress" : docs.address,
-            "userphone" : docs.phone,
-            "userpassword" : docs.password,
-            "userid" : docs._id
+            "username": user.username,
+            "useremail": user.email,
+            // "userbirthdate" : docs.birthdate,
+            "useraddress": user.address,
+            "userphone": user.phone,
+            "userpassword": crypto.createHash('md5').update(req.body.password).digest('hex'),
+            "userid": user._id
 
 
         });
     });
+
 });
 
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
     //connect the schema
-    user = userschema.getUserSchema(req.db);
-    // Set our internal DB variable
-    var db = req.db;
-    // Get our form values. These rely on the "name" attributes
-    var userName = req.body.username;
-    var userEmail = req.body.email;
-    var userBirthDate = req.body.birthdate;
-    var userAddress = req.body.address;
-    var userPhone = req.body.phone;
-    var userPassword = req.body.password;
+    var user = userschema.getUserModel(req.db);
 
-    // Set our collection
-    var collection = db.get('usercollection');
-    // Submit to the DB
-    collection.insert({
+    var newUser = new user({
+        username: req.body.username
+        //, userbirthdate: req.body.birthdate
+        , useraddress: req.body.address
+        , userphone: req.body.phone
+        , useremail: req.body.email
+        , userpassword: req.body.password
 
-        "username" : userName,
-        "email" : userEmail,
-        "birthdate" : userBirthDate,
-        "address" : userAddress,
-        "phone" : userPhone,
-        "password" : userPassword
-    }, function (err, doc) {
+    })
+
+    newUser.save(function (err, newUser) {
         if (err) {
+            console.log(err);
             // If it failed, return error
             res.send("There was a problem adding the information to the database.");
         }
@@ -82,6 +76,7 @@ router.post('/add', function (req, res) {
             });
         }
     });
+
 });
 
 /* POST to Update User */
@@ -93,7 +88,7 @@ router.post('/updateuser', function(req, res) {
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
     var userEmail = req.body.email;
-    var userBirthDate = req.body.birthdate;
+   // var userBirthDate = req.body.birthdate;
     var userAddress = req.body.address;
     var userPhone = req.body.phone;
     var userPassword = req.body.password;
@@ -113,7 +108,7 @@ router.post('/updateuser', function(req, res) {
     	{
 	    	"username" : userName,
             "email" : userEmail,
-            "birthdate" : userBirthDate,
+           // "birthdate" : userBirthDate,
             "address" : userAddress,
             "phone" : userPhone,
             "password" : userPassword

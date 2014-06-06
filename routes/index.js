@@ -60,10 +60,13 @@ router.post('/authenticate', function(req, res) {
     collection.findOne({email: userEmail, password: userPassword}, function(e,docs){
             if (docs != null){
                 //Add the user_id to a session variable
+                
                 var sess = req.session;
                 sess.uid = docs._id;
                 sess.logged = true;
                 sess.save();
+
+                console.log(userEmail + ' is now logged')
 
                 res.location("/users");
                 res.redirect("/users");

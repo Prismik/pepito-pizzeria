@@ -1,24 +1,41 @@
 ﻿var mongoose = require('mongoose');
 
-module.export = {
+module.exports = {
 
-    getUserSchema: function (db) {
 
-        mongoose.connect(db) 
+    getUserModel: function (db) {
+
+        var connectString = db.driver._connect_args[0];
+
+        if (mongoose.connection.readyState == 0) 
+        {
+            mongoose.connect(connectString.substring(10, connectString.length));
+        }
 
         var Schema = mongoose.Schema;
 
-        var userschem = new Schema({
-            id: { type: Number }
-          , username: { type: String }
-            //    , date: { type: Date }
-            //    , address: { type: String }
-            //    , phone: { type: String }
-          , email: { type: String }
-          , password: { type: String }
-        });
+           var userschem = new Schema({
+                  userid: { type: Number }
+                  , username: { type: String }
+                    //, userbirthdate: { type: String }
+                  , useraddress: { type: String }
+                  , userphone: { type: String }
+                  , useremail: { type: String }
+                  , userpassword: { type: String }
+                }, { collection: 'usercollection' });
 
-        return userschem;
+              try {
+                return mongoose.model('usercollection', userschem);
+            } catch (e) {
+                return mongoose.model('usercollection')
+            }
 
+        
+
+    },
+
+    closeConnection: function () {
+
+        mongoose.disconnect();
     }
 }
