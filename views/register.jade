@@ -11,31 +11,38 @@ block content
     
     h1= header
     form#formAddUser(name="adduser",method="post",action="users/add")
-    
+        
+        label(for="inputUserName") Complete name
         input#inputUserName(type="text", placeholder="Complete name", name="username")
 
         br
         
+        label Birthdate
         input#datepicker(type="text", name="birthdate", placeholder="click icon" readonly)
             
         br
         
+        label(for="inputUseraddress") Address
         input#inputUseraddress(type="text", placeholder="Complete address", name="address")
         
         br
         
+        label(for="inputUserPhone") Phone number
         input#inputUserPhone(type="tel", placeholder="Phone number", name="phone")
         
         br
 
+        label(for="inputUserEmail") Email
         input#inputUserEmail(type="email", placeholder="Email", name="email")
         
         br
         
+        label(for="password") Password
         input#password(type="password", placeholder="Password", name="password")
         
         br
         
+        label(for="password2") Password (again)
         input#password2(type="password", placeholder="Password (again)", name="userpassword2")
         
         br
@@ -48,5 +55,5 @@ block content
             validateLenghtMin('datepicker', 3, 'Please, enter your birthdadte by clicking on the icon');
             validateEmail('inputUserEmail', 'Please, enter a valid email address');
             validatePassword('password', 'password2', 'Passwords dont match');
-        
+        label
         button#btnSubmit.sexybutton(type="submit") submit
