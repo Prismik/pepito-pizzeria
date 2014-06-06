@@ -17,11 +17,11 @@ module.exports = {
            var userschem = new Schema({
                   userid: { type: Number }
                   , username: { type: String }
-                    //, userbirthdate: { type: String }
-                  , useraddress: { type: String }
-                  , userphone: { type: String }
-                  , useremail: { type: String }
-                  , userpassword: { type: String }
+                  , birthdate: { type: String }
+                  , address: { type: String }
+                  , phone: { type: String }
+                  , email: { type: String }
+                  , password: { type: String }
                 }, { collection: 'usercollection' });
 
               try {
