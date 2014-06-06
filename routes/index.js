@@ -1,6 +1,7 @@
 var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
+var mail = require('../lib/mail');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -21,8 +22,12 @@ router.get('/login', function(req, res) {
         });
 });
 
-router.get('/test', function(req, res) {
-    res.send(req.session.logged);
+router.get('/mail', function(req, res) {
+   res.render('test', { 
+        title: 'Pepito Pizzeria - Test', 
+        header: 'Test',
+        authRequired: true
+    });
 });
 
 router.get('/register', function(req, res) {

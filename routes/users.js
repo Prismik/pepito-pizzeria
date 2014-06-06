@@ -29,18 +29,16 @@ router.get('/update', function (req, res) {
 
     var usermodel = userschema.getUserModel(req.db)
 
-    user = usermodel.findOne({ userid: req.session.uid }).exec(function (err, user) {
+    user = usermodel.findOne({ userid: req.session.uid }).exec(function (err, docs) {
         res.render('users/update', {
 
-            "username": user.username,
-            "useremail": user.email,
-            // "userbirthdate" : docs.birthdate,
-            "useraddress": user.address,
-            "userphone": user.phone,
-            "userpassword": crypto.createHash('md5').update(req.body.password).digest('hex'),
-            "userid": user._id
-
-
+            username : docs.username,
+            useremail : docs.email,
+            userbirthdate : docs.birthdate,
+            useraddress : docs.address,
+            userphone : docs.phone,
+            active: 'account',
+            userid : docs._id
         });
     });
 
@@ -53,17 +51,16 @@ router.post('/add', function (req, res) {
 
     var newUser = new user({
         username: req.body.username
-        //, userbirthdate: req.body.birthdate
+        , userbirthdate: req.body.birthdate
         , useraddress: req.body.address
         , userphone: req.body.phone
         , useremail: req.body.email
-        , userpassword: req.body.password
+        , userpassword: crypto.createHash('md5').update(req.body.password).digest('hex')
 
     })
 
     newUser.save(function (err, newUser) {
         if (err) {
-            console.log(err);
             // If it failed, return error
             res.send("There was a problem adding the information to the database.");
         }
@@ -88,10 +85,10 @@ router.post('/updateuser', function(req, res) {
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
     var userEmail = req.body.email;
-   // var userBirthDate = req.body.birthdate;
+    var userBirthDate = req.body.birthdate;
     var userAddress = req.body.address;
     var userPhone = req.body.phone;
-    var userPassword = req.body.password;
+    var userPassword = crypto.createHash('md5').update(req.body.password).digest('hex');
     var userId = req.body.userid;
 
 
