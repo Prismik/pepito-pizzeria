@@ -66,6 +66,7 @@ header li.active:hover {
 header li>a{
     text-decoration: none;
     color: white;
+    padding: 20px 0px 20px 0px;
 }
 
 header .title{
@@ -101,10 +102,10 @@ header .title>span{
  }
 
 .loginBox .header {
-    background-color: whitesmoke;
+    background-color: #EAEAEA;
     margin: 0;
     padding: 20px 0px 0px 20px;
-    border-bottom: solid 1px #E1E1E1;
+    border-bottom: solid 1px #DFDFDF;
 }
 .loginBox h1 {
     position: relative;
