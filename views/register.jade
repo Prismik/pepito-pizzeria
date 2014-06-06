@@ -7,6 +7,7 @@ block content
     script(src="//code.jquery.com/ui/1.10.4/jquery-ui.js")
     script(type="text/javascript" src="/javascripts/validateform.js")
     script(type="text/javascript" src="/javascripts/datepicker.js")
+    script(type="text/javascript" src="/javascripts/verifyEmail.js")
     
     h1= header
     form#formAddUser(name="adduser",method="post",action="users/add")
@@ -23,7 +24,7 @@ block content
         
         br
         
-        input#inputUserPhone(type="text", placeholder="Phone number", name="phone")
+        input#inputUserPhone(type="tel", placeholder="Phone number", name="phone")
         
         br
 
