@@ -1,4 +1,22 @@
 extends ../layout
 
 block content
-  p Restaurant List
+    h1 Restaurant List
+
+    table
+        thead
+            tr
+                th Name
+                th Adress
+                th Postal Code
+                th Description
+        tbody
+            each resto, i in restoList
+                tr
+                    td #{resto.name}
+                    td #{resto.adress}
+                    td #{resto.postal}
+                    td #{resto.description}
+
+    form.center(name="login",action="/create")
+        button.sexybutton(type="submit") Add Restaurant
