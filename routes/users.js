@@ -6,7 +6,7 @@ var userschema = require('../schema/userSchema');
 /* GET users listing. */
 router.get('/', function (req, res) {
 
-    var usermodel = userschema.getUserModel(req.db);
+    var usermodel = userschema.getUserModel();
     usermodel.find().exec(function (err, users) {
         res.render('users/list', {
             title: 'Pepito Pizzeria - Users',
@@ -26,7 +26,7 @@ router.get('/create', function(req, res) {
 /* GET Manage User page. */
 router.get('/update', function (req, res) {
 
-    var usermodel = userschema.getUserModel(req.db)
+    var usermodel = userschema.getUserModel()
 
     user = usermodel.findOne({ _id: req.session.uid }).exec(function (err, docs) {
         res.render('users/update', {
@@ -46,7 +46,7 @@ router.get('/update', function (req, res) {
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
     //connect the schema
-    var user = userschema.getUserModel(req.db);
+    var user = userschema.getUserModel();
 
     var newUser = new user({
         username: req.body.username
@@ -78,7 +78,7 @@ router.post('/add', function (req, res) {
 /* POST to Update User */
 router.post('/updateuser', function (req, res) {
 
-    var userModel = userschema.getUserModel(req.db);
+    var userModel = userschema.getUserModel();
 
     var user = userModel.findOneAndUpdate(
         { _id: req.body.userid },

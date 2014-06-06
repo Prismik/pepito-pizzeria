@@ -67,29 +67,43 @@ block content
     h1= header
     form#formAddUser(name="adduser",method="post",action="users/add")
     
+        label Username
+
         input#inputUserName(type="text", placeholder="Complete name", name="username")
 
         br
+
+        label Birthdate
         
         input#datepicker(type="text", name="birthdate" readonly)
             
         br
         
+        label Adresse
+        
         input#inputUseraddress(type="text", placeholder="Complete address", name="address")
         
         br
+        
+        label Phone
         
         input#inputUserPhone(type="text", placeholder="Phone number", name="phone")
         
         br
 
+        label Email
+        
         input#inputUserEmail(type="text", placeholder="Email", name="email", onkeyup="validateEmail();", onchange="validateEmail();")
         span(id="messageEmail")
         br
         
+        label Password
+        
         input#password(type="password", placeholder="Password", name="password", onkeyup="validatePassword();", onchange="validatePassword();")
         
         br
+        
+        label Valid Password
         
         input#password2(type="password", placeholder="Password (again)", name="userpassword2", onkeyup="validatePassword();", onchange="validatePassword();")
         

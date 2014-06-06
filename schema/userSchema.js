@@ -1,41 +1,28 @@
-﻿var mongoose = require('mongoose');
+﻿var env = process.env.NODE_ENV || 'development';
+var config = require('../config/' + env);
+var mongoose = require('mongoose');
+
+userSchema = new mongoose.Schema({
+           userid: { type: Number }
+           , username: { type: String }
+           , birthdate: { type: String }
+           , address: { type: [String] }
+           , phone: { type: String }
+           , email: { type: String }
+           , password: { type: String }
+       }, { collection: 'usercollection' })
+
+userModel = mongoose.model('usercollection', userSchema)
 
 module.exports = {
 
+    getUserModel: function () {
 
-    getUserModel: function (db) {
-
-        var connectString = db.driver._connect_args[0];
-
-        if (mongoose.connection.readyState == 0) 
-        {
-            mongoose.connect(connectString.substring(10, connectString.length));
+        if (mongoose.connection.readyState == 0) {
+            mongoose.connect(config.db);
         }
 
-        var Schema = mongoose.Schema;
+        return userModel;
 
-           var userschem = new Schema({
-                  userid: { type: Number }
-                  , username: { type: String }
-                  , birthdate: { type: String }
-                  , address: { type: String }
-                  , phone: { type: String }
-                  , email: { type: String }
-                  , password: { type: String }
-                }, { collection: 'usercollection' });
-
-              try {
-                return mongoose.model('usercollection', userschem);
-            } catch (e) {
-                return mongoose.model('usercollection')
-            }
-
-        
-
-    },
-
-    closeConnection: function () {
-
-        mongoose.disconnect();
     }
 }
