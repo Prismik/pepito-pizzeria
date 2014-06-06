@@ -17,35 +17,35 @@ exports.up = function(db, next){
 		_id: 123,
 		name: "Pepito menu",
 		plates: [
-			"abc",
-			"def"
+			123,
+			456
 		]
 	},{
 		_id: 456,
 		name: "Pepito special menu",
 		plates: [
-			"ghi",
-			"jlk"
+			789,
+			101112
 		]
 	}];
 
 	var plate_docs  = [{
-			_id: "abc",
+			_id: 123,
 			name: "All dressed",
 			price: 17.28,
 			description: "12 inches all dressed pizza"
 		},{
-			_id: "def",
+			_id: 456,
 			name: "Epic load of meat",
 			price: 21.12,
 			description: "A pizza with a shit load of meat on it"
 		},{
-			_id: "ghi",
+			_id: 789,
 			name: "Vegepizza",
 			price: 25.23,
 			description: "A veggie pizza"
 		},{
-			_id: "jkl",
+			_id: 101112,
 			name: "Cheesie doodeli cheese",
 			price: 21.12,
 			description: "A pizza with cheese and cheese on top of more cheese"
