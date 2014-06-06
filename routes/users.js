@@ -38,6 +38,21 @@ router.get('/update', function(req, res) {
     });
 });
 
+//Ajax request for validating if email address is used
+router.post('/verifyEmail', function(req,res){
+    var db = req.db;
+    var validateEmail = req.body.validateEmail;
+    var collection = db.get('usercollection');
+    collection.findOne({email:validateEmail}, function(e,docs){
+        if(docs!=null){
+	        res.send(false);
+        }else{
+	        res.send(true);
+        }
+    });
+    
+});
+
 /* POST to Add User Service */
 router.post('/add', function(req, res) {
     // Set our internal DB variable
