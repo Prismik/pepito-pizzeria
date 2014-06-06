@@ -132,10 +132,12 @@ header .title>span{
 .loginBox input[type="text"] {
      background: url(../images/pizza_pencil.png) no-repeat scroll 0px 1px;
      background-size:32px 32px;
+     padding-left:35px;
 }
 .loginBox input[type="password"] {
      background: url(../images/pizza_lock.png) no-repeat scroll 0px 1px;
      background-size:32px 32px;
+     padding-left:35px;
 }
 div.loginfo {
     padding: 3px 0px 3px 35px;
@@ -186,6 +188,13 @@ div#message {
 }
  button.sexybutton:hover{
     background-color: #e6e6e6;
+ }
+
+ label{
+    font-style: none;
+    font-size: 13px;
+    display: inline-block;
+    min-width: 120px;
  }
 
 /***
