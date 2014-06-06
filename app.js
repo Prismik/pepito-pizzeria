@@ -13,9 +13,11 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk(config.db);
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var orders = require('./routes/orders');
+// Routing controllers
+var routes  = require('./routes/index');
+var users   = require('./routes/users');
+var orders  = require('./routes/orders');
+var restos  = require('./routes/restaurants');
 
 var app = express();
 
@@ -65,6 +67,7 @@ app.use(authChecker);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/orders', orders);
+app.use('/restaurants', restos)
 
 
 /// catch 404 and forwarding to error handler

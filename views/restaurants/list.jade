@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+    h1= header
+
+    table
+        thead
+            tr
+                th Name
+                th Adress
+                th Postal Code
+                th Description
+        tbody
+            each resto, i in restos
+                tr
+                    td #{resto.name}
+                    td #{resto.adress}
+                    td #{resto.postal_code}
+                    td #{resto.description}
+
+    form.center(name="createrestaurant",action="/restaurants/create")
+        button.sexybutton(type="submit") Add Restaurant
