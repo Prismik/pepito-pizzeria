@@ -5,65 +5,10 @@ block content
     link(rel="stylesheet", href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css")
     script(src="//code.jquery.com/jquery-1.10.2.js")
     script(src="//code.jquery.com/ui/1.10.4/jquery-ui.js")
-    script.
-        $(function() {
-        $( "#datepicker" ).datepicker({
-        changeMonth:true, 
-        changeYear:true, 
-        buttonImageOnly:true,
-        showOn: "button",
-        buttonImage: "../public/images/pizza_clock.png",
-        buttonImageOnly: true
-        });
-        });
-        
-    script(type='text/javascript').
-        var validePassword;
-        var valideEmail;
-        
-        function validatePassword(){
-            var password = document.getElementById('password');
-            var password1 = document.getElementById('password2');
-            var message = document.getElementById('messagePass');
-            if (password.value == password1.value) {
-                message.style.color="#135F07";
-                message.innerHTML = "Passwords match";
-                validePassword = true;
-            }else{
-                message.style.color="#9C000B";
-                message.innerHTML = "Passwords don't match";
-                validePassword = false;
-            }
-            validateForm();
-        }
-        
-        function validateEmail(){
-            var mail=document.getElementById('inputUserEmail').value;
-            var message2 = document.getElementById('messageEmail');
-            var at=mail.indexOf("@");
-            var dot=mail.lastIndexOf(".");
-            if (at<1 || dot<at+2 || dot+2>=mail.length)
-            {
-                message2.style.color="#9C000B";
-                message2.innerHTML = "Not a valide email address";
-                valideEmail = false;
-            }else{
-                valideEmail = true;
-                message2.style.color="#135F07";
-                message2.innerHTML = "Valide email address";
-            }  
-            validateForm();  
-        }
-        function validateForm(){
-            var btnSubmit = document.getElementById("btnSubmit");
-            if (valideEmail && validePassword)
-            {
-                btnSubmit.disabled=false;
-            }else{
-                btnSubmit.disabled=true;
-            }
-        }
-
+    script(type="text/javascript" src="/javascripts/validateform.js")
+    script(type="text/javascript" src="/javascripts/datepicker.js")
+    script(type="text/javascript" src="/javascripts/verifyEmail.js")
+    
     h1= header
     form#formAddUser(name="adduser",method="post",action="users/add")
     
@@ -71,7 +16,7 @@ block content
 
         br
         
-        input#datepicker(type="text", name="birthdate" readonly)
+        input#datepicker(type="text", name="birthdate", placeholder="click icon" readonly)
             
         br
         
@@ -79,22 +24,29 @@ block content
         
         br
         
-        input#inputUserPhone(type="text", placeholder="Phone number", name="phone")
+        input#inputUserPhone(type="tel", placeholder="Phone number", name="phone")
         
         br
 
-        input#inputUserEmail(type="text", placeholder="Email", name="email", onkeyup="validateEmail();", onchange="validateEmail();")
-        span(id="messageEmail")
-        br
-        
-        input#password(type="password", placeholder="Password", name="password", onkeyup="validatePassword();", onchange="validatePassword();")
+        input#inputUserEmail(type="email", placeholder="Email", name="email")
         
         br
         
-        input#password2(type="password", placeholder="Password (again)", name="userpassword2", onkeyup="validatePassword();", onchange="validatePassword();")
-        
-        span(id="messagePass")
+        input#password(type="password", placeholder="Password", name="password")
         
         br
+        
+        input#password2(type="password", placeholder="Password (again)", name="userpassword2")
+        
+        br
+        
+        //validate inputs that needs to be validated
+        script(type="text/javascript").
+            validateLenghtMin('inputUserName', 3, 'Please, enter your name');
+            validateLenghtMin('inputUseraddress', 5, 'Please, enter an address');
+            validateRegex('inputUserPhone', '^([0-9\(\)\/\+ \-]*)$', 'Please, enter a valid phone number');
+            validateLenghtMin('datepicker', 3, 'Please, enter your birthdadte by clicking on the icon');
+            validateEmail('inputUserEmail', 'Please, enter a valid email address');
+            validatePassword('password', 'password2', 'Passwords dont match');
         
         button#btnSubmit.sexybutton(type="submit") submit
