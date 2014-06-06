@@ -8,7 +8,8 @@ router.get('/', function(req, res) {
         res.render('restaurants/list', {
             title: 'Pepito Pizzeria - Restaurants',
             header: 'Restaurants',
-            active: 'resto'
+            active: 'resto',
+            restos: docs
         });
     });
 });
