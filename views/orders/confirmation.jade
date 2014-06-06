@@ -1,6 +1,9 @@
 extends ../layout
 
 block content
+
+    script(type="text/javascript" src="/javascripts/confirmation.js")
+
     h1= "Confirm order"
 
     table#order
@@ -23,3 +26,18 @@ block content
             tr  
                 td(colspan=3)= "Total"
                 td= total
+
+    h2= "Order informations"
+
+    label= "Addresse: "
+    select(name="addresses")
+        option(value='')='Select an address'
+
+    button(id="addAddress")= "New address"
+
+    br
+
+    label= "Date: "
+    input(name="deliveryDate")
+
+    br
