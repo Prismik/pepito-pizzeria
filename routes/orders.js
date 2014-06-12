@@ -71,26 +71,10 @@ router.post('/getUserAddresses', function(req,res){
 
 router.post('/addAddressToCurrentUser', function(req,res){
     var db = req.db;
-    var userCollection = db.get('userCollection');
+    var userCollection = db.get('usercollection');
 
-    userCollection.update({_id:req.session.uid}, 
-        {
-            "$set":
-            {
-                "address" : userAddress,
-            }
-        }, function (err, doc) {
-            if (err) {
-                // If it failed, return error
-                res.send("There was a problem updating the information in the database.");
-            }
-            else {
-                // If it worked, set the header so the address bar doesn't still say /adduser
-                res.location("/users/update");
-                // And forward to success page
-                res.redirect("/users/update");
-            }
-        });
+    userCollection.update({_id:req.session.uid},{"$addToSet":{address:req.body.address}});
+    res.send("200");
 });
 
 router.post('/confirmOrder', function(req,res){
@@ -110,6 +94,17 @@ router.post('/confirmOrder', function(req,res){
         total: subtotal*2,
         active: 'createorder'
     });
+});
+
+router.post('/sendOrder', function(req,res){
+    var db = req.db;
+    var orders = db.get('orders');
+
+    var order = req.body.order;
+    order.customer = req.session.uid;
+
+    orders.insert(order);
+    res.send("202");
 });
 
 module.exports = router;

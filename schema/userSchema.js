@@ -18,7 +18,7 @@ module.exports = {
                   userid: { type: Number }
                   , username: { type: String }
                   , birthdate: { type: String }
-                  , address: { type: String }
+                  , address: [String]
                   , phone: { type: String }
                   , email: { type: String }
                   , password: { type: String }

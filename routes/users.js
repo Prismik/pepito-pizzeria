@@ -51,7 +51,7 @@ router.post('/add', function (req, res) {
     var newUser = new user({
         username: req.body.username
         , birthdate: req.body.birthdate
-        , address: req.body.address
+        , address: [req.body.address]
         , phone: req.body.phone
         , email: req.body.email
         , password: crypto.createHash('md5').update(req.body.password).digest('hex')

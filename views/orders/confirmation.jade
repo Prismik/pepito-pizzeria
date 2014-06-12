@@ -19,18 +19,20 @@ block content
                     td #{entry.plate.name}
                     td #{entry.quantity}
                     td #{entry.plate.price}$
-                    td #{entry.plate.price*entry.quantity}$
+                    td= (entry.plate.price*entry.quantity).toFixed(2)+"$"
             tr  
                 td(colspan=3)= "Sub"
-                td= subtotal
+                td= subtotal.toFixed(2)+"$"
             tr  
                 td(colspan=3)= "Total"
-                td= total
+                td= total.toFixed(2)+"$"
 
     h2= "Order informations"
 
+    input(name="order", type="hidden",value=JSON.stringify(orderList))
+
     label= "Addresse: "
-    select(name="addresses")
+    select(name="address")
         option(value='')='Select an address'
 
     button(id="addAddress")= "New address"
@@ -41,3 +43,5 @@ block content
     input(name="deliveryDate")
 
     br
+
+    button(id="send")= "Send order"
