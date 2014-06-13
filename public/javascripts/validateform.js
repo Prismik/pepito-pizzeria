@@ -54,3 +54,21 @@ function validateEmail(inputId, errormessage){
 		}
 	}, false);
 }
+
+function addAddressInput() {
+    var lastdiv = $(".addressDiv").last();
+    var num = lastdiv.children("input").attr("data-num") + 1
+
+    var newdiv = lastdiv.clone();
+    newdiv.children("label").html(" ")
+    newdiv.children("input").first().attr("id","inputUseraddress" + num).attr("data-num", num).attr(value="");
+    newdiv.children("input").last().attr("id","inputUserpostalcode" + num).attr("data-num", num).attr(value="");
+    newdiv.children("button").attr("id","delAddress"+num).attr("onclick","delAddressInput("+num+")").html("Delete");
+   
+    lastdiv.after(newdiv);
+}
+
+function delAddressInput(num) {
+    var div = $('input[data-num="'+num+'"]').parent();
+    div.remove();
+}
