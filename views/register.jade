@@ -8,39 +8,60 @@ block content
     script(type="text/javascript" src="/javascripts/validateform.js")
     script(type="text/javascript" src="/javascripts/datepicker.js")
     script(type="text/javascript" src="/javascripts/verifyEmail.js")
-    
+
     h1= header
     form#formAddUser(name="adduser",method="post",action="users/add")
     
+        label Username
+
         input#inputUserName(type="text", placeholder="Complete name", name="username")
 
         br
+
+        label Birthdate
         
         input#datepicker(type="text", name="birthdate", placeholder="click icon" readonly)
+
+        br
+        
+        div.addressDiv
             
-        br
-        
-        input#inputUseraddress(type="text", placeholder="Complete address", name="address")
-        
-        br
-        
-        input(type="text", placeholder="Postal code", name="postal")
+            label Adresse
+            
+            input#inputUseraddress1(type="text", placeholder="Complete address", name="address" data-num="1")
+            button#addAddress(type="button" onclick="addAddressInput()") Add
 
+            br
+
+            label Postal Code
+
+            input#inputUserPostalCode1(type="text", placeholder="Complete postal code", name="postal" data-num="1")
+        
+        br
+        
+        label Phone
+        
+        input#inputUserPhone(type="text", placeholder="Phone number", name="phone")
+        
         br
 
-        input#inputUserPhone(type="tel", placeholder="Phone number", name="phone")
+        label Email
         
-        br
-
-        input#inputUserEmail(type="email", placeholder="Email", name="email")
-        
+        input#inputUserEmail(type="text", placeholder="Email", name="email", onkeyup="validateEmail();", onchange="validateEmail();")
+        span(id="messageEmail")
         br
         
-        input#password(type="password", placeholder="Password", name="password")
+        label Password
+        
+        input#password(type="password", placeholder="Password", name="password", onkeyup="validatePassword();", onchange="validatePassword();")
         
         br
         
-        input#password2(type="password", placeholder="Password (again)", name="userpassword2")
+        label Valid Password
+        
+        input#password2(type="password", placeholder="Password (again)", name="userpassword2", onkeyup="validatePassword();", onchange="validatePassword();")
+        
+        span(id="messagePass")
         
         br
         
