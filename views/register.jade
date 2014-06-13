@@ -63,7 +63,24 @@ block content
                 btnSubmit.disabled=true;
             }
         }
+        function addAddressInput(){
+            var lastdiv = $(".addressDiv").last();
+            var num = lastdiv.children("input").attr("data-num") + 1
 
+            var newdiv = lastdiv.clone();
+            newdiv.children("label").html(" ")
+            newdiv.children("input").first().attr("id","inputUseraddress" + num).attr("data-num", num).attr(value="");
+            newdiv.children("input").last().attr("id","inputUserpostalcode" + num).attr("data-num", num).attr(value="");
+            newdiv.children("button").attr("id","delAddress"+num).attr("onclick","delAddressInput("+num+")").html("Delete");
+           
+            lastdiv.after(newdiv);
+        }
+        function delAddressInput(num)
+        {
+            var div = $('input[data-num="'+num+'"]').parent();
+            div.remove();
+        }
+        
     h1= header
     form#formAddUser(name="adduser",method="post",action="users/add")
     
@@ -76,12 +93,21 @@ block content
         label Birthdate
         
         input#datepicker(type="text", name="birthdate" readonly)
-            
+        
         br
         
-        label Adresse
-        
-        input#inputUseraddress(type="text", placeholder="Complete address", name="address")
+        div.addressDiv
+            
+            label Adresse
+            
+            input#inputUseraddress1(type="text", placeholder="Complete address", name="address" data-num="1")
+            button#addAddress(type="button" onclick="addAddressInput()") Add
+
+            br
+
+            label Postal Code
+
+            input#inputUserPostalCode1(type="text", placeholder="Complete postal code", name="postalcode" data-num="1")
         
         br
         
