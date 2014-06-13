@@ -61,9 +61,9 @@ function addAddressInput() {
 
     var newdiv = lastdiv.clone();
     newdiv.children("label").html(" ")
-    newdiv.children("input").first().attr("id","inputUseraddress" + num).attr("data-num", num).attr(value="");
-    newdiv.children("input").last().attr("id","inputUserpostalcode" + num).attr("data-num", num).attr(value="");
-    newdiv.children("button").attr("id","delAddress"+num).attr("onclick","delAddressInput("+num+")").html("Delete");
+    newdiv.children("input").first().attr("data-num", num).attr(value="");
+    newdiv.children("input").last().attr("data-num", num).attr(value="");
+    newdiv.children("button").attr("onclick","delAddressInput("+num+")").html("Delete");
    
     lastdiv.after(newdiv);
 }

@@ -51,7 +51,7 @@ router.post('/add', function (req, res) {
     var newUser = new user({
         username: req.body.username
         , birthdate: req.body.birthdate
-        , address: [req.body.address]
+        , address: req.body.address
         , defaultAddress: 0
         , postal: req.body.postal
         , phone: req.body.phone
