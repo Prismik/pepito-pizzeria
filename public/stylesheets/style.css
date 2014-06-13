@@ -231,3 +231,9 @@ table td {
 table {
     border-bottom: 1px solid black;
 }
+
+.ui-datepicker-trigger{
+    margin-bottom: -8px;
+    cursor: pointer;
+    width: 25px;
+}
