@@ -20,6 +20,18 @@ function updateUserAddressList(){
 $(function() {
 	updateUserAddressList();
 
+    $('select[name="address"]').change(function(){
+        $.ajax({
+                type: 'POST',
+                data: {address:$('select[name=address]').val()},
+                url: 'changeDefaultAddress',
+                dataType: 'text',
+                success: function(data){
+                    updateUserAddressList();
+                },
+            }); 
+    });
+
     $( "#addAddress" ).click(function() {
         var address=prompt("Please enter the new address","");
 

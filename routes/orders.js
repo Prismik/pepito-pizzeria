@@ -123,4 +123,18 @@ router.post('/sendOrder', function(req,res){
     res.send("202");
 });
 
+router.post('/changeDefaultAddress', function(req,res){
+    var db = req.db;
+    var userCollection = db.get('usercollection');
+
+
+    userCollection.findOne({_id:req.session.uid},function(e,docs){
+        if(docs!=null){
+            userCollection.update({_id:req.session.uid},{"$set":{defaultAddress:req.body.address}});
+        }
+    });
+
+    res.send("202");
+});
+
 module.exports = router;
