@@ -7,7 +7,11 @@ function updateUserAddressList(){
         success: function(data){
             $('select[name="address"]').html("<option value>Select an address</option>");
             for (var i = 0; i < data.address.length; i++) {
-                $('select[name="address"]').append("<option value='"+i+"'>"+data.address[i]+"</option>");
+                if(i == data.defaultAddress){
+                    $('select[name="address"]').append("<option selected value='"+i+"'>"+data.address[i]+"</option>");
+                }else{
+                    $('select[name="address"]').append("<option value='"+i+"'>"+data.address[i]+"</option>");
+                }
             };
         }
     });
