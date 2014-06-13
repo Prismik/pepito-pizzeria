@@ -1,4 +1,4 @@
-function validateLenghtMin(inputId, validationValue, errormessage){
+function validateLengthMin(inputId, validationValue, errormessage){
 	var val = function(e) {
 		if(document.getElementById(inputId).value.length >= validationValue){
 			document.getElementById(inputId).setCustomValidity("");
@@ -26,12 +26,12 @@ function validateRegex(inputId, regex, errormessage){
 
 function validatePassword(passwordId1, passwordId2, errormessage){
 	var val = function(e) {
-		if(document.getElementById(passwordId1).value == document.getElementById(passwordId2).value){
+		if(document.getElementById(passwordId1).value == document.getElementById(passwordId2).value)
 			document.getElementById(passwordId2).setCustomValidity("");
-		}else{
+		else
 			document.getElementById(passwordId2).setCustomValidity(errormessage);
-		}
 	}
+	
 	val();
 	document.getElementById(passwordId1).addEventListener("keyup", val, false);
 	document.getElementById(passwordId2).addEventListener("keyup", val, false);
@@ -43,13 +43,11 @@ function validateEmail(inputId, errormessage){
 		var at=mail.indexOf("@");
 		var dot=mail.lastIndexOf(".");
 		if (at<1 || dot<at+2 || dot+2>=mail.length)
-		{
     		document.getElementById(inputId).setCustomValidity(errormessage);
-		}else{
+		else
     	    document.getElementById(inputId).setCustomValidity("");
-		}
-	}, false);
-
+	};
+	val();
 	document.getElementById(inputId).addEventListener("keyup", val, false);
 }
 
