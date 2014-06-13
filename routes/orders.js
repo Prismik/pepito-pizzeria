@@ -1,4 +1,5 @@
 var express = require('express');
+var mail = require('../lib/mail');
 var router = express.Router();
 
 router.get('/', function(req, res) {
@@ -105,11 +106,20 @@ router.post('/confirmOrder', function(req,res){
 router.post('/sendOrder', function(req,res){
     var db = req.db;
     var orders = db.get('orders');
+    var userCollection = db.get('usercollection');
+
 
     var order = req.body.order;
     order.customer = req.session.uid;
 
     orders.insert(order);
+
+    userCollection.findOne({_id:req.session.uid},function(e,docs){
+        if(docs!=null){
+            mail.sendMail("Your order has been confirmed", docs.email, "Order confirmation", "");
+        }
+    });
+
     res.send("202");
 });
 
