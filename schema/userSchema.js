@@ -12,8 +12,8 @@ userSchema = new mongoose.Schema({
     , phone: { type: String }
     , email: { type: String }
     , password: { type: String }
-    }, { collection: 'usercollection' 
-});
+    }, { collection: 'usercollection' }
+);
 
 userModel = mongoose.model('usercollection', userSchema)
 

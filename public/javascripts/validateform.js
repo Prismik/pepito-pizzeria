@@ -1,25 +1,24 @@
 function validateLengthMin(inputId, validationValue, errormessage){
 	var val = function(e) {
-		if(document.getElementById(inputId).value.length >= validationValue){
+		if(document.getElementById(inputId).value.length >= validationValue)
 			document.getElementById(inputId).setCustomValidity("");
-		}else{
+		else
 			document.getElementById(inputId).setCustomValidity(errormessage);
-		}
-	}
+	};
 	
 	val();
 	document.getElementById(inputId).addEventListener("keyup", val, false);
 }
 
 function validateRegex(inputId, regex, errormessage){
-	var val = function(e){
+	var val = function(e) {
 		var expression = new RegExp(regex);
-		if(expression.test(document.getElementById(inputId).value)){
+		if(expression.test(document.getElementById(inputId).value))
 			document.getElementById(inputId).setCustomValidity("");
-		}else{
+		else
 			document.getElementById(inputId).setCustomValidity(errormessage);
-		}
-	}
+	};
+
 	val();
 	document.getElementById(inputId).addEventListener("keyup",val, false);
 }
@@ -31,7 +30,7 @@ function validatePassword(passwordId1, passwordId2, errormessage){
 		else
 			document.getElementById(passwordId2).setCustomValidity(errormessage);
 	}
-	
+
 	val();
 	document.getElementById(passwordId1).addEventListener("keyup", val, false);
 	document.getElementById(passwordId2).addEventListener("keyup", val, false);
@@ -47,6 +46,7 @@ function validateEmail(inputId, errormessage){
 		else
     	    document.getElementById(inputId).setCustomValidity("");
 	};
+	
 	val();
 	document.getElementById(inputId).addEventListener("keyup", val, false);
 }

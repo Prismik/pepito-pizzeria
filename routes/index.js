@@ -55,7 +55,7 @@ router.get('/logout', function(req, res) {
 /* POST to authentificate users */
 router.post('/authenticate', function (req, res) {
 
-    var userModel = userschema.getUserModel(req.db);
+    var userModel = userschema.getUserModel();
 
     // Get our form values. These rely on the "name" attributes
     var userEmail = req.body.email;

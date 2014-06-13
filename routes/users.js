@@ -71,7 +71,7 @@ router.post('/add', function (req, res) {
         , phone: req.body.phone
         , email: req.body.email
         , password: crypto.createHash('md5').update(req.body.password).digest('hex')
-    })
+    });
 
     newUser.save(function (err, newUser) {
         if (err) {
@@ -83,7 +83,7 @@ router.post('/add', function (req, res) {
             res.location("/login");
             // And forward to success page
             res.redirect("/login?message=User has been created");
-            console.log('User created');
+            console.log(newUser);
         }
     });
 });
