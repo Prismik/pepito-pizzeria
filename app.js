@@ -54,12 +54,7 @@ Array.prototype.contains = function (element) {
 
 // Pre routing functions
 function authChecker(req, res, next) {
-<<<<<<< HEAD
-    if (req.session.logged ||  ['/login', '/authenticate', '/register', '/users/add'].contains(req.path)) {
-=======
     if (req.session.logged ||  ['/login', '/authenticate', '/register', '/users/add', '/users/verifyEmail'].contains(req.path)) {
-    
->>>>>>> 01745696167edb46cb28fc86a21fbe55dc08c9ff
         next();
     }
     else {
