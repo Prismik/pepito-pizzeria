@@ -1,12 +1,31 @@
 extends ../layout
 
 block content
+
+  script(type="text/javascript").
+        function checkRestaurateur(){
+        var restaurateur = document.getElementById('restaurateur').value;
+            if(restaurateur=="Without restaurateur"){
+               return (confirm("Are you sure you want to create a restaurant without restaurateur?"));
+            }else{
+                return true;
+            }
+        }
+  script(type="text/javascript" src="/javascripts/verifyRestaurantAddress.js")
+
   h1= header
 
-  form(name="addrestaurant",method="post",action="add")
-        input(type="text", placeholder="name", name="name")
-        input(type="text", placeholder="address", name="adress")
-        input(type="text", placeholder="A1B 2C3", name="postal_code")
-        input(type="text", placeholder="description", name="adress")
+  form(name="addrestaurant",method="post", action="add", onSubmit="if(!checkRestaurateur()){return false;}")
+        input(type="text", placeholder="name", name="name", required)
+        input#restaurantAddress(type="text", placeholder="address", name="address", required)
+        input(type="text", placeholder="A1B 2C3", name="postal_code", required)
+        input(type="text", placeholder="description", name="description", required)
+        br
+        br
+        label Assigned restaurateur: 
+        select#restaurateur(name="restaurateur")
+            option(value="Without restaurateur") Without restaurateur
+        br
+        br
         button.sexybutton(type="submit") Create
 

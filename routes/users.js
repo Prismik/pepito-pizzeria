@@ -55,7 +55,6 @@ router.post('/verifyEmail', function(req,res){
 	        res.send(true);
         }
     });
-    
 });
 
 /* POST to Add User Service */
@@ -87,7 +86,6 @@ router.post('/add', function (req, res) {
             });
         }
     });
-
 });
 
 /* POST to Update User */
