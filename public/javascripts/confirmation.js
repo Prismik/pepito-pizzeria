@@ -6,8 +6,8 @@ function updateUserAddressList(){
         dataType: 'json',
         success: function(data){
             $('select[name="address"]').html("<option value>Select an address</option>");
-            for (var i = 0; i < data.length; i++) {
-                $('select[name="address"]').append("<option value='"+data[i]+"'>"+data[i]+"</option>");
+            for (var i = 0; i < data.address.length; i++) {
+                $('select[name="address"]').append("<option value='"+i+"'>"+data.address[i]+"</option>");
             };
         }
     });

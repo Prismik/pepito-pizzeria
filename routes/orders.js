@@ -62,7 +62,7 @@ router.post('/getUserAddresses', function(req,res){
     
     userCollection.findOne({_id:req.session.uid},function(e,docs){
         if(docs!=null){
-            res.send(docs.address);
+            res.send(docs);
         }else{
             res.send('none');
         }
@@ -74,6 +74,12 @@ router.post('/addAddressToCurrentUser', function(req,res){
     var userCollection = db.get('usercollection');
 
     userCollection.update({_id:req.session.uid},{"$addToSet":{address:req.body.address}});
+    
+    userCollection.findOne({_id:req.session.uid},function(e,docs){
+        if(docs!=null){
+            userCollection.update({_id:req.session.uid},{"$set":{defaultAddress:docs.address.length-1}});
+        }
+    });
     res.send("200");
 });
 

@@ -19,6 +19,7 @@ module.exports = {
                   , username: { type: String }
                   , birthdate: { type: String }
                   , address: [String]
+                  , defaultAddress: { type: Number }
                   , phone: { type: String }
                   , email: { type: String }
                   , password: { type: String }
