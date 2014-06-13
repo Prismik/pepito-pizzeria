@@ -14,12 +14,10 @@ userSchema = new mongoose.Schema({
 userModel = mongoose.model('restorantcollection', userSchema)
 
 module.exports = {
-
     getUserModel: function () {
-
-        if (mongoose.connection.readyState == 0) {
+        if (mongoose.connection.readyState == 0)
             mongoose.connect(config.db);
-        }
-
+        
         return userModel;
+    }
 }
