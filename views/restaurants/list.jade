@@ -1,22 +1,51 @@
 extends ../layout
 
 block content
+
+    script(type="text/javascript").
+        var manageActivated = false;
+        $( document ).ready(function() {
+            $('[id="manageOption"]').hide();
+        });
+        
+        function activateManageOption(){
+            if(manageActivated==false){
+                $('[id="manageOption"]').show("slow", function(){});
+                manageActivated = true;
+            }else{
+                $('[id="manageOption"]').hide("slow", function(){});
+                manageActivated = false;
+            }
+        }
+
     h1= header
 
     table
         thead
             tr
                 th Name
-                th Adress
+                th Address
                 th Postal Code
                 th Description
+                th Restaurateur
+                th#manageOption 
         tbody
             each resto, i in restos
                 tr
                     td #{resto.name}
-                    td #{resto.adress}
+                    td #{resto.address}
                     td #{resto.postal_code}
                     td #{resto.description}
+                    td #{resto.restaurateur}
+                    td#manageOption
+                        form(action="restaurants/update", method="post")
+                            input(type="hidden", name="restaurantId", value="#{resto._id}")
+                            button.sexybutton(type="submit") Modify
+                            
+                        form(action="restaurants/delete", method="post", onSubmit="if(!confirm('Are you sure you want to delete this restaurant?')){return false;}")
+                            input(type="hidden", name="restaurantName", value="#{resto._id}")
+                            button.sexybutton(type="submit") Delete
 
     form.center(name="createrestaurant",action="/restaurants/create")
         button.sexybutton(type="submit") Add Restaurant
+        button.sexybutton(type="button" onclick="activateManageOption()") Manage Restaurants

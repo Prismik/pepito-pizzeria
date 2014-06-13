@@ -11,15 +11,12 @@ block content
 
     h1= header
     form#formAddUser(name="adduser",method="post",action="users/add")
-    
-        label Username
-
+        label(for="inputUserName") Complete name
         input#inputUserName(type="text", placeholder="Complete name", name="username")
 
         br
 
         label Birthdate
-        
         input#datepicker(type="text", name="birthdate", placeholder="click icon" readonly)
 
         br
@@ -38,32 +35,23 @@ block content
             input#inputUserPostalCode1(type="text", placeholder="Complete postal code", name="postal" data-num="1")
         
         br
-        
         label Phone
-        
         input#inputUserPhone(type="text", placeholder="Phone number", name="phone")
-        
         br
-
-        label Email
-        
-        input#inputUserEmail(type="text", placeholder="Email", name="email", onkeyup="validateEmail();", onchange="validateEmail();")
-        span(id="messageEmail")
+        label(for="inputUseraddress") Address
+        input#inputUseraddress(type="text", placeholder="Complete address", name="address")
         br
-        
+        label(for="inputUserPhone") Phone number
+        input#inputUserPhone(type="tel", placeholder="Phone number", name="phone")
+        br
+        label(for="inputUserEmail") Email
+        input#inputUserEmail(type="email", placeholder="Email", name="email")
+        br
         label Password
-        
         input#password(type="password", placeholder="Password", name="password", onkeyup="validatePassword();", onchange="validatePassword();")
-        
         br
-        
-        label Valid Password
-        
+        label Valid Password        
         input#password2(type="password", placeholder="Password (again)", name="userpassword2", onkeyup="validatePassword();", onchange="validatePassword();")
-        
-        span(id="messagePass")
-        
-        br
         
         //validate inputs that needs to be validated
         script(type="text/javascript").
@@ -73,5 +61,5 @@ block content
             validateLenghtMin('datepicker', 3, 'Please, enter your birthdadte by clicking on the icon');
             validateEmail('inputUserEmail', 'Please, enter a valid email address');
             validatePassword('password', 'password2', 'Passwords dont match');
-        
+        label
         button#btnSubmit.sexybutton(type="submit") submit

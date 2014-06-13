@@ -1,4 +1,5 @@
-﻿var env = process.env.NODE_ENV || 'development';
+
+var env = process.env.NODE_ENV || 'development';
 var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
@@ -21,6 +22,4 @@ module.exports = {
         }
 
         return userModel;
-
-    }
 }

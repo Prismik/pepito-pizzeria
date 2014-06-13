@@ -1,48 +1,44 @@
 function validateLenghtMin(inputId, validationValue, errormessage){
-	document.getElementById(inputId).setCustomValidity(errormessage);
-	document.getElementById(inputId).addEventListener("keyup", function(e) {
+	var val = function(e) {
 		if(document.getElementById(inputId).value.length >= validationValue){
 			document.getElementById(inputId).setCustomValidity("");
 		}else{
 			document.getElementById(inputId).setCustomValidity(errormessage);
 		}
-	}, false);
+	}
+	
+	val();
+	document.getElementById(inputId).addEventListener("keyup", val, false);
 }
 
 function validateRegex(inputId, regex, errormessage){
-	document.getElementById(inputId).setCustomValidity(errormessage);
-	document.getElementById(inputId).addEventListener("keyup", function(e) {
+	var val = function(e){
 		var expression = new RegExp(regex);
 		if(expression.test(document.getElementById(inputId).value)){
 			document.getElementById(inputId).setCustomValidity("");
 		}else{
 			document.getElementById(inputId).setCustomValidity(errormessage);
 		}
-	}, false);
+	}
+	val();
+	document.getElementById(inputId).addEventListener("keyup",val, false);
 }
 
 function validatePassword(passwordId1, passwordId2, errormessage){
-	document.getElementById(passwordId2).setCustomValidity(errormessage);
-	document.getElementById(passwordId1).addEventListener("keyup", function(e) {
+	var val = function(e) {
 		if(document.getElementById(passwordId1).value == document.getElementById(passwordId2).value){
 			document.getElementById(passwordId2).setCustomValidity("");
 		}else{
 			document.getElementById(passwordId2).setCustomValidity(errormessage);
 		}
-	}, false);
-	
-	document.getElementById(passwordId2).addEventListener("keyup", function(e) {
-		if(document.getElementById(passwordId1).value == document.getElementById(passwordId2).value){
-			document.getElementById(passwordId2).setCustomValidity("");
-		}else{
-			document.getElementById(passwordId2).setCustomValidity(errormessage);
-		}
-	}, false);
+	}
+	val();
+	document.getElementById(passwordId1).addEventListener("keyup", val, false);
+	document.getElementById(passwordId2).addEventListener("keyup", val, false);
 }
 
 function validateEmail(inputId, errormessage){
-	document.getElementById(inputId).setCustomValidity(errormessage);
-	document.getElementById(inputId).addEventListener("keyup", function(e) {
+	var val = function(e) {
 		var mail=document.getElementById(inputId).value;
 		var at=mail.indexOf("@");
 		var dot=mail.lastIndexOf(".");
@@ -53,6 +49,8 @@ function validateEmail(inputId, errormessage){
     	    document.getElementById(inputId).setCustomValidity("");
 		}
 	}, false);
+
+	document.getElementById(inputId).addEventListener("keyup", val, false);
 }
 
 function addAddressInput() {

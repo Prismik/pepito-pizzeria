@@ -1,4 +1,20 @@
 extends ../layout
 
 block content
-  h1= header
+    h1= header
+  
+    form(name="Update",method="post",action="updateRestaurant")
+  
+        input(type="text", placeholder="name", name="name", value=name)
+        input(type="text", placeholder="address", name="address", value=address)
+        input(type="text", placeholder="A1B 2C3", name="postal_code", value=postal_code)
+        input(type="text", placeholder="description", name="description", value=description)
+        br
+        br
+        label Assigned restaurateur: 
+        select(name="restaurateur")
+            option(value="restaurateur") restaurateur
+        br
+        br
+        input(type="hidden", name="restaurantId", value=id)
+        button.sexybutton(type="submit") Update

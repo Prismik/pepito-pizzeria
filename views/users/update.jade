@@ -11,22 +11,30 @@ block content
     h1 Manage account
     form#formAddUser(name="adduser",method="post",action="updateuser")
     
+        label(for="inputUserName") Complete name
         input#inputUserName(type="text", placeholder="Complete name", name="username", value=username)
         br
-        input#datepicker(type="text", name="birthdate", value=userbirthdate readonly)  
+        label() Birthdate
+        input#datepicker(type="text", name="birthdate", value=userbirthdate readonly)    
         br
+        label(for="inputUseraddress") Address
         input#inputUseraddress(type="text", placeholder="Complete address", name="address", value=useraddress)
         br
         input(type="text", placeholder="Postal code", name="postal", value=postal)
-        br
+        br 
+        label(for="inputUserPhone") Phone number
         input#inputUserPhone(type="text", placeholder="Phone number", name="phone", value=userphone)
         br
+        label(for="inputUserEmail") Email
         input#inputUserEmail(type="email", placeholder="Email", name="email", value=useremail readonly)
         br
+        label(for="password") Password
         input#password(type="password", placeholder="Password", name="password")
         br
+        label(for="password2") Password (again)
         input#password2(type="password", placeholder="Password (again)", name="userpassword2")
         br
+        label
         input#inputUserId(type="hidden", placeholder="userid", name="userid", value=userid)
         
         //validate inputs that needs to be validated
