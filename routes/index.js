@@ -17,7 +17,8 @@ router.get('/login', function(req, res) {
         res.redirect("/");
     else
         res.render('login', { 
-            title: 'Pepito Pizzeria - Login', 
+            title: 'Pepito Pizzeria - Login',
+            success: req.query.message,
             header: 'Login',
             authRequired: true
         });
@@ -74,6 +75,8 @@ router.post('/authenticate', function (req, res) {
             res.location("/users");
             res.redirect("/users");
         } else {
+            console.log('Bad credentials');
+
             //Redirect to the login page with a "Bad credentials" error
             res.render('login', {
                 error: 'Bad credentials',

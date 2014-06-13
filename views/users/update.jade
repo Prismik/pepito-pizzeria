@@ -12,31 +12,20 @@ block content
     form#formAddUser(name="adduser",method="post",action="updateuser")
     
         input#inputUserName(type="text", placeholder="Complete name", name="username", value=username)
-        
         br
-        
-        input#datepicker(type="text", name="birthdate", value=userbirthdate readonly)
-            
+        input#datepicker(type="text", name="birthdate", value=userbirthdate readonly)  
         br
-        
         input#inputUseraddress(type="text", placeholder="Complete address", name="address", value=useraddress)
-        
         br
-        
+        input(type="text", placeholder="Postal code", name="postal", value=postal)
+        br
         input#inputUserPhone(type="text", placeholder="Phone number", name="phone", value=userphone)
-        
         br
-
         input#inputUserEmail(type="email", placeholder="Email", name="email", value=useremail readonly)
-
         br
-        
         input#password(type="password", placeholder="Password", name="password")
-        
         br
-        
         input#password2(type="password", placeholder="Password (again)", name="userpassword2")
-        
         br
         input#inputUserId(type="hidden", placeholder="userid", name="userid", value=userid)
         

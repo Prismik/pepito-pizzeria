@@ -30,11 +30,11 @@ router.get('/update', function (req, res) {
 
     user = usermodel.findOne({ _id: req.session.uid }).exec(function (err, docs) {
         res.render('users/update', {
-
             username : docs.username,
             useremail : docs.email,
             userbirthdate : docs.birthdate,
             useraddress : docs.address,
+            postal : docs.postal,
             userphone : docs.phone,
             active: 'account',
             userid : docs._id
@@ -53,10 +53,10 @@ router.post('/add', function (req, res) {
         , birthdate: req.body.birthdate
         , address: [req.body.address]
         , defaultAddress: 0
+        , postal: req.body.postal
         , phone: req.body.phone
         , email: req.body.email
         , password: crypto.createHash('md5').update(req.body.password).digest('hex')
-
     })
 
     newUser.save(function (err, newUser) {
@@ -65,15 +65,13 @@ router.post('/add', function (req, res) {
             res.send("There was a problem adding the information to the database.");
         }
         else {
-            res.render('login', {
-                success: 'Account successfully created',
-                title: 'Pepito Pizzeria - Login',
-                header: 'Login',
-                authRequired: true
-            });
+            // If it worked, set the header so the address bar doesn't still say /adduser
+            res.location("/login");
+            // And forward to success page
+            res.redirect("/login?message=User has been created");
+            console.log('User created');
         }
     });
-
 });
 
 /* POST to Update User */
