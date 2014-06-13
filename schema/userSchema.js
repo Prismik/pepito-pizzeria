@@ -3,16 +3,17 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 userSchema = new mongoose.Schema({
-           userid: { type: Number }
-           , username: { type: String }
-           , birthdate: { type: String }
-           , address: [String]
-           , defaultAddress: { type: Number }
-           , postal: { type: String }
-           , phone: { type: String }
-           , email: { type: String }
-           , password: { type: String }
-       }, { collection: 'usercollection' })
+    userid: { type: Number }
+    , username: { type: String }
+    , birthdate: { type: String }
+    , address: [String]
+    , defaultAddress: { type: Number }
+    , postal: { type: String }
+    , phone: { type: String }
+    , email: { type: String }
+    , password: { type: String }
+    }, { collection: 'usercollection' 
+});
 
 userModel = mongoose.model('usercollection', userSchema)
 
