@@ -7,7 +7,11 @@ function updateUserAddressList(){
         success: function(data){
             $('select[name="address"]').html("<option value>Select an address</option>");
             for (var i = 0; i < data.address.length; i++) {
-                $('select[name="address"]').append("<option value='"+i+"'>"+data.address[i]+"</option>");
+                if(i == data.defaultAddress){
+                    $('select[name="address"]').append("<option selected value='"+i+"'>"+data.address[i]+"</option>");
+                }else{
+                    $('select[name="address"]').append("<option value='"+i+"'>"+data.address[i]+"</option>");
+                }
             };
         }
     });
@@ -15,6 +19,18 @@ function updateUserAddressList(){
 
 $(function() {
 	updateUserAddressList();
+
+    $('select[name="address"]').change(function(){
+        $.ajax({
+                type: 'POST',
+                data: {address:$('select[name=address]').val()},
+                url: 'changeDefaultAddress',
+                dataType: 'text',
+                success: function(data){
+                    updateUserAddressList();
+                },
+            }); 
+    });
 
     $( "#addAddress" ).click(function() {
         var address=prompt("Please enter the new address","");
