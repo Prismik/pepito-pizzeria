@@ -4,15 +4,13 @@ var mongoose = require('mongoose');
 
 userSchema = new mongoose.Schema({
     userid: { type: Number }
-           , username: { type: String }
-           , birthdate: { type: String }
-           , address: { type: [String] }
-           , phone: { type: String }
-           , email: { type: String }
-           , password: { type: String }
-}, { collection: 'usercollection' })
+           , nom: { type: String }
+           , adress: { type: String }
+           , postalcode: { type: String }
+           , description: { type: String }
+}, { collection: 'restorantcollection' })
 
-userModel = mongoose.model('usercollection', userSchema)
+userModel = mongoose.model('restorantcollection', userSchema)
 
 module.exports = {
 

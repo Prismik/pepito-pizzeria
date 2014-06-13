@@ -3,16 +3,13 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 userSchema = new mongoose.Schema({
-    userid: { type: Number }
-           , username: { type: String }
-           , birthdate: { type: String }
-           , address: { type: [String] }
-           , phone: { type: String }
-           , email: { type: String }
-           , password: { type: String }
-}, { collection: 'usercollection' })
+            plateid: { type: Number }
+           , name: { type: String }
+           , price: { type: String }
+           , description: { type: String }
+}, { collection: 'platecollection' })
 
-userModel = mongoose.model('usercollection', userSchema)
+        userModel = mongoose.model('platecollection', userSchema)
 
 module.exports = {
 
