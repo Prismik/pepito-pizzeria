@@ -3,7 +3,7 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    userid: { type: Number }
+    _id: { type: mongoose.Schema.Types.ObjectId }
     , username: { type: String }
     , birthdate: { type: String }
     , address: [String]

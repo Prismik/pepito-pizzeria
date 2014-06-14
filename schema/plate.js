@@ -3,7 +3,7 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    plateid: { type: Number }
+    _id: { type: Number }
     , name: { type: String }
     , price: { type: String }
     , description: { type: String }

@@ -3,7 +3,9 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    orderid: { type: Number }
+   address: { type: String },
+   date: { type: String },
+   order: [mongoose.Schema.Types.Mixed]
 }, { collection: 'orders' });
 
 var model = mongoose.model('orders', schema)

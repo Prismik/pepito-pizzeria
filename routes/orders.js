@@ -3,9 +3,9 @@ var mail = require('../lib/mail');
 var router = express.Router();
 
 var Order = require('../schema/order').Order;
+var Restaurant = require('../schema/restaurant').Restaurant;
 var Menu = require('../schema/menu').Menu;
 var Plate = require('../schema/plate').Plate;
-var Restaurant = require('../schema/restaurant').Restaurant;
 var User = require('../schema/user').User;
 
 router.get('/', function(req, res) {
@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
 
 router.get('/create', function(req, res){
     Restaurant.find({},{},function(e,docs){
-        if(docs){
+        if (docs) {
             res.render('orders/create', {
                 restaurantList: docs,
                 active: 'createorder'
@@ -28,15 +28,15 @@ router.get('/create', function(req, res){
 });
 
 router.post('/updateMenus', function(req, res){
-    Restaurant.findOne({_id:req.body.restaurantid},function(e,rdocs){
-        Menu.find({_id:{$in:rdocs.menus}},function(e,mdocs){
+    Restaurant.findOne({_id:req.body.objId}, function(e, rdocs) {
+        Menu.find({_id:{$in: rdocs.menus}}, function(e, mdocs) {
             res.send(mdocs);
         });
     });
 });
 
 router.post('/updatePlates', function(req, res){
-    Menu.findOne({_id:parseInt(req.body.menuid)},function(e,mdocs){
+    Menu.findOne({_id:parseInt(req.body.objId)},function(e,mdocs){
         Plate.find({_id:{$in:mdocs.plates}},function(e,pdocs){
             res.send(pdocs);
         });
@@ -44,7 +44,7 @@ router.post('/updatePlates', function(req, res){
 });
 
 router.post('/getPlate', function(req,res) {
-    Plate.findOne({_id:parseInt(req.body.plateid)},function(e,docs) {
+    Plate.findOne({_id:parseInt(req.body.objId)},function(e,docs) {
         res.send(docs);
     });
 });
@@ -95,13 +95,20 @@ router.post('/confirmOrder', function(req,res) {
 router.post('/sendOrder', function(req,res) {
     var order = req.body.order;
     order.customer = req.session.uid;
-
-    Order.insert(order);
+    var newOrder = new Order({
+        address: order.address,
+        date: order.date,
+        order: order.order
+    });
+    
+    newOrder.save(function (err, newUser) {
+        if (err)
+            console.log(err);
+    });
 
     User.findOne({_id:req.session.uid},function(e,docs) {
-        if(docs != null) {
+        if(docs != null)
             mail.sendMail("Your order has been confirmed", docs.email, "Order confirmation", "");
-        }
     });
 
     res.send("202");

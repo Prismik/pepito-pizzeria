@@ -33,7 +33,7 @@ $(function() {
     $( "#addAddress" ).click(function() {
         var address=prompt("Please enter the new address","");
 
-        if(address != ""){
+        if(address != "") {
 	        $.ajax({
 	            type: 'POST',
 	            data: {address:address},
@@ -43,6 +43,7 @@ $(function() {
 	                updateUserAddressList();
 	            },
 	        }); 
+        }
     	else
     		alert("Invalid address");
     });
