@@ -12,6 +12,9 @@ var bodyParser = require('body-parser');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk(config.db);
+var mongoose = require('mongoose');
+if (mongoose.connection.readyState == 0)
+    mongoose.connect(config.db);
 
 // Routing controllers
 var routes  = require('./routes/index');

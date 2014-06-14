@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var restaurantchema = require('../schema/restaurant');
+var Restaurant = require('../schema/restaurant').Restaurant;
 
 router.get('/', function(req, res) {
     var db = req.db;
@@ -24,12 +24,9 @@ router.get('/create', function(req, res){
 });
 
 router.post('/add', function (req, res) {
-    //connect the schema
-    var restaurant = restaurantchema.getRestaurantModel(req.db);
-
-    var newRestaurant = new restaurant({
+    var newRestaurant = new Restaurant({
         name: req.body.name
-        , address: req.body.address
+        , adress: req.body.address
         , postal_code: req.body.postal_code
         , description: req.body.description
         , restaurateur: req.body.restaurateur
@@ -57,9 +54,7 @@ router.post('/delete', function(req,res){
 });
 
 router.post('/update', function(req, res){
-    var db = req.db;
-    var collection = restaurantchema.getRestaurantModel(req.db);
-    collection.findOne({ _id: req.body.restaurantId }).exec(function (err, docs){
+    Restaurant.findOne({ _id: req.body.restaurantId }).exec(function (err, docs) {
         res.render('restaurants/update', {
         	name : docs.name,
             address : docs.address,
@@ -76,9 +71,7 @@ router.post('/update', function(req, res){
 });
 
 router.post('/updateRestaurant', function(req, res){
-    var db = req.db;
-    var collection = restaurantchema.getRestaurantModel(req.db);
-    var restaurant = collection.findOneAndUpdate(
+    var restaurant = Restaurant.findOneAndUpdate(
         { _id: req.body.restaurantId },
         {
             name: req.body.name,

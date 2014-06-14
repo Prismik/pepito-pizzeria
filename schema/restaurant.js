@@ -3,19 +3,15 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    userid: { type: Number }
-    , nom: { type: String }
+    id: { type: Number }
+    , name: { type: String }
     , adress: { type: String }
-    , postalcode: { type: String }
+    , postal_code: { type: String }
     , description: { type: String }
+    , restaurateur: { type: String }
 }, { collection: 'restaurants' })
 
 var model = mongoose.model('restaurants', schema)
 module.exports = {
-    getUserModel: function () {
-        if (mongoose.connection.readyState == 0)
-            mongoose.connect(config.db);
-        
-        return model;
-    }
+    Restaurant: model
 }

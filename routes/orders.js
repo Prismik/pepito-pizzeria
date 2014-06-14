@@ -2,15 +2,18 @@ var express = require('express');
 var mail = require('../lib/mail');
 var router = express.Router();
 
+var Order = require('../schema/order').Order;
+var Menu = require('../schema/menu').Menu;
+var Plate = require('../schema/plate').Plate;
+var Restaurant = require('../schema/restaurant').Restaurant;
+var User = require('../schema/user').User;
+
 router.get('/', function(req, res) {
     
 });
 
 router.get('/create', function(req, res){
-    var db = req.db;
-    var restaurantCollection = db.get('restaurants');
-    
-    restaurantCollection.find({},{},function(e,docs){
+    Restaurant.find({},{},function(e,docs){
         if(docs){
             res.render('orders/create', {
                 restaurantList: docs,
@@ -25,66 +28,52 @@ router.get('/create', function(req, res){
 });
 
 router.post('/updateMenus', function(req, res){
-    var db = req.db;
-    var menuCollection = db.get('menus');
-    var restaurantCollection = db.get('restaurants');
-
-    restaurantCollection.findOne({_id:req.body.restaurantid},function(e,rdocs){
-        menuCollection.find({_id:{$in:rdocs.menus}},function(e,mdocs){
+    Restaurant.findOne({_id:req.body.restaurantid},function(e,rdocs){
+        Menu.find({_id:{$in:rdocs.menus}},function(e,mdocs){
             res.send(mdocs);
         });
     });
 });
 
 router.post('/updatePlates', function(req, res){
-    var db = req.db;
-    var plateCollection = db.get('plates');
-    var menuCollection = db.get('menus');
-
-    menuCollection.findOne({_id:parseInt(req.body.menuid)},function(e,mdocs){
-        plateCollection.find({_id:{$in:mdocs.plates}},function(e,pdocs){
+    Menu.findOne({_id:parseInt(req.body.menuid)},function(e,mdocs){
+        Plate.find({_id:{$in:mdocs.plates}},function(e,pdocs){
             res.send(pdocs);
         });
     });
 });
 
-router.post('/getPlate', function(req,res){
-    var db = req.db;
-    var plateCollection = db.get('plates');
-
-    plateCollection.findOne({_id:parseInt(req.body.plateid)},function(e,docs){
+router.post('/getPlate', function(req,res) {
+    Plate.findOne({_id:parseInt(req.body.plateid)},function(e,docs) {
         res.send(docs);
     });
 });
 
-router.post('/getUserAddresses', function(req,res){
-    var db = req.db;
-    var userCollection = db.get('usercollection');
-    
-    userCollection.findOne({_id:req.session.uid},function(e,docs){
-        if(docs!=null){
+router.post('/getUserAddresses', function(req,res) {
+    User.findOne({_id:req.session.uid},function(e,docs) {
+        if (docs != null)
             res.send(docs);
-        }else{
+        else
             res.send('none');
-        }
     });
 });
 
-router.post('/addAddressToCurrentUser', function(req,res){
-    var db = req.db;
-    var userCollection = db.get('usercollection');
+router.post('/addAddressToCurrentUser', function(req,res) {
+    User.update(
+        { _id:req.session.uid },
+        { "$addToSet": { address:req.body.address } }
+    );
 
-    userCollection.update({_id:req.session.uid},{"$addToSet":{address:req.body.address}});
-    
-    userCollection.findOne({_id:req.session.uid},function(e,docs){
-        if(docs!=null){
-            userCollection.update({_id:req.session.uid},{"$set":{defaultAddress:docs.address.length-1}});
+    User.findOne({_id:req.session.uid},function(e,docs) {
+        if (docs != null) {
+            User.update({_id:req.session.uid},{"$set":{defaultAddress:docs.address.length-1}});
         }
     });
+
     res.send("200");
 });
 
-router.post('/confirmOrder', function(req,res){
+router.post('/confirmOrder', function(req,res) {
     var orders = JSON.parse(req.body.arrayOrder);
 
     var subtotal = 0;
@@ -103,19 +92,14 @@ router.post('/confirmOrder', function(req,res){
     });
 });
 
-router.post('/sendOrder', function(req,res){
-    var db = req.db;
-    var orders = db.get('orders');
-    var userCollection = db.get('usercollection');
-
-
+router.post('/sendOrder', function(req,res) {
     var order = req.body.order;
     order.customer = req.session.uid;
 
-    orders.insert(order);
+    Order.insert(order);
 
-    userCollection.findOne({_id:req.session.uid},function(e,docs){
-        if(docs!=null){
+    User.findOne({_id:req.session.uid},function(e,docs) {
+        if(docs != null) {
             mail.sendMail("Your order has been confirmed", docs.email, "Order confirmation", "");
         }
     });
@@ -123,15 +107,10 @@ router.post('/sendOrder', function(req,res){
     res.send("202");
 });
 
-router.post('/changeDefaultAddress', function(req,res){
-    var db = req.db;
-    var userCollection = db.get('usercollection');
-
-
-    userCollection.findOne({_id:req.session.uid},function(e,docs){
-        if(docs!=null){
-            userCollection.update({_id:req.session.uid},{"$set":{defaultAddress:req.body.address}});
-        }
+router.post('/changeDefaultAddress', function(req,res) {
+    User.findOne({_id:req.session.uid},function(e,docs) {
+        if(docs != null)
+            User.update({_id:req.session.uid},{"$set":{defaultAddress:req.body.address}});
     });
 
     res.send("202");

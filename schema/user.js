@@ -16,10 +16,5 @@ var schema = new mongoose.Schema({
 
 var model = mongoose.model('usercollection', schema)
 module.exports = {
-    getUserModel: function () {
-        if (mongoose.connection.readyState == 0)
-            mongoose.connect(config.db);
-
-        return model;
-    }
+    User: model
 }

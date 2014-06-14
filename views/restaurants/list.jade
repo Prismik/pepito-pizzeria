@@ -1,22 +1,9 @@
 extends ../layout
 
 block content
-
+    script(type="text/javascript" src="/javascripts/restaurants.js")
     script(type="text/javascript").
-        var manageActivated = false;
-        $( document ).ready(function() {
-            $('[id="manageOption"]').hide();
-        });
-        
-        function activateManageOption(){
-            if(manageActivated==false){
-                $('[id="manageOption"]').show("slow", function(){});
-                manageActivated = true;
-            }else{
-                $('[id="manageOption"]').hide("slow", function(){});
-                manageActivated = false;
-            }
-        }
+        initManageRestaurants();
 
     h1= header
 

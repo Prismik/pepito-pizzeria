@@ -6,12 +6,7 @@ var schema = new mongoose.Schema({
     orderid: { type: Number }
 }, { collection: 'orders' });
 
-var userModel = mongoose.model('orders', userSchema)
+var model = mongoose.model('orders', schema)
 module.exports = {
-    getOrderModel: function () {
-        if (mongoose.connection.readyState == 0)
-            mongoose.connect(config.db);
-        
-        return userModel;
-    }
+    Order: model
 }

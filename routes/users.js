@@ -1,13 +1,11 @@
 var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
-var userschema = require('../schema/user');
+var User = require('../schema/user').User;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
-
-    var usermodel = userschema.getUserModel();
-    usermodel.find().exec(function (err, users) {
+    User.find().exec(function (err, users) {
         res.render('users/list', {
             title: 'Pepito Pizzeria - Users',
             header: 'Users',
@@ -25,10 +23,7 @@ router.get('/create', function(req, res) {
 
 /* GET Manage User page. */
 router.get('/update', function (req, res) {
-
-    var usermodel = userschema.getUserModel()
-
-    user = usermodel.findOne({ _id: req.session.uid }).exec(function (err, docs) {
+    user = User.findOne({ _id: req.session.uid }).exec(function (err, docs) {
         res.render('users/update', {
             username : docs.username,
             useremail : docs.email,
@@ -59,10 +54,7 @@ router.post('/verifyEmail', function(req,res){
 
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
-    //connect the schema
-    var user = userschema.getUserModel();
-
-    var newUser = new user({
+    var newUser = new User({
         username: req.body.username
         , birthdate: req.body.birthdate
         , address: req.body.address
@@ -90,10 +82,7 @@ router.post('/add', function (req, res) {
 
 /* POST to Update User */
 router.post('/updateuser', function (req, res) {
-
-    var userModel = userschema.getUserModel();
-
-    var user = userModel.findOneAndUpdate(
+    var user = User.findOneAndUpdate(
         { _id: req.body.userid },
         {
             username : req.body.username,
@@ -114,7 +103,8 @@ router.post('/updateuser', function (req, res) {
                 // And forward to success page
                 res.redirect("/users/update");
             }
-        });
+        }
+    );
 });
 
 

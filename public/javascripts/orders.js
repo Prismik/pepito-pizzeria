@@ -7,7 +7,7 @@ $(document).ready(function() {
         $('select[name="plate"]').html("<option value>Select a plate</option>");
         $('select[name="menu"]').html("<option value>Select a menu</option>");
         
-        if($(this).val() != ""){
+        if($(this).val() != "") {
             $.ajax({
                 type: 'POST',
                 data: {restaurantid:$(this).val()},
@@ -20,9 +20,9 @@ $(document).ready(function() {
                     });
                 }
             }); 
-        }else{
+        } 
+        else
             $('#plateSelection').fadeOut("slow");
-        }
     });
 
     $('select[name="menu"]').on('change',function() {
@@ -48,7 +48,7 @@ $(document).ready(function() {
     $('button[name="addToOrder"]').on('click',function() {
         if($('select[name="restaurant"]').val() != "" &&
             $('select[name="menu"]').val() != "" &&
-            $('select[name="plate"]').val() != ""){
+            $('select[name="plate"]').val() != "") {
             $.ajax({
                 type: 'POST',
                 url: 'getPlate',
@@ -64,7 +64,8 @@ $(document).ready(function() {
 
                     $('input[name="arrayOrder"]').val(JSON.stringify(orders));
                 }
-            }); 
+            });
+        } 
         else
             alert('Missing some parameters');
     }); 
