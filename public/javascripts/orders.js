@@ -65,9 +65,8 @@ $(document).ready(function() {
                     $('input[name="arrayOrder"]').val(JSON.stringify(orders));
                 }
             }); 
-        }else{
+        else
             alert('Missing some parameters');
-        }
     }); 
 });
 

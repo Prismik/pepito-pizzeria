@@ -16,7 +16,7 @@ router.get('/create', function(req, res){
                 restaurantList: docs,
                 active: 'createorder'
             });
-        }else{
+        } else {
             res.render('orders/create', {
                 error: 'Could not find any restaurants'
             });
