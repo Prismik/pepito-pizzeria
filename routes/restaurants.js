@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var restaurantchema = require('../schema/restaurantSchema.js');
+var restaurantchema = require('../schema/restaurant');
 
 router.get('/', function(req, res) {
     var db = req.db;

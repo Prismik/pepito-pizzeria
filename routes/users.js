@@ -1,7 +1,7 @@
 var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
-var userschema = require('../schema/userSchema');
+var userschema = require('../schema/user');
 
 /* GET users listing. */
 router.get('/', function (req, res) {
