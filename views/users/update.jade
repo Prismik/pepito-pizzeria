@@ -37,7 +37,8 @@ block content
         label
         input#inputUserId(type="hidden", placeholder="userid", name="userid", value=userid)
         
-        //validate inputs that needs to be validated
+        input(name="accountType", type="hidden",value=accountType)
+
         script(type="text/javascript").
             validateLenghtMin('inputUserName', 3, 'Please, enter your name');
             validateLenghtMin('inputUseraddress', 5, 'Please, enter an address');

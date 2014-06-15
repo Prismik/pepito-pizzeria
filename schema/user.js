@@ -3,8 +3,8 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    _id: { type: mongoose.Schema.Types.ObjectId }
-    , username: { type: String }
+    username: { type: String }
+    , accountType: { type: mongoose.Schema.Types.ObjectId, ref: 'accountTypes' }
     , birthdate: { type: String }
     , address: [String]
     , defaultAddress: { type: Number }

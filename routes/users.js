@@ -2,6 +2,7 @@ var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
 var User = require('../schema/user').User;
+var AccountType = require('../schema/accountType').AccountType;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
@@ -31,6 +32,7 @@ router.get('/update', function (req, res) {
             useraddress : docs.address,
             postal : docs.postal,
             userphone : docs.phone,
+            accountType: docs.accountType,
             active: 'account',
             userid : docs._id
         });
@@ -54,29 +56,34 @@ router.post('/verifyEmail', function(req,res){
 
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
-    var newUser = new User({
-        username: req.body.username
-        , birthdate: req.body.birthdate
-        , address: req.body.address
-        , defaultAddress: 0
-        , postal: req.body.postal
-        , phone: req.body.phone
-        , email: req.body.email
-        , password: crypto.createHash('md5').update(req.body.password).digest('hex')
-    });
+    AccountType.findOne({ name: 'client' },function (err, type) {
+        console.log(type);
+        var newUser = new User({
+            username: req.body.username
+            , accountType: type._id
+            , birthdate: req.body.birthdate
+            , address: req.body.address
+            , defaultAddress: 0
+            , postal: req.body.postal
+            , phone: req.body.phone
+            , email: req.body.email
+            , password: crypto.createHash('md5').update(req.body.password).digest('hex')
+        });
 
-    newUser.save(function (err, newUser) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        }
-        else {
-            // If it worked, set the header so the address bar doesn't still say /adduser
-            res.location("/login");
-            // And forward to success page
-            res.redirect("/login?message=User has been created");
-            console.log(newUser);
-        }
+        newUser.save(function (err, newUser) {
+            if (err) {
+                console.log(err);
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            }
+            else {
+                // If it worked, set the header so the address bar doesn't still say /adduser
+                res.location("/login");
+                // And forward to success page
+                res.redirect("/login?message=User has been created");
+                console.log(newUser);
+            }
+        });
     });
 });
 
@@ -85,12 +92,13 @@ router.post('/updateuser', function (req, res) {
     var user = User.findOneAndUpdate(
         { _id: req.body.userid },
         {
-            username : req.body.username,
-            email : req.body.email,
-            birthdate : req.body.birthdate,
-            address : req.body.address,
-            phone : req.body.phone,
-            password : crypto.createHash('md5').update(req.body.password).digest('hex')
+            username: req.body.username,
+            accountType: req.body.accountType,
+            email: req.body.email,
+            birthdate: req.body.birthdate,
+            address: req.body.address,
+            phone: req.body.phone,
+            password: crypto.createHash('md5').update(req.body.password).digest('hex')
         },
         function (err, doc) {
             if (err) {
