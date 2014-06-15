@@ -20,7 +20,8 @@ block content
         label(for="inputUseraddress") Address
         input#inputUseraddress(type="text", placeholder="Complete address", name="address", value=useraddress)
         br
-        input(type="text", placeholder="Postal code", name="postal", value=postal)
+        label(for="ipc") Postal Code
+        input#ipc(type="text", placeholder="Postal code", name="postal", value=postal_code)
         br 
         label(for="inputUserPhone") Phone number
         input#inputUserPhone(type="text", placeholder="Phone number", name="phone", value=userphone)
@@ -40,10 +41,10 @@ block content
         input(name="accountType", type="hidden",value=accountType)
 
         script(type="text/javascript").
-            validateLenghtMin('inputUserName', 3, 'Please, enter your name');
-            validateLenghtMin('inputUseraddress', 5, 'Please, enter an address');
+            validateLengthMin('inputUserName', 3, 'Please, enter your name');
+            validateLengthMin('inputUseraddress', 5, 'Please, enter an address');
             validateRegex('inputUserPhone', '^([0-9\(\)\/\+ \-]*)$', 'Please, enter a valid phone number');
             validatePassword('password', 'password2', 'Passwords dont match');
             
         
-        button#btnSubmit(type="submit") submit
+        button#btnSubmit.sexybutton(type="submit") submit
