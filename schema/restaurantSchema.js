@@ -2,25 +2,25 @@
 var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
-userSchema = new mongoose.Schema({
-    userid: { type: Number }
+restaurantSchema = new mongoose.Schema({
+    restaurantid: { type: Number }
            , nom: { type: String }
            , adress: { type: String }
            , postalcode: { type: String }
            , description: { type: String }
-}, { collection: 'restorantcollection' })
+}, { collection: 'restaurantcollection' })
 
-userModel = mongoose.model('restorantcollection', userSchema)
+restaurantModel = mongoose.model('restaurantcollection', restaurantSchema)
 
 module.exports = {
 
-    getUserModel: function () {
+    getRestaurantModel: function () {
 
         if (mongoose.connection.readyState == 0) {
             mongoose.connect(config.db);
         }
 
-        return userModel;
+        return restaurantModel;
 
     }
 }

@@ -1,28 +1,18 @@
-﻿var mongoose = require('mongoose');
+﻿var env = process.env.NODE_ENV || 'development';
+var config = require('../config/' + env);
+var mongoose = require('mongoose');
+
+orderSchema = new mongoose.Schema({
+    orderid: { type: Number }
+}, { collection: 'ordercollection' })
+
+orderModel = mongoose.model('ordercollection', orderSchema)
 
 module.exports = {
+    getOrderModel: function () {
+        if (mongoose.connection.readyState == 0)
+            mongoose.connect(config.db);
 
-    getOrderModel: function (db) {
-
-        var connectString = db.driver._connect_args[0];
-
-        if (mongoose.connection.readyState == 0) {
-            mongoose.connect(connectString.substring(10, connectString.length));
-        }
-
-        var Schema = mongoose.Schema;
-
-        var orderschem = new Schema({
-                orderid: { type: Number }
-                //ajouter autre propriété  
-        }, { collection: 'orderrcollection' });
-
-
-        try {
-            return mongoose.model('ordercollection', userschem);
-        } catch (e) {
-            return mongoose.model('ordercollection')
-        }
-
+        return orderModel
     }
 }
