@@ -2,6 +2,12 @@ pepito-pizzeria
 ===============
 
 TP - LOG2010
+### Specs
+> **Database:** MongoDB (Mongoose)
+ 
+> **Language:** Javascript (Node.js) 
+
+> **Framework:** Express, Jade
 
 ## Branches
 

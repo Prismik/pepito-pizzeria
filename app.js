@@ -12,6 +12,9 @@ var bodyParser = require('body-parser');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk(config.db);
+var mongoose = require('mongoose');
+if (mongoose.connection.readyState == 0)
+    mongoose.connect(config.db);
 
 // Routing controllers
 var routes  = require('./routes/index');
@@ -54,7 +57,7 @@ Array.prototype.contains = function (element) {
 
 // Pre routing functions
 function authChecker(req, res, next) {
-    if (req.session.logged ||  ['/login', '/authenticate', '/register', '/users/add'].contains(req.path)) {
+    if (req.session.logged ||  ['/login', '/authenticate', '/register', '/users/add', '/users/verifyEmail'].contains(req.path)) {
         next();
     }
     else {

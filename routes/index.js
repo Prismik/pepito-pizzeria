@@ -2,7 +2,7 @@ var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
 var mail = require('../lib/mail');
-var userschema = require('../schema/userSchema');
+var User = require('../schema/user').User;
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -54,17 +54,13 @@ router.get('/logout', function(req, res) {
 
 /* POST to authentificate users */
 router.post('/authenticate', function (req, res) {
-
-    var userModel = userschema.getUserModel(req.db);
-
     // Get our form values. These rely on the "name" attributes
     var userEmail = req.body.email;
     var userPassword = crypto.createHash('md5').update(req.body.password).digest('hex');
 
-    userModel.findOne({ email: userEmail, password: userPassword }).exec(function (err, docs) {
+    User.findOne({ email: userEmail, password: userPassword }).exec(function (err, docs) {
         if (docs != null) {
             //Add the user_id to a session variable
-
             var sess = req.session;
             sess.uid = docs._id;
             sess.logged = true;
@@ -85,7 +81,6 @@ router.post('/authenticate', function (req, res) {
                 authRequired: true
             });
         }
-    
     });
 });
 
