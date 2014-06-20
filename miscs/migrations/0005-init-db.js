@@ -1,4 +1,3 @@
-
 var mongodb = require('mongodb');
 
 exports.up = function(db, next){
@@ -62,13 +61,19 @@ exports.up = function(db, next){
     restaurants.insert(restaurant_docs, next);
 };
 
-exports.down = function(db, next){
+exports.down = function(db, next) {
     var plates = mongodb.Collection(db, 'plates');
-    plates.remove();
+    plates.remove(function(err, removedCount) {
+
+    });
 
     var menus = mongodb.Collection(db, 'menus');
-    menus.remove();
+    menus.remove(function(err, removedCount) {
+
+    });
 
     var restaurants = mongodb.Collection(db, 'restaurants');
-    restaurants.remove();
+    restaurants.remove(function(err, removedCount) {
+
+    });
 };
