@@ -44,8 +44,7 @@ router.get('/update', function (req, res) {
 router.post('/verifyEmail', function(req,res){
     var db = req.db;
     var validateEmail = req.body.validateEmail;
-    var collection = db.get('usercollection');
-    collection.findOne({email:validateEmail}, function(e,docs){
+    User.findOne({email:validateEmail}).exec(function(e,docs){
         if(docs!=null){
 	        res.send(false);
         }else{

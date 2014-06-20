@@ -4,8 +4,7 @@ var Restaurant = require('../schema/restaurant').Restaurant;
 
 router.get('/', function(req, res) {
     var db = req.db;
-    var collection = db.get('restaurants');
-    collection.find({},{},function(e,docs){
+    Restaurant.find().exec(function(e,docs){
         res.render('restaurants/list', {
             title: 'Pepito Pizzeria - Restaurants',
             header: 'Restaurants',
@@ -99,8 +98,7 @@ router.post('/updateRestaurant', function(req, res){
 router.post('/verifyAddress', function(req,res){
     var db = req.db;
     var validateAddress = req.body.validateAddress;
-    var collection = db.get('restaurants');
-    collection.findOne({address:validateAddress}, function(e,docs){
+    Restaurant.findOne({address:validateAddress}).exec(function(e,docs){
         if(docs!=null){
 	        res.send(false);
         }else{

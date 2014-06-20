@@ -5,9 +5,7 @@ var AccountType = require('../schema/accountType').AccountType;
 
 router.get('/', function(req, res) {
     var db = req.db;
-    var accountTypes = db.get('accountTypes');
-    var permissions = db.get('permissions');
-    accountTypes.find({},{},function(e,docs){
+    AccountType.find().exec(function(e,docs){
         res.render('restaurants/list', {
             title: 'Pepito Pizzeria - Restaurants',
             header: 'Restaurants',
