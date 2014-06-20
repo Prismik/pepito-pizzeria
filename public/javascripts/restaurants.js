@@ -26,10 +26,10 @@ function initManageRestaurants() {
 
 function activateManageOption() {
     if (manageActivated == false) {
-        $('[id="manageOption"]').show("slow", function(){});
+        $('[id="manageOption"]').show();
         manageActivated = true;
     } else {
-        $('[id="manageOption"]').hide("slow", function(){});
+        $('[id="manageOption"]').hide();
         manageActivated = false;
     }
 }
