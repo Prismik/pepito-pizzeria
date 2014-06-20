@@ -14,7 +14,6 @@ $(document).ready(function() {
                 url: 'updateMenus',
                 dataType: 'json',
                 success: function(encoded_json) {
-                    console.log("gg");
                     $('select[name="menu"]').html("<option value>Select a menu</option>");
                     $.each(encoded_json, function(i, item) {
                         $('select[name="menu"]').append(
@@ -86,5 +85,15 @@ $(document).ready(function() {
         else
             alert('Missing some parameters');
     }); 
+
+    $("#submitForm").submit(function(e) {
+        if($('input[name="arrayOrder"]').val() != ""){
+            return true;
+        }else{
+            alert("The order cannot be empty!");
+            e.preventDefault();
+        }
+        return false; //is superfluous, but I put it here as a fallback
+    });
 });
 

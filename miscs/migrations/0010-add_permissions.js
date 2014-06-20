@@ -1,26 +1,30 @@
 var mongodb = require('mongodb');
+var ObjectID = require('mongodb').ObjectID;
 
-exports.up = function(db, next){
+exports.up = function(db, next) {
+    var doc1 = new ObjectID();
+    var doc2 = new ObjectID();
+    var doc3 = new ObjectID();
     var permission_docs = [{
-        _id: 99,
+        _id: doc1,
         name: 'manageUser'
     }, {
-        _id: 98,
+        _id: doc2,
         name: 'manageRestaurant'
     }, {
-        _id: 97,
+        _id: doc3,
         name: 'passOrder'
     }];
 
 	var accountType_docs = [{
 		name: 'client',
-		rights: [97]
+		rights: [doc3]
 	}, {
         name: 'restaurateur',
-        rights: [98]
+        rights: [doc2]
     }, {
         name: 'admin',
-        rights: [99, 98, 97]
+        rights: [doc1, doc2, doc3]
     }];
 
     var permissions = mongodb.Collection(db, 'permissions');
@@ -30,10 +34,12 @@ exports.up = function(db, next){
     accountType.insert(accountType_docs, next);
 };
 
-exports.down = function(db, next){
+exports.down = function(db, next) {
     var permissions = mongodb.Collection(db, 'permissions');
-    permissions.remove();
+    permissions.remove(function(err, removedCount) {});
 
     var accountTypes = mongodb.Collection(db, 'accountTypes');
-    accountTypes.remove();
+    accountTypes.remove(function(err, removedCount) {});
+
+    next();
 };

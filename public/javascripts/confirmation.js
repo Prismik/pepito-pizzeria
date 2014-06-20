@@ -61,7 +61,7 @@ $(function() {
             url: 'sendOrder',
             dataType: 'text',
             success: function(data){
-    
+                window.location.replace("orderSendConfirmation");
             },
         }); 
     });

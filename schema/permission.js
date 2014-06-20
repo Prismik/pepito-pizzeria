@@ -3,7 +3,6 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-	_id: { type: Number },
     name: { type: String }
 }, { collection: 'permissions' });
 

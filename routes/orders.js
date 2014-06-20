@@ -1,5 +1,6 @@
 var express = require('express');
 var mail = require('../lib/mail');
+var constants = require('../lib/constants');
 var router = express.Router();
 
 var Order = require('../schema/order').Order;
@@ -25,6 +26,10 @@ router.get('/create', function(req, res){
             });
         } 
     });
+});
+
+router.get('/orderSendConfirmation', function(req,res){
+    res.render('orders/sendConfirmation');
 });
 
 router.post('/updateMenus', function(req, res){
@@ -77,6 +82,7 @@ router.post('/confirmOrder', function(req,res) {
     var orders = JSON.parse(req.body.arrayOrder);
 
     var subtotal = 0;
+    var total = 0;
     var orderElements = [];
 
     orders.forEach(function(entry) {
@@ -84,10 +90,14 @@ router.post('/confirmOrder', function(req,res) {
         subtotal+=entry.quantity*entry.plate.price;
     });
 
+    total = subtotal;
+    total = total + (total * constants.TPS);
+    total = total + (total * constants.TVQ);
+
     res.render('orders/confirmation', {
         orderList: orders,
         subtotal: subtotal,
-        total: subtotal*2,
+        total: total,
         active: 'createorder'
     });
 });

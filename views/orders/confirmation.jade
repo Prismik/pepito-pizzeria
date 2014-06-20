@@ -3,6 +3,10 @@ extends ../layout
 block content
 
     script(type="text/javascript" src="/javascripts/confirmation.js")
+    script(type="text/javascript" src="/javascripts/datepicker.js")
+    link(rel="stylesheet", href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css")
+    script(src="//code.jquery.com/jquery-1.10.2.js")
+    script(src="//code.jquery.com/ui/1.10.4/jquery-ui.js")
 
     h1= "Confirm order"
 
@@ -40,7 +44,7 @@ block content
     br
 
     label= "Date: "
-    input(name="deliveryDate")
+    input#datepicker(type="text", name="deliveryDate", placeholder="click icon" readonly)
 
     br
 

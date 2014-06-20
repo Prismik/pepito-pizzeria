@@ -251,3 +251,16 @@ table {
     cursor: pointer;
     width: 25px;
 }
+
+.multipleSelect{
+    min-width: 250px;
+    padding: 5px 10px;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+
