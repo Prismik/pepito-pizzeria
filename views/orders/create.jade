@@ -13,7 +13,8 @@ block content
         h2= "Menu selection"
 
         label= "Restaurant: "
-        select(name="restaurant")
+        br
+        select(name="restaurant", size=2).multipleSelect
             option(value='')='Select a restaurant'
             each restaurant, i in restaurantList
                     option(value=restaurant._id)= restaurant.name
@@ -21,7 +22,9 @@ block content
         br
 
         label= "Menu: "
-        select(name="menu")
+        div#menuRadioContainer
+
+        select(name="menu" , size=2).multipleSelect
             option(value='')='Select a menu'
 
         div#plateSelection
@@ -29,7 +32,8 @@ block content
             h2= "Plate selection"
 
             label= "Plate: "
-            select(name="plate")
+            br
+            select(name="plate" , size=2).multipleSelect
                 option(value='')='Select a plate'
 
             br
@@ -52,6 +56,8 @@ block content
                         th Unit price
                         th Price
                 tbody
+                    tr
+                        td(colspan=4) No elements in the order
 
             br
             br
