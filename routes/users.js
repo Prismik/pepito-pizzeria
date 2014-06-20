@@ -41,12 +41,26 @@ router.get('/update', function (req, res) {
         });
     });
 
+<<<<<<< Updated upstream
 });
 
 //Ajax request for validating if email address is used
 router.post('/verifyEmail', function(req,res){
     var db = req.db;
     var validateEmail = req.body.validateEmail;
+=======
+/* POST to Add User Service */
+router.post('/add', function(req, res) {
+console.log("test new user ! ");
+    // Set our internal DB variable
+    var db = req.db;
+    // Get our form values. These rely on the "name" attributes
+    var userName = req.body.username;
+    var userEmail = req.body.email;
+    var userPassword = req.body.password;
+console.log("test new user ! ");
+    // Set our collection
+>>>>>>> Stashed changes
     var collection = db.get('usercollection');
     collection.findOne({email:validateEmail}, function(e,docs){
         if(docs!=null){
@@ -72,7 +86,23 @@ router.post('/add', function (req, res) {
 
     })
 
+<<<<<<< Updated upstream
     newUser.save(function (err, newUser) {
+=======
+    // Submit to the DB
+    collection.update(
+    {
+	    _id : userId
+    },
+    {
+    "$set":
+    	{
+	    	username : userName,
+			email : userEmail,
+			password : userPassword
+    	}
+    }, function (err, doc) {
+>>>>>>> Stashed changes
         if (err) {
             // If it failed, return error
             res.send("There was a problem adding the information to the database.");
