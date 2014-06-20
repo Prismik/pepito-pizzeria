@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
     name: { type: String }
-    , plates: [type: mongoose.Schema.Types.ObjectId]
+    , plates: [mongoose.Schema.Types.ObjectId]
 }, { collection: 'menus' });
 
 var model = mongoose.model('menus', schema)

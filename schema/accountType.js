@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
     name: { type: String },
-    rights: [type: mongoose.Schema.Types.ObjectId]
+    rights: [mongoose.Schema.Types.ObjectId]
 }, { collection: 'accountTypes' });
 
 var model = mongoose.model('accountTypes', schema)
