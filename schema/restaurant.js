@@ -7,7 +7,7 @@ var schema = new mongoose.Schema({
     , adress: { type: String }
     , postal_code: { type: String }
     , description: { type: String }
-    , menus: [Number]
+    , menus: [type: mongoose.Schema.Types.ObjectId]
     , restaurateur: { type: String }
 }, { collection: 'restaurants' })
 
