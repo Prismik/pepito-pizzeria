@@ -1,7 +1,6 @@
 var mongodb = require('mongodb');
 var ObjectID = require('mongodb').ObjectID;
 
-
 exports.up = function(db, next) {
     var doc1 = new ObjectID();
     var doc2 = new ObjectID();
@@ -37,12 +36,10 @@ exports.up = function(db, next) {
 
 exports.down = function(db, next) {
     var permissions = mongodb.Collection(db, 'permissions');
-    permissions.remove(function(err, removedCount) {
-
-    });
+    permissions.remove(function(err, removedCount) {});
 
     var accountTypes = mongodb.Collection(db, 'accountTypes');
-    accountTypes.remove(function(err, removedCount) {
+    accountTypes.remove(function(err, removedCount) {});
 
-    });
+    next();
 };

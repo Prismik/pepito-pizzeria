@@ -43,14 +43,17 @@ router.post('/add', function (req, res) {
     });
 });
 
-router.post('/delete', function(req,res){
+router.post('/delete', function (req, res) {
     var db = req.db;
-    var collection = db.get('restaurants');
-    collection.remove({"_id":req.body.restaurantName});
-    res.location("/restaurants");
-    res.redirect("/restaurants");
-    
-
+    Restaurant.remove({ "_id": req.body.restaurantName }, function (err) {
+        if (err) {
+            res.send("There was a problem deleting restaurant.");
+        }
+        else {
+            res.location("/restaurants");
+            res.redirect("/restaurants");
+        }
+    });
 });
 
 router.post('/update', function(req, res){

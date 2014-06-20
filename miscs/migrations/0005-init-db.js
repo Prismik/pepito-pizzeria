@@ -1,50 +1,58 @@
 var mongodb = require('mongodb');
+var ObjectID = require('mongodb').ObjectID;
 
 exports.up = function(db, next){
+	var doc1 = new ObjectID();
+    var doc2 = new ObjectID();
+    var doc3 = new ObjectID();
+    var doc4 = new ObjectID();
+    var doc5 = new ObjectID();
+    var doc6 = new ObjectID();
 	var restaurant_docs = [{
 		name: "Pepito Pizzeria",
 		adress: "378 Jackson street",
 		postal_code: "J2Z 1B6",
 		description: "Epic pizza restaurant",
 		menus: [
-			123,
-			456
+			doc1,
+			doc2
 		]
 	}];
 
 	var menu_docs = [{
-		_id: 123,
+		_id: doc1,
 		name: "Pepito menu",
 		plates: [
-			123,
-			456
+			doc3,
+			doc4
 		]
 	},{
-		_id: 456,
+		_id: doc2,
 		name: "Pepito special menu",
 		plates: [
-			789,
-			101112
+			doc5,
+			doc6
 		]
 	}];
 
+
 	var plate_docs  = [{
-			_id: 123,
+			_id: doc3,
 			name: "All dressed",
 			price: 17.28,
 			description: "12 inches all dressed pizza"
 		},{
-			_id: 456,
+			_id: doc4,
 			name: "Epic load of meat",
 			price: 21.12,
 			description: "A pizza with a shit load of meat on it"
 		},{
-			_id: 789,
+			_id: doc5,
 			name: "Vegepizza",
 			price: 25.23,
 			description: "A veggie pizza"
 		},{
-			_id: 101112,
+			_id: doc6,
 			name: "Cheesie doodeli cheese",
 			price: 21.12,
 			description: "A pizza with cheese and cheese on top of more cheese"
@@ -63,17 +71,13 @@ exports.up = function(db, next){
 
 exports.down = function(db, next) {
     var plates = mongodb.Collection(db, 'plates');
-    plates.remove(function(err, removedCount) {
-
-    });
+    plates.remove(function(err, removedCount) {});
 
     var menus = mongodb.Collection(db, 'menus');
-    menus.remove(function(err, removedCount) {
-
-    });
+    menus.remove(function(err, removedCount) {});
 
     var restaurants = mongodb.Collection(db, 'restaurants');
-    restaurants.remove(function(err, removedCount) {
+    restaurants.remove(function(err, removedCount) {});
 
-    });
+    next();
 };
