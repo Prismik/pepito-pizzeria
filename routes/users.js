@@ -6,7 +6,23 @@ var AccountType = require('../schema/accountType').AccountType;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
+    var accountType = AccountType.find();
+    var userList = [];
+
+    /*User.aggregate([{$group:{_id:"$accountType",accounts:{$push:"$$ROOT"}}}]).exec(function (err, users){
+        for (var i=0; i < users.length; i++){
+            userCategory = users[i];
+            AccountType.findOne({ _id: users[i]._id}).exec(function (err, docs) {
+                userCategory.name = docs.name;
+            });
+
+            userList.push(userCategory);
+        }
+        console.log(userList);
+    });*/
+    
     User.find().exec(function (err, users) {
+
         res.render('users/list', {
             title: 'Pepito Pizzeria - Users',
             header: 'Users',
@@ -14,7 +30,6 @@ router.get('/', function (req, res) {
             userlist: users
         });
     });
-
 });
 
 /* GET New User page. */
