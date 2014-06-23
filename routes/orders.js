@@ -29,7 +29,9 @@ router.get('/create', function(req, res){
 });
 
 router.get('/orderSendConfirmation', function(req,res){
-    res.render('orders/sendConfirmation');
+    res.render('orders/sendConfirmation', {
+        active: 'createorder'
+    });
 });
 
 router.post('/updateMenus', function(req, res){
@@ -41,7 +43,7 @@ router.post('/updateMenus', function(req, res){
 });
 
 router.post('/updatePlates', function(req, res){
-    Menu.findOne({_id:parseInt(req.body.objId)},function(e,mdocs){
+    Menu.findOne({_id:req.body.objId},function(e,mdocs){
         Plate.find({_id:{$in:mdocs.plates}},function(e,pdocs){
             res.send(pdocs);
         });
@@ -49,7 +51,7 @@ router.post('/updatePlates', function(req, res){
 });
 
 router.post('/getPlate', function(req,res) {
-    Plate.findOne({_id:parseInt(req.body.objId)},function(e,docs) {
+    Plate.findOne({_id:req.body.objId},function(e,docs) {
         res.send(docs);
     });
 });
