@@ -7,6 +7,7 @@ var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var User = require('./schema/user').User;
 
 // MongoDB
 var mongo = require('mongodb');
@@ -65,12 +66,30 @@ function authChecker(req, res, next) {
     }
 }
 
+function rightChecker(req, res, next) {
+    var uid = req.session.uid;
+    if (uid != null) {
+        var user = new User();
+        user.getPermissions(uid, function(err, docs){  
+        console.log(docs); 
+        var result = [];
+        for (var i = 0; i != docs.length; i++) {
+            result.push(docs[i].name);
+        }
+
+        res.locals.permissions = result;
+        });
+    }
+
+    next();
+}
+
 app.use(authChecker);
+app.use(rightChecker);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/orders', orders);
 app.use('/restaurants', restos)
-
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
