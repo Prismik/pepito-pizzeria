@@ -83,7 +83,34 @@ router.post('/add', function (req, res) {
 
 /* POST to Update User */
 router.post('/updateRestaurateur', function (req, res) {
-    var user = User.findOneAndUpdate(
+    if (req.body.password=="") {
+        console.log("password dont change");
+        var user = User.findOneAndUpdate(
+        { _id: req.body.restaurateursId },
+        {
+            username: req.body.username,
+            accountType: req.body.accountType,
+            email: req.body.email,
+            birthdate: req.body.birthdate,
+            address: req.body.address,
+            phone: req.body.phone
+        },
+        function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem updating the information in the database.");
+            }
+            else {
+                // If it worked, set the header so the address bar doesn't still say /adduser
+                res.location("/restaurateurs/");
+                // And forward to success page
+                res.redirect("/restaurateurs/");
+            }
+        }
+        );
+    }else{
+        console.log("password change");
+        var user = User.findOneAndUpdate(
         { _id: req.body.restaurateursId },
         {
             username: req.body.username,
@@ -106,7 +133,8 @@ router.post('/updateRestaurateur', function (req, res) {
                 res.redirect("/restaurateurs/");
             }
         }
-    );
+        );
+    };
 });
 
 router.post('/delete', function (req, res) {
