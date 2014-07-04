@@ -55,15 +55,22 @@ router.post('/verifyEmail', function(req,res){
 
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
-    AccountType.findOne({ name: 'client' },function (err, type) {
+    AccountType.findOne({ name: 'client' }, function (err, type) {
         console.log(type);
+
+        //build address from address and postal code
+        var arrAddr = new Array();
+
+        for (var i = 0; i < req.body.address.length; i++) {
+            arrAddr[i] = new { address: req.body.address[i], postalCode: req.body.postal[i]};
+        }
+
         var newUser = new User({
             username: req.body.username
             , accountType: type._id
             , birthdate: req.body.birthdate
-            , address: req.body.address
+            , address: arrAddr
             , defaultAddress: 0
-            , postal: req.body.postal
             , phone: req.body.phone
             , email: req.body.email
             , password: crypto.createHash('md5').update(req.body.password).digest('hex')

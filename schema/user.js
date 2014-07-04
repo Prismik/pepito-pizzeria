@@ -6,7 +6,10 @@ var schema = new mongoose.Schema({
     username: { type: String }
     , accountType: { type: mongoose.Schema.Types.ObjectId, ref: 'accountTypes' }
     , birthdate: { type: String }
-    , address: [String]
+    , address: [ { 
+            address: String,
+            postalCode: String
+        }, {_id: false}]
     , defaultAddress: { type: Number }
     , phone: { type: String }
     , email: { type: String }
