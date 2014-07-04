@@ -2,24 +2,23 @@ extends ../layout
 
 block content
     h1 User List
-
-    p= userlist
-
+    
     table
         thead
             tr
                 th Name
                 th Email
-                th Postal code
                 th Phone
                 th Birth date
-                th Address
+                th Address Complete
         tbody
             each user, i in userlist
                 tr
                     td #{user.username}
                     td #{user.email}
-                    td #{user.postal}
                     td #{user.phone}
                     td #{user.birthdate}
-                    td #{user.address}
+                    td
+                        each adpc, i in user.address
+                            | #{adpc.address} , #{adpc.postalCode}
+                            br

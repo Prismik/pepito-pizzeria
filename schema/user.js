@@ -9,7 +9,7 @@ var schema = new mongoose.Schema({
     , address: [ { 
             address: String,
             postalCode: String
-        }, {_id: false}]
+        }]
     , defaultAddress: { type: Number }
     , phone: { type: String }
     , email: { type: String }

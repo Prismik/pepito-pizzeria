@@ -76,8 +76,14 @@ router.post('/add', function (req, res) {
         //build address from address and postal code
         var arrAddr = new Array();
 
-        for (var i = 0; i < req.body.address.length; i++) {
-            arrAddr[i] = new { address: req.body.address[i], postalCode: req.body.postal[i]};
+
+        if (typeof(req.body.address) == typeof("string")) {
+            arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
+        }
+        else {
+            for (var i = 0; i < req.body.address.length; i++) {
+                arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
+            }
         }
 
         var newUser = new User({
@@ -110,6 +116,18 @@ router.post('/add', function (req, res) {
 
 /* POST to Update User */
 router.post('/updateuser', function (req, res) {
+
+    var arrAddr = new Array();
+
+    if (typeof(req.body.address) == typeof("string")) {
+        arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
+    }
+    else {
+        for (var i = 0; i < req.body.address.length; i++) {
+            arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
+        }
+    }
+
     var user = User.findOneAndUpdate(
         { _id: req.body.userid },
         {
@@ -117,7 +135,7 @@ router.post('/updateuser', function (req, res) {
             accountType: req.body.accountType,
             email: req.body.email,
             birthdate: req.body.birthdate,
-            address: req.body.address,
+            address: arrAddr,
             phone: req.body.phone,
             password: crypto.createHash('md5').update(req.body.password).digest('hex')
         },
