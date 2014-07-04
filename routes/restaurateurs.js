@@ -84,7 +84,6 @@ router.post('/add', function (req, res) {
 /* POST to Update User */
 router.post('/updateRestaurateur', function (req, res) {
     if (req.body.password=="") {
-        console.log("password dont change");
         var user = User.findOneAndUpdate(
         { _id: req.body.restaurateursId },
         {
@@ -109,7 +108,6 @@ router.post('/updateRestaurateur', function (req, res) {
         }
         );
     }else{
-        console.log("password change");
         var user = User.findOneAndUpdate(
         { _id: req.body.restaurateursId },
         {
