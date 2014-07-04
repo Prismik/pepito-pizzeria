@@ -53,7 +53,7 @@ function validateEmail(inputId, errormessage){
 
 function addAddressInput() {
     var lastdiv = $(".addressDiv").last();
-    var num = lastdiv.children("input").attr("data-num") + 1
+    var num = parseInt(lastdiv.children("input").attr("data-num")) + 1
 
     var newdiv = lastdiv.clone();
     newdiv.children("label").html(" ")
