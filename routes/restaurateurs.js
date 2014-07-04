@@ -6,27 +6,11 @@ var AccountType = require('../schema/accountType').AccountType;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
-    var accountType = AccountType.find();
-    var userList = [];
-
-    /*User.aggregate([{$group:{_id:"$accountType",accounts:{$push:"$$ROOT"}}}]).exec(function (err, users){
-        for (var i=0; i < users.length; i++){
-            userCategory = users[i];
-            AccountType.findOne({ _id: users[i]._id}).exec(function (err, docs) {
-                userCategory.name = docs.name;
-            });
-
-            userList.push(userCategory);
-        }
-        console.log(userList);
-    });*/
-    
     User.find().exec(function (err, users) {
-
-        res.render('users/list', {
-            title: 'Pepito Pizzeria - Users',
-            header: 'Users',
-            active: 'listuser',
+        res.render('restaurateurs/list', {
+            title: 'Pepito Pizzeria - Restaurateurs',
+            header: 'Restaurateurs',
+            active: 'restaurateurs',
             userlist: users
         });
     });
@@ -34,13 +18,13 @@ router.get('/', function (req, res) {
 
 /* GET New User page. */
 router.get('/create', function(req, res) {
-    res.render('users/create', { title: 'Pepito Pizzeria - Add New User' , header: 'Create user'});
+    res.render('restaurateurs/create', { title: 'Pepito Pizzeria - Add New Restaurateur' , header: 'Create restaurateur'});
 });
 
 /* GET Manage User page. */
-router.get('/update', function (req, res) {
-    user = User.findOne({ _id: req.session.uid }).exec(function (err, docs) {
-        res.render('users/update', {
+router.post('/update', function (req, res) {
+    user = User.findOne({ _id: req.body.restaurateursId }).exec(function (err, docs) {
+        res.render('restaurateurs/update', {
             username : docs.username,
             useremail : docs.email,
             userbirthdate : docs.birthdate,
@@ -48,7 +32,7 @@ router.get('/update', function (req, res) {
             postal : docs.postal,
             userphone : docs.phone,
             accountType: docs.accountType,
-            active: 'account',
+            active: 'restaurateurs',
             userid : docs._id
         });
     });
@@ -70,48 +54,26 @@ router.post('/verifyEmail', function(req,res){
 
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
-    AccountType.findOne({ name: 'client' }, function (err, type) {
+    AccountType.findOne({ name: 'client' },function (err, type) {
         console.log(type);
-
-        //build address from address and postal code
-        var arrAddr = new Array();
-
-        for (var i = 0; i < req.body.address.length; i++) {
-            arrAddr[i] = new { address: req.body.address[i], postalCode: req.body.postal[i]};
-        }
-
         var newUser = new User({
             username: req.body.username
             , accountType: type._id
             , birthdate: req.body.birthdate
-            , address: arrAddr
+            , address: req.body.address
             , defaultAddress: 0
+            , postal: req.body.postal
             , phone: req.body.phone
             , email: req.body.email
             , password: crypto.createHash('md5').update(req.body.password).digest('hex')
-        });
-
-        newUser.save(function (err, newUser) {
-            if (err) {
-                console.log(err);
-                // If it failed, return error
-                res.send("There was a problem adding the information to the database.");
-            }
-            else {
-                // If it worked, set the header so the address bar doesn't still say /adduser
-                res.location("/login");
-                // And forward to success page
-                res.redirect("/login?message=User has been created");
-                console.log(newUser);
-            }
         });
     });
 });
 
 /* POST to Update User */
-router.post('/updateuser', function (req, res) {
+router.post('/updateRestaurateur', function (req, res) {
     var user = User.findOneAndUpdate(
-        { _id: req.body.userid },
+        { _id: req.body.restaurateursId },
         {
             username: req.body.username,
             accountType: req.body.accountType,
@@ -128,12 +90,25 @@ router.post('/updateuser', function (req, res) {
             }
             else {
                 // If it worked, set the header so the address bar doesn't still say /adduser
-                res.location("/users/update");
+                res.location("/restaurateurs/");
                 // And forward to success page
-                res.redirect("/users/update");
+                res.redirect("/restaurateurs/");
             }
         }
     );
+});
+
+router.post('/delete', function (req, res) {
+    var db = req.db;
+    User.remove({ "_id": req.body.restaurateurId }, function (err) {
+        if (err) {
+            res.send("There was a problem deleting restaurant.");
+        }
+        else {
+            res.location("/restaurateurs");
+            res.redirect("/restaurateurs");
+        }
+    });
 });
 
 
