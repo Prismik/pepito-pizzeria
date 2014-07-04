@@ -4,6 +4,7 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src="//code.jquery.com/jquery-1.10.2.js")
+
     script.
       var active_tab= !{JSON.stringify(active)}
 
@@ -18,15 +19,21 @@ html
           li.first#home
             a(href='/') Home
           li#account
-            a(href='/users/update') My account
+            a(href='/users/update') My Account
+          - if (locals.permissions && locals.permissions.contains('manageUser'))
+            li#perms
+              a(href='/orders/create') Permissions
           li#listuser
             a(href='/users') Users
-          li#restaurateurs
-            a(href='/restaurateurs') Restaurateurs
-          li#resto
-            a(href='/restaurants') Restaurants
-          li#createorder
-            a(href='/orders/create') Pass order
+          - if (locals.permissions && locals.permissions.contains('manageRestaurant'))
+            li#resto
+              a(href='/restaurants') Restaurants 
+          - if (locals.permissions && locals.permissions.contains('manageRestaurant'))
+            li#restaurateurs
+              a(href='/restaurateurs') Restaurateurs
+          - if (locals.permissions && locals.permissions.contains('passOrder'))
+            li#createorder
+              a(href='/orders/create') Pass order
           li#logout
             a(href='/logout') Logout
          

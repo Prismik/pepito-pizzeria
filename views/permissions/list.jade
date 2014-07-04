@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    script(type='text/javascript' src='/javascripts/permissions.js')
+    h1= header
+    textarea(id="permissions" name="permissions")
+        each perm, i in perms
+            | #{perm.name} &#13;&#10;
+
+    button.sexybutton(type="submit" id="updatePerms") Update
