@@ -22,6 +22,7 @@ var routes  = require('./routes/index');
 var users   = require('./routes/users');
 var orders  = require('./routes/orders');
 var restos  = require('./routes/restaurants');
+var perms   = require('./routes/permissions');
 
 var app = express();
 
@@ -70,12 +71,10 @@ function rightChecker(req, res, next) {
     var uid = req.session.uid;
     if (uid != null) {
         var user = new User();
-        user.getPermissions(uid, function(err, docs){  
-        console.log(docs); 
+        user.getPermissions(uid, function(err, docs) {  
         var result = [];
-        for (var i = 0; i != docs.length; i++) {
+        for (var i = 0; i != docs.length; i++)
             result.push(docs[i].name);
-        }
 
         res.locals.permissions = result;
         });
@@ -90,6 +89,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/orders', orders);
 app.use('/restaurants', restos)
+app.use('/permissions', perms)
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
