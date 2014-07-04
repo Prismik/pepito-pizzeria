@@ -54,11 +54,10 @@ router.post('/verifyEmail', function(req,res){
 
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
-    AccountType.findOne({ name: 'client' },function (err, type) {
-        console.log(type);
+    console.log(req.body.postal);
         var newUser = new User({
             username: req.body.username
-            , accountType: type._id
+           // , accountType: type._id
             , birthdate: req.body.birthdate
             , address: req.body.address
             , defaultAddress: 0
@@ -67,12 +66,51 @@ router.post('/add', function (req, res) {
             , email: req.body.email
             , password: crypto.createHash('md5').update(req.body.password).digest('hex')
         });
-    });
+
+        newUser.save(function (err, newUser) {
+            if (err) {
+                console.log(err);
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            }
+            else {
+                res.location("/restaurateurs/");
+                // And forward to success page
+                res.redirect("/restaurateurs/");
+            }
+        });
 });
 
 /* POST to Update User */
 router.post('/updateRestaurateur', function (req, res) {
-    var user = User.findOneAndUpdate(
+    if (req.body.password=="") {
+        console.log("password dont change");
+        var user = User.findOneAndUpdate(
+        { _id: req.body.restaurateursId },
+        {
+            username: req.body.username,
+            accountType: req.body.accountType,
+            email: req.body.email,
+            birthdate: req.body.birthdate,
+            address: req.body.address,
+            phone: req.body.phone
+        },
+        function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem updating the information in the database.");
+            }
+            else {
+                // If it worked, set the header so the address bar doesn't still say /adduser
+                res.location("/restaurateurs/");
+                // And forward to success page
+                res.redirect("/restaurateurs/");
+            }
+        }
+        );
+    }else{
+        console.log("password change");
+        var user = User.findOneAndUpdate(
         { _id: req.body.restaurateursId },
         {
             username: req.body.username,
@@ -95,7 +133,8 @@ router.post('/updateRestaurateur', function (req, res) {
                 res.redirect("/restaurateurs/");
             }
         }
-    );
+        );
+    };
 });
 
 router.post('/delete', function (req, res) {
