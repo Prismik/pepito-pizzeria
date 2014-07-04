@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+    script(type='text/javascript' src='http://code.jquery.com/jquery-latest.min.js')
+    script(type='text/javascript' src='/javascripts/menu.js')
+
+    h1= "Create menu"
+
+    div#messageBox
+
+    label= "Name"
+    input#menuName(type="text", placeholder="Name", name="menuName")
+    br
+    label= "Plates"
+    input#plateName(type="text", placeholder="Name")
+    input#plateDescription(type="text", placeholder="Description")
+    input#platePrice(type="text", placeholder="Price")
+
+    button#btnAddPlate.sexybutton(type="submit") Add
+
+    br
+    br
+
+    table#plates
+        thead
+            tr
+                th Name
+                th Description
+                th Price
+                th Actions
+        tbody
+            tr
+                td(colspan=4) There is no menu item
+
+    br 
+    button#btnAddMenu.sexybutton(type="submit") Create menu

@@ -22,6 +22,7 @@ var users   = require('./routes/users');
 var orders  = require('./routes/orders');
 var restos  = require('./routes/restaurants');
 var restaurateurs  = require('./routes/restaurateurs');
+var menus  = require('./routes/menus');
 
 var app = express();
 
@@ -72,6 +73,7 @@ app.use('/users', users);
 app.use('/orders', orders);
 app.use('/restaurants', restos)
 app.use('/restaurateurs', restaurateurs)
+app.use('/menus', menus)
 
 
 /// catch 404 and forwarding to error handler
