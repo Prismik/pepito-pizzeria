@@ -171,16 +171,21 @@ div.loginfo {
 div#message {
     margin:auto;
     width: 200px;
-    padding: 15px 5px 15px 5px;
+    padding: 15px;
     margin-top: 10px 0px 20px 0px;
     font-size: 12px;
     font-weight: bold;
-    color: #5a5a5a;
+    color: #3d3d3d;
 }
 
 #message.error {
     background-color: #FFC2DA;
     border: 1px solid #DB4848;
+}
+
+#message.warning {
+    background-color: #FAECAF;
+    border: 1px solid #D6B318;
 }
 
 #message.success {
