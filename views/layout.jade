@@ -27,7 +27,10 @@ html
             a(href='/users') Users
           - if (locals.permissions && locals.permissions.contains('manageRestaurant'))
             li#resto
-              a(href='/restaurants') Restaurants
+              a(href='/restaurants') Restaurants 
+          - if (locals.permissions && locals.permissions.contains('manageRestaurant'))
+            li#restaurateurs
+              a(href='/restaurateurs') Restaurateurs
           - if (locals.permissions && locals.permissions.contains('passOrder'))
             li#createorder
               a(href='/orders/create') Pass order
