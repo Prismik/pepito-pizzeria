@@ -11,7 +11,7 @@ var schema = new mongoose.Schema({
 
 var model = mongoose.model('menus', schema)
 
-schema.methods.addPlates = function(params, id) {
+/*schema.methods.addPlates = function(params, id) {
     $.each(params, function(i, item) {
     	var newPlate = new Plate({
 	        name: item.name,
@@ -30,7 +30,7 @@ schema.methods.addPlates = function(params, id) {
     }
 
 	
-};
+};*/
 
 module.exports = {
     Menu: model
