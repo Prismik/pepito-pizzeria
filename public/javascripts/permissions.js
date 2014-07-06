@@ -15,4 +15,11 @@ $('#updatePerms').click(function() {
     });
 });
 
+
 }); // ON READY
+
+function initPerms(ids) {
+    for (var i = 0; i != ids.length; ++i) {
+        $('input[name="'+ids[i]+'" done="false"]').prop('checked', 'checked');
+    }
+}

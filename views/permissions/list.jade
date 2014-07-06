@@ -5,6 +5,24 @@ block content
     h1= header
     textarea(id="permissions" name="permissions")
         each perm, i in perms
-            | #{perm.name} &#13;&#10;
+            | #{perm.name}&#13;&#10;
+
+    table 
+        thead
+            th Account type
+            th permissions
+        tbody
+            each acc, i in accs
+                tr
+                    td #{acc.name}
+                    td
+                        div(id="accPermissions" name="accPermissions")
+                        each perm, i in perms
+                            label(for="#{perm._id}") 
+                            input(type="checkbox" value="#{perm._id}" done="false") 
+                            | #{perm.name}
+                        script(type="text/javascript").
+                            initPerms(!{JSON.stringify(acc.rights)});
+    
 
     button.sexybutton(type="submit" id="updatePerms") Update
