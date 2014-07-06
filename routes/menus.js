@@ -17,7 +17,19 @@ router.get('/create', function(req, res){
 });
 
 router.post('/addMenu', function(req, res){
-    res.send({status:"200", message:"The menu was added succesfully"});
+    console.log(req.body);
+
+    var newRestaurant = new Restaurant({
+        name: req.body.name
+    })
+    newRestaurant.save(function (err, newRestaurant) {
+        if (err) {
+            res.send({status:"500", message:"The menu could not be inserted"});
+        }
+        else {
+            res.send({status:"200", message:"The menu was added succesfully"});
+        }
+    });
 });
 
 module.exports = router;
