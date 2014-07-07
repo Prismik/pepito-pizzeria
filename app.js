@@ -61,6 +61,7 @@ Array.prototype.contains = function (element) {
 
 // Pre routing functions
 function authChecker(req, res, next) {
+    console.log("Authentification");
     if (req.session.logged ||  ['/login', '/authenticate', '/register', '/users/add', '/users/verifyEmail'].contains(req.path)) {
         next();
     }
@@ -70,6 +71,7 @@ function authChecker(req, res, next) {
 }
 
 function rightChecker(req, res, next) {
+    console.log("Rights check");
     var uid = req.session.uid;
     if (uid != null) {
         var user = new User();
