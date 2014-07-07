@@ -19,15 +19,38 @@ router.get('/create', function(req, res){
 router.post('/addMenu', function(req, res){
     console.log(req.body);
 
-    var newRestaurant = new Restaurant({
+    var newMenu = new Menu({
         name: req.body.name
-    })
-    newRestaurant.save(function (err, newRestaurant) {
+    });
+
+    newMenu.save(function (err, newMenu) {
         if (err) {
-            res.send({status:"500", message:"The menu could not be inserted"});
+           res.send({status:"500", message:"The menu could not be inserted"});
         }
         else {
-            res.send({status:"200", message:"The menu was added succesfully"});
+            var plates = JSON.parse(req.body.plates);
+
+            for (i = 0; i < plates.length; i++) { 
+                var item = plates[i];
+
+                console.log(item);
+
+                var plate = new Plate({
+                    name: item.name,
+                    price: parseFloat(item.price),
+                    description: item.description
+                });
+
+                Menu.update({_id: newMenu._id },
+                    {$push: { 'plates' : plate._id }},
+                    {upsert:true}, function(err, data) { 
+                        plate.save();
+                });
+                
+            }
+
+
+            res.send({status:"200", message:"The menu was inserted"});
         }
     });
 });
