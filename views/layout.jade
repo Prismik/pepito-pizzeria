@@ -25,7 +25,7 @@ html
             a(href='/users/update') My Account
           - if (locals.permissions && locals.permissions.contains('manageUser'))
             li#perms
-              a(href='/orders/create') Permissions
+              a(href='/permissions') Permissions
           li#listuser
             a(href='/users') Users
           - if (locals.permissions && locals.permissions.contains('manageRestaurant'))
