@@ -4,10 +4,12 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src="//code.jquery.com/jquery-1.10.2.js")
-    script(src="/javascripts/jquery.js")
+    <!--script(src="/javascripts/jquery.js")-->
 
     script.
       var active_tab= !{JSON.stringify(active)}
+      var test= !{JSON.stringify(locals)}
+      console.log(test)
 
     script(src="/javascripts/active.js")
   body

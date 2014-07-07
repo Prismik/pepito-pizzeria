@@ -26,6 +26,18 @@ router.get('/', function(req, res) {
 });
 
 router.post('/update', function(req, res) {
+    var a = req.body.accounts;
+    for (var k in a) {
+        AccountType.findOneAndUpdate({ _id: k }, 
+            {
+                rights: a[k]
+            }, function (err, doc) { 
+                if (err)
+                    console.log('Error to add the accType');
+            }
+        );
+    }
+
     var perms = req.body.permissions.split(/\r\n|\r|\n/g);
     for (var i = 0; i != perms.length; ++i) {
         var p = perms[i].trim();
@@ -33,18 +45,12 @@ router.post('/update', function(req, res) {
             Permission.find({ name: p }, function (err, docs) {
                 if (!docs.length) {
                     var newPerm = new Permission({ name: p });
-                    newPerm.save(function (err, newDoc) {
-                        if (err) {
-                            console.log('Error to add the perm');
-                            res.send("error")
-                        }
-                        else
-                            res.send("success");
-                    });
+                    newPerm.save(function (err, newDoc) { });
                 }
             });
         }
     }
-});
 
+    res.send("202");
+});
 module.exports = router;

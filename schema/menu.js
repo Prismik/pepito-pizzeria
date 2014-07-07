@@ -21,12 +21,10 @@ schema.methods.addPlates = function(params, id) {
 	    });
 
 	    newPlate.save(function (err, newPlate) {
-	        if (err) {
+	        if (err)
 	            console.log("Plate not added");
-	        }
-	        else {
+	        else
 	            platesId.push(newPlate._id);
-	        }
 	    });
     }
 };

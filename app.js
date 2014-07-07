@@ -74,15 +74,14 @@ function rightChecker(req, res, next) {
     if (uid != null) {
         var user = new User();
         user.getPermissions(uid, function(err, docs) {  
-        var result = [];
-        for (var i = 0; i != docs.length; i++)
-            result.push(docs[i].name);
+            var result = [];
+            for (var i = 0; i != docs.length; i++)
+                result.push(docs[i].name);
 
-        res.locals.permissions = result;
+            res.locals.permissions= result;
+            next();
         });
     }
-
-    next();
 }
 
 app.use(authChecker);
