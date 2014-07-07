@@ -6,30 +6,47 @@ var AccountType = require('../schema/accountType').AccountType;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
-    var accountType = AccountType.find();
-    var userList = [];
+    AccountType.find({ }, function (err, accTypes) {
+        var userList = [];
+        User.find({ }, function (err, users) {
+            for (var i = 0; i != users.length; ++i) {
+                var user = users[i];
+                var name;
+                for (var j = 0; j != accTypes.length; ++j) {
+                    if (accTypes[j].id == user.accountType)
+                        name = accTypes[j].name;
+                }
 
-    /*User.aggregate([{$group:{_id:"$accountType",accounts:{$push:"$$ROOT"}}}]).exec(function (err, users){
-        for (var i=0; i < users.length; i++){
-            userCategory = users[i];
-            AccountType.findOne({ _id: users[i]._id}).exec(function (err, docs) {
-                userCategory.name = docs.name;
-            });
-
-            userList.push(userCategory);
-        }
-        console.log(userList);
-    });*/
-    
-    User.find().exec(function (err, users) {
-
-        res.render('users/list', {
-            title: 'Pepito Pizzeria - Users',
-            header: 'Users',
-            active: 'listuser',
-            userlist: users
+                userList.push({user: user, accName: name});
+            }
+            
+            console.log(userList);
+            res.render('users/list', {
+                title: 'Pepito Pizzeria - Users',
+                header: 'Users',
+                active: 'listuser',
+                userlist: userList,
+                accTypes: accTypes
+            });          
         });
     });
+});
+
+router.post('/changeAccountType', function (req, res) {
+    var data = req.body.data;
+    for (var i = 0; i != data.length; ++i) {
+        var line = data[i];
+        User.findOneAndUpdate({ _id: line.id }, 
+            {
+                accountType: line.type
+            }, function (err, doc) { 
+                if (err)
+                    console.log('Error to add the accType');
+            }
+        );
+    }
+
+    res.send('202');
 });
 
 /* GET New User page. */

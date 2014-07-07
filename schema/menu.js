@@ -8,6 +8,25 @@ var schema = new mongoose.Schema({
 }, { collection: 'menus' });
 
 var model = mongoose.model('menus', schema)
+
+schema.methods.addPlates = function(params, id) {
+    for (var i = 0; i != params.length; ++i) {
+    	var item = params[i];
+    	var newPlate = new Plate({
+	        name: item.name,
+	        price: item.price,
+	        description: item.description
+	    });
+
+	    newPlate.save(function (err, newPlate) {
+	        if (err)
+	            console.log("Plate not added");
+	        else
+	            platesId.push(newPlate._id);
+	    });
+    }
+};
+
 module.exports = {
     Menu: model
 }
