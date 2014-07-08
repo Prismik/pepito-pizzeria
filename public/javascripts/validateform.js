@@ -57,8 +57,8 @@ function addAddressInput() {
 
     var newdiv = lastdiv.clone();
     newdiv.children("label").html(" ")
-    newdiv.children("input").first().attr("data-num", num).attr(value="");
-    newdiv.children("input").last().attr("data-num", num).attr(value="");
+    newdiv.children("input").first().val("");
+    newdiv.children("input").last().val("");
     newdiv.children("button").attr("onclick","delAddressInput("+num+")").html("Delete");
    
     lastdiv.after(newdiv);
