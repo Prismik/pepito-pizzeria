@@ -63,7 +63,7 @@ router.post('/add', function (req, res) {
         }
     }
 
-    AccountType.find({ name: "restaurateur"}, function (e, type) {
+    AccountType.findOne({ name: "restaurateur"}, function (e, type) {
         console.log(type);
         var newUser = new User({
             username: req.body.username
@@ -77,6 +77,7 @@ router.post('/add', function (req, res) {
             , accountType: type._id
         });
 
+        console.log(newUser);
         newUser.save(function (err, newUser) {
             if (err) {
                 // If it failed, return error
