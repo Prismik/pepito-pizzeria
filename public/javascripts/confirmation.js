@@ -7,9 +7,9 @@ function updateUserAddressList(){
             $('select[name="address"]').html("<option value>Select an address</option>");
             for (var i = 0; i < data.address.length; i++) {
                 if(i == data.defaultAddress)
-                    $('select[name="address"]').append("<option selected value='"+i+"'>"+data.address[i]+"</option>");
+                    $('select[name="address"]').append("<option selected value='"+i+"'>"+data.address[i].address+", "+data.address[i].postalCode+"</option>");
                 else
-                    $('select[name="address"]').append("<option value='"+i+"'>"+data.address[i]+"</option>");
+                    $('select[name="address"]').append("<option value='"+i+"'>"+data.address[i].address+", "+data.address[i].postalCode+"</option>");
             };
         }
     });
