@@ -8,8 +8,6 @@ html
 
     script.
       var active_tab= !{JSON.stringify(active)}
-      var test= !{JSON.stringify(locals)}
-      console.log(test)
 
     script(src="/javascripts/active.js")
   body
@@ -25,7 +23,7 @@ html
             a(href='/users/update') My Account
           - if (locals.permissions && locals.permissions.contains('manageUser'))
             li#perms
-              a(href='/orders/create') Permissions
+              a(href='/permissions') Permissions
           li#listuser
             a(href='/users') Users
           - if (locals.permissions && locals.permissions.contains('manageRestaurant'))

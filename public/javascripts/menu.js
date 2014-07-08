@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 		var name = $('#plateName').val();
 		var description = $('#plateDescription').val();
-		var price = $('#platePrice').val();
+		var price = parseFloat($('#platePrice').val());
 
 		if(name == ""){
 			errors.push("The name is required");
@@ -35,6 +35,8 @@ $(document).ready(function() {
 
 		if(price == ""){
 			errors.push("The price is required");
+		}else if(isNaN(price)){
+			errors.push("The price must be a number");
 		}
 
 		if(description == ""){

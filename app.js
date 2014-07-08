@@ -84,6 +84,8 @@ function rightChecker(req, res, next) {
             next();
         });
     }
+    else
+        next();
 }
 
 app.use(authChecker);
