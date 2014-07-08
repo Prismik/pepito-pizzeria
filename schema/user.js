@@ -32,6 +32,12 @@ schema.methods.getPermissions = function(params, callback) {
     });
 };
 
+schema.methods.getRestaurateurs = function(callback) {
+    AccountType.findOne({name: "restaurateur"}, function(err, r) {
+        mongoose.model('usercollection').find({ accountType: r._id }, callback);
+    });
+};
+
 var model = mongoose.model('usercollection', schema)
 module.exports = {
     User: model

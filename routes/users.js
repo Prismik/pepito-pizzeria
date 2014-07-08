@@ -88,20 +88,14 @@ router.post('/verifyEmail', function(req,res){
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
     AccountType.findOne({ name: 'client' }, function (err, type) {
-        console.log(type);
-
         //build address from address and postal code
         var arrAddr = new Array();
 
-
-        if (typeof(req.body.address) == typeof("string")) {
+        if (typeof(req.body.address) == typeof("string"))
             arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
-        }
-        else {
-            for (var i = 0; i < req.body.address.length; i++) {
+        else
+            for (var i = 0; i < req.body.address.length; i++)
                 arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
-            }
-        }
 
         var newUser = new User({
             username: req.body.username
@@ -133,20 +127,39 @@ router.post('/add', function (req, res) {
 
 /* POST to Update User */
 router.post('/updateuser', function (req, res) {
-
     var arrAddr = new Array();
 
-    if (typeof(req.body.address) == typeof("string")) {
+    if (typeof(req.body.address) == typeof("string"))
         arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
-    }
-    else {
-        for (var i = 0; i < req.body.address.length; i++) {
+    else 
+        for (var i = 0; i < req.body.address.length; i++)
             arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
-        }
-    }
 
-    var user = User.findOneAndUpdate(
-        { _id: req.body.userid },
+    if (req.body.password=="") {
+        var user = User.findOneAndUpdate(
+        { _id: req.body.restaurateursId },
+        {
+            username: req.body.username,
+            accountType: req.body.accountType,
+            email: req.body.email,
+            birthdate: req.body.birthdate,
+            address: req.body.arrAddr,
+            phone: req.body.phone
+        },
+        function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem updating the information in the database.");
+            }
+            else {
+                // If it worked, set the header so the address bar doesn't still say /adduser
+                res.location("/users/update");
+                // And forward to success page
+                res.redirect("/users/update");
+            }
+        });
+    } else {
+        var user = User.findOneAndUpdate({ _id: req.body.userid },
         {
             username: req.body.username,
             accountType: req.body.accountType,
@@ -167,9 +180,8 @@ router.post('/updateuser', function (req, res) {
                 // And forward to success page
                 res.redirect("/users/update");
             }
-        }
-    );
+        });
+    }
 });
-
 
 module.exports = router;

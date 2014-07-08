@@ -6,7 +6,8 @@ var AccountType = require('../schema/accountType').AccountType;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
-    User.find().exec(function (err, users) {
+    var user = new User();
+    user.getRestaurateurs(function (err, users) {
         res.render('restaurateurs/list', {
             title: 'Pepito Pizzeria - Restaurateurs',
             header: 'Restaurateurs',
@@ -41,35 +42,43 @@ router.post('/update', function (req, res) {
 
 //Ajax request for validating if email address is used
 router.post('/verifyEmail', function(req,res){
-    var db = req.db;
     var validateEmail = req.body.validateEmail;
-    User.findOne({email:validateEmail}).exec(function(e,docs){
-        if(docs!=null){
+    User.findOne({email:validateEmail}).exec(function(e,docs) {
+        if(docs!=null)
 	        res.send(false);
-        }else{
+        else
 	        res.send(true);
-        }
     });
 });
 
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
-    console.log(req.body.postal);
+    var arrAddr = new Array();
+    if (typeof(req.body.address) == typeof("string")) {
+        arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
+    }
+    else {
+        for (var i = 0; i < req.body.address.length; i++) {
+            arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
+        }
+    }
+
+    AccountType.find({ name: "restaurateur"}, function (e, type) {
+        console.log(type);
         var newUser = new User({
             username: req.body.username
-           // , accountType: type._id
             , birthdate: req.body.birthdate
-            , address: req.body.address
+            , address: arrAddr
             , defaultAddress: 0
             , postal: req.body.postal
             , phone: req.body.phone
             , email: req.body.email
             , password: crypto.createHash('md5').update(req.body.password).digest('hex')
+            , accountType: type._id
         });
 
         newUser.save(function (err, newUser) {
             if (err) {
-                console.log(err);
                 // If it failed, return error
                 res.send("There was a problem adding the information to the database.");
             }
@@ -79,6 +88,7 @@ router.post('/add', function (req, res) {
                 res.redirect("/restaurateurs/");
             }
         });
+    });
 });
 
 /* POST to Update User */
@@ -107,7 +117,7 @@ router.post('/updateRestaurateur', function (req, res) {
             }
         }
         );
-    }else{
+    } else {
         var user = User.findOneAndUpdate(
         { _id: req.body.restaurateursId },
         {
@@ -136,11 +146,9 @@ router.post('/updateRestaurateur', function (req, res) {
 });
 
 router.post('/delete', function (req, res) {
-    var db = req.db;
-    User.remove({ "_id": req.body.restaurateurId }, function (err) {
-        if (err) {
+    User.remove({ _id: req.body.restaurateurId }, function (err) {
+        if (err)
             res.send("There was a problem deleting restaurant.");
-        }
         else {
             res.location("/restaurateurs");
             res.redirect("/restaurateurs");

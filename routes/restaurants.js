@@ -1,24 +1,42 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../schema/user').User;
 var Restaurant = require('../schema/restaurant').Restaurant;
+var helper = require('../lib/helper');
 
 router.get('/', function(req, res) {
-    var db = req.db;
-    Restaurant.find().exec(function(e,docs){
-        res.render('restaurants/list', {
-            title: 'Pepito Pizzeria - Restaurants',
-            header: 'Restaurants',
-            active: 'resto',
-            restos: docs
+    User.find({ }, function (e, users) {
+        Restaurant.find({ }, function (e,docs) {
+            for (var i = 0; i != docs.length; ++i) {
+                var r = docs[i].restaurateur;
+                var user = helper.getObjectFromId(users, r);
+                if (user != null) {
+                    r = user.username;
+                    console.log(r);
+                }
+
+                docs[i].restaurateur = r
+            }
+            
+            res.render('restaurants/list', {
+                title: 'Pepito Pizzeria - Restaurants',
+                header: 'Restaurants',
+                active: 'resto',
+                restos: docs
+            });
         });
     });
 });
 
-router.get('/create', function(req, res){
-    res.render('restaurants/create', {
-        title: 'Pepito Pizzeria - Restaurants',
-        header: 'Restaurants',
-        active: 'resto'
+router.get('/create', function(req, res) {
+    var user = new User();
+    user.getRestaurateurs(function (err, users) {
+        res.render('restaurants/create', {
+            title: 'Pepito Pizzeria - Restaurants',
+            header: 'Restaurants',
+            active: 'resto',
+            users: users
+        });
     });
 });
 
@@ -56,18 +74,22 @@ router.post('/delete', function (req, res) {
 });
 
 router.post('/update', function(req, res){
-    Restaurant.findOne({ _id: req.body.restaurantId }).exec(function (err, docs) {
-        res.render('restaurants/update', {
-        	name : docs.name,
-            address : docs.address,
-            postal_code : docs.postal_code,
-            description : docs.description,
-            restaurateur : docs.restaurateur,
-            id : docs._id,
-            title: 'Pepito Pizzeria - Restaurants',
-            header: 'Modify '+docs.name,
-            active: 'resto',
-            restos: docs
+    var user = new User();
+    user.getRestaurateurs(function (err, users) {
+        Restaurant.findOne({ _id: req.body.restaurantId }).exec(function (err, docs) {
+            res.render('restaurants/update', {
+            	name : docs.name,
+                address : docs.address,
+                postal_code : docs.postal_code,
+                description : docs.description,
+                restaurateur : docs.restaurateur,
+                id : docs._id,
+                title: 'Pepito Pizzeria - Restaurants',
+                header: 'Modify '+docs.name,
+                active: 'resto',
+                restos: docs,
+                users: users
+            });
         });
     });
 });

@@ -12,8 +12,10 @@ block content
         br
         br
         label Assigned restaurateur: 
-        select(name="restaurateur")
-            option(value="restaurateur") restaurateur
+        select#restaurateur(name="restaurateur")
+            option(value="ND") Without restaurateur
+            each r, i in users
+                option(value="#{r.id}", selected=r.id==restos.restaurateur) #{r.username}
         br
         br
         input(type="hidden", name="restaurantId", value=id)
