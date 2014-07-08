@@ -6,7 +6,7 @@ var AccountType = require('../schema/accountType').AccountType;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
-    User.find().exec(function (err, users) {
+    User.find({accountType: '53b9d9080436403806d46bf3'}).exec(function (err, users) {
         res.render('restaurateurs/list', {
             title: 'Pepito Pizzeria - Restaurateurs',
             header: 'Restaurateurs',
