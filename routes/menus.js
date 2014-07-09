@@ -26,8 +26,7 @@ router.post('/addMenu', function(req, res){
     newMenu.save(function (err, newMenu) {
         if (err) {
            res.send({status:"500", message:"The menu could not be inserted"});
-        }
-        else {
+        } else {
             var plates = JSON.parse(req.body.plates);
 
             for (i = 0; i < plates.length; i++) { 
@@ -49,8 +48,23 @@ router.post('/addMenu', function(req, res){
                 
             }
 
+            User.findOne({_id:req.session.uid}).exec(function (err, docs) {
+                console.log(docs);
+                if(docs.restaurant!=null){
+                     
+                    Restaurant.findOneAndUpdate(
+                        {_id:docs.restaurant},
+                        {$push: { 'menus' : newMenu._id }},
+                        {upsert:true}, function(err, data) {
+                            res.send({status:"200", message:"The menu was inserted"});
+                        } 
+                    );
 
-            res.send({status:"200", message:"The menu was inserted"});
+                }else{
+                    res.send({status:"500", message:"The user does not have a restaurant"});
+                    return 0;
+                }
+            });
         }
     });
 });
