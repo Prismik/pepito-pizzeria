@@ -2,67 +2,55 @@ var express = require('express');
 var router = express.Router();
 var Permission = require('../schema/permission').Permission;
 var AccountType = require('../schema/accountType').AccountType;
+var helper = require('../lib/helper');
 
 router.get('/', function(req, res) {
-    var db = req.db;
-    AccountType.find().exec(function(e,docs){
-        res.render('restaurants/list', {
-            title: 'Pepito Pizzeria - Restaurants',
-            header: 'Restaurants',
-            active: 'resto',
-            restos: docs
+    Permission.find().exec(function (err,docs) {
+        AccountType.find().exec(function (err,accounts) {
+            for (var i = 0; i != accounts.length; ++i) {
+                var acc = accounts[i];
+                for (var j = 0; j != acc.rights.length; ++j) {
+                    acc.rights[j] = helper.getObjectFromId(docs, acc.rights[j]);
+                }
+            }
+
+            res.render('permissions/list', {
+                title: 'Pepito Pizzeria - Permissions',
+                header: 'Permissions',
+                active: 'perms',
+                perms: docs,
+                accs: accounts
+            });
         });
     });
 });
 
-router.get('/create', function(req, res){
-    res.render('restaurants/create', {
-        title: 'Pepito Pizzeria - Restaurants',
-        header: 'Restaurants',
-        active: 'resto'
-    });
-});
+router.post('/update', function(req, res) {
+    var a = req.body.accounts;
+    for (var k in a) {
+        AccountType.findOneAndUpdate({ _id: k }, 
+            {
+                rights: a[k]
+            }, function (err, doc) { 
+                if (err)
+                    console.log('Error to add the accType');
+            }
+        );
+    }
 
-router.post('/add', function (req, res) {
-    //connect the schema
-    var restaurant = restaurantchema.getRestaurantModel(req.db);
-
-    var newRestaurant = new restaurant({
-        name: req.body.name
-        , address: req.body.address
-        , postal_code: req.body.postal_code
-        , description: req.body.description
-        , restaurateur: req.body.restaurateur
-    })
-    newRestaurant.save(function (err, newRestaurant) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+    var perms = req.body.permissions.split(/\r\n|\r|\n/g);
+    for (var i = 0; i != perms.length; ++i) {
+        var p = perms[i].trim();
+        if (p != "") {
+            Permission.find({ name: p }, function (err, docs) {
+                if (!docs.length) {
+                    var newPerm = new Permission({ name: p });
+                    newPerm.save(function (err, newDoc) { });
+                }
+            });
         }
-        else {
-            res.location("/restaurants");
-			res.redirect("/restaurants");
-        }
-    });
-});
+    }
 
-router.post('/update', function(req, res){
-    var db = req.db;
-    var collection = restaurantchema.getRestaurantModel(req.db);
-    collection.findOne({ _id: req.body.restaurantId }).exec(function (err, docs){
-        res.render('restaurants/update', {
-        	name : docs.name,
-            address : docs.address,
-            postal_code : docs.postal_code,
-            description : docs.description,
-            restaurateur : docs.restaurateur,
-            id : docs._id,
-            title: 'Pepito Pizzeria - Restaurants',
-            header: 'Modify '+docs.name,
-            active: 'resto',
-            restos: docs
-        });
-    });
+    res.send("202");
 });
-
 module.exports = router;

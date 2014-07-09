@@ -6,30 +6,47 @@ var AccountType = require('../schema/accountType').AccountType;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
-    var accountType = AccountType.find();
-    var userList = [];
+    AccountType.find({ }, function (err, accTypes) {
+        var userList = [];
+        User.find({ }, function (err, users) {
+            for (var i = 0; i != users.length; ++i) {
+                var user = users[i];
+                var name;
+                for (var j = 0; j != accTypes.length; ++j) {
+                    if (accTypes[j].id == user.accountType)
+                        name = accTypes[j].name;
+                }
 
-    /*User.aggregate([{$group:{_id:"$accountType",accounts:{$push:"$$ROOT"}}}]).exec(function (err, users){
-        for (var i=0; i < users.length; i++){
-            userCategory = users[i];
-            AccountType.findOne({ _id: users[i]._id}).exec(function (err, docs) {
-                userCategory.name = docs.name;
-            });
-
-            userList.push(userCategory);
-        }
-        console.log(userList);
-    });*/
-    
-    User.find().exec(function (err, users) {
-
-        res.render('users/list', {
-            title: 'Pepito Pizzeria - Users',
-            header: 'Users',
-            active: 'listuser',
-            userlist: users
+                userList.push({user: user, accName: name});
+            }
+            
+            console.log(userList);
+            res.render('users/list', {
+                title: 'Pepito Pizzeria - Users',
+                header: 'Users',
+                active: 'listuser',
+                userlist: userList,
+                accTypes: accTypes
+            });          
         });
     });
+});
+
+router.post('/changeAccountType', function (req, res) {
+    var data = req.body.data;
+    for (var i = 0; i != data.length; ++i) {
+        var line = data[i];
+        User.findOneAndUpdate({ _id: line.id }, 
+            {
+                accountType: line.type
+            }, function (err, doc) { 
+                if (err)
+                    console.log('Error to add the accType');
+            }
+        );
+    }
+
+    res.send('202');
 });
 
 /* GET New User page. */
@@ -70,15 +87,22 @@ router.post('/verifyEmail', function(req,res){
 
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
-    AccountType.findOne({ name: 'client' },function (err, type) {
-        console.log(type);
+    AccountType.findOne({ name: 'client' }, function (err, type) {
+        //build address from address and postal code
+        var arrAddr = new Array();
+
+        if (typeof(req.body.address) == typeof("string"))
+            arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
+        else
+            for (var i = 0; i < req.body.address.length; i++)
+                arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
+
         var newUser = new User({
             username: req.body.username
             , accountType: type._id
             , birthdate: req.body.birthdate
-            , address: req.body.address
+            , address: arrAddr
             , defaultAddress: 0
-            , postal: req.body.postal
             , phone: req.body.phone
             , email: req.body.email
             , password: crypto.createHash('md5').update(req.body.password).digest('hex')
@@ -103,14 +127,45 @@ router.post('/add', function (req, res) {
 
 /* POST to Update User */
 router.post('/updateuser', function (req, res) {
-    var user = User.findOneAndUpdate(
-        { _id: req.body.userid },
+    var arrAddr = new Array();
+
+    if (typeof(req.body.address) == typeof("string"))
+        arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
+    else 
+        for (var i = 0; i < req.body.address.length; i++)
+            arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
+
+    if (req.body.password=="") {
+        var user = User.findOneAndUpdate(
+        { _id: req.body.restaurateursId },
         {
             username: req.body.username,
             accountType: req.body.accountType,
             email: req.body.email,
             birthdate: req.body.birthdate,
-            address: req.body.address,
+            address: req.body.arrAddr,
+            phone: req.body.phone
+        },
+        function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem updating the information in the database.");
+            }
+            else {
+                // If it worked, set the header so the address bar doesn't still say /adduser
+                res.location("/users/update");
+                // And forward to success page
+                res.redirect("/users/update");
+            }
+        });
+    } else {
+        var user = User.findOneAndUpdate({ _id: req.body.userid },
+        {
+            username: req.body.username,
+            accountType: req.body.accountType,
+            email: req.body.email,
+            birthdate: req.body.birthdate,
+            address: arrAddr,
             phone: req.body.phone,
             password: crypto.createHash('md5').update(req.body.password).digest('hex')
         },
@@ -125,9 +180,8 @@ router.post('/updateuser', function (req, res) {
                 // And forward to success page
                 res.redirect("/users/update");
             }
-        }
-    );
+        });
+    }
 });
-
 
 module.exports = router;

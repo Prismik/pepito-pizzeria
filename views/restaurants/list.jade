@@ -23,7 +23,10 @@ block content
                     td #{resto.address}
                     td #{resto.postal_code}
                     td #{resto.description}
-                    td #{resto.restaurateur}
+                    if (resto.restaurateur.name)
+                        td #{resto.restaurateur.name}
+                    else
+                        td #{resto.restaurateur}
                     td#manageOption(style="width:60px;padding:0;")
                         form(style="display:inline;", action="restaurants/update", method="post")
                             input(type="hidden", name="restaurantId", value="#{resto._id}")

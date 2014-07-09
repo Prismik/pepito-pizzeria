@@ -13,20 +13,21 @@ block content
             tr
                 th Name
                 th Email
-                th Postal code
                 th Phone
                 th Birth date
-                th Address
+                th Address Complete
                 th#manageOption
         tbody
             each user, i in userlist
                 tr
                     td #{user.username}
                     td #{user.email}
-                    td #{user.postal}
                     td #{user.phone}
                     td #{user.birthdate}
-                    td #{user.address}
+                    td
+                        each adpc, i in user.address
+                            | #{adpc.address} , #{adpc.postalCode}
+                            br
                     td#manageOption(style="width:60px;padding:0;")
                         form(style="display:inline;", action="restaurateurs/update", method="post")
                             input(type="hidden", name="restaurateursId", value="#{user._id}")

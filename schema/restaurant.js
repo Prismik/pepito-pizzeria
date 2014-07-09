@@ -8,7 +8,6 @@ var schema = new mongoose.Schema({
     , postal_code: { type: String }
     , description: { type: String }
     , menus: [mongoose.Schema.Types.ObjectId]
-    , restaurateur: { type: String }
 }, { collection: 'restaurants' })
 
 var model = mongoose.model('restaurants', schema)

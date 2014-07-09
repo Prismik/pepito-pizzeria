@@ -16,7 +16,9 @@ block content
         br
         label Assigned restaurateur: 
         select#restaurateur(name="restaurateur")
-            option(value="Without restaurateur") Without restaurateur
+            option(value="ND") Without restaurateur
+            each r, i in users
+                option(value="#{r.id}") #{r.username}
         br
         br
         button.sexybutton(type="submit") Create

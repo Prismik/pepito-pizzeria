@@ -17,12 +17,36 @@ block content
         label() Birthdate
         input#datepicker(type="text", name="birthdate", value=userbirthdate readonly)    
         br
-        label(for="inputUseraddress") Address
-        input#inputUseraddress(type="text", placeholder="Complete address", name="address", value=useraddress)
+        each compAddress, i in useraddress
+            if(i == 0)
+                div.addressDiv
+                    label Address
+
+                    input#inputUseraddress(type="text", placeholder="Complete address", name="address", data-num=i, value=compAddress.address)
+                    button#addAddress.sexybutton(type="button" onclick="addAddressInput()") Add
+
+                    br
+
+                    label Postal Code
+
+                    input#inputUserPostalCode(type="text", placeholder="Complete postal code", name="postal", data-num=i, value=compAddress.postalCode)
+
+                    br
+            else
+                div.addressDiv
+                    label 
+
+                    input#inputUseraddress(type="text", placeholder="Complete address", name="address", data-num=i, value=compAddress.address)
+                    button#addAddress.sexybutton(type="button" onclick="delAddressInput("+i+")") Delete
+
+                    br
+
+                    label
+
+                    input#inputUserPostalCode(type="text", placeholder="Complete postal code", name="postal", data-num=i, value=compAddress.postalCode)
+
+                    br
         br
-        label(for="ipc") Postal Code
-        input#ipc(type="text", placeholder="Postal code", name="postal", value=postal_code)
-        br 
         label(for="inputUserPhone") Phone number
         input#inputUserPhone(type="text", placeholder="Phone number", name="phone", value=userphone)
         br

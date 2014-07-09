@@ -7,6 +7,7 @@ var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var User = require('./schema/user').User;
 
 // MongoDB
 var mongo = require('mongodb');
@@ -21,7 +22,9 @@ var routes  = require('./routes/index');
 var users   = require('./routes/users');
 var orders  = require('./routes/orders');
 var restos  = require('./routes/restaurants');
+var perms   = require('./routes/permissions');
 var restaurateurs  = require('./routes/restaurateurs');
+var menus  = require('./routes/menus');
 
 var app = express();
 
@@ -58,6 +61,7 @@ Array.prototype.contains = function (element) {
 
 // Pre routing functions
 function authChecker(req, res, next) {
+    console.log("Authentification");
     if (req.session.logged ||  ['/login', '/authenticate', '/register', '/users/add', '/users/verifyEmail'].contains(req.path)) {
         next();
     }
@@ -66,13 +70,33 @@ function authChecker(req, res, next) {
     }
 }
 
+function rightChecker(req, res, next) {
+    console.log("Rights check");
+    var uid = req.session.uid;
+    if (uid != null) {
+        var user = new User();
+        user.getPermissions(uid, function(err, docs) {  
+            var result = [];
+            for (var i = 0; i != docs.length; i++)
+                result.push(docs[i].name);
+
+            res.locals.permissions= result;
+            next();
+        });
+    }
+    else
+        next();
+}
+
 app.use(authChecker);
+app.use(rightChecker);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/orders', orders);
 app.use('/restaurants', restos)
+app.use('/permissions', perms)
 app.use('/restaurateurs', restaurateurs)
-
+app.use('/menus', menus)
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

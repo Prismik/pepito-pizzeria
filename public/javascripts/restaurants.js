@@ -36,7 +36,7 @@ function activateManageOption() {
 
 function checkRestaurateur(){
     var restaurateur = document.getElementById('restaurateur').value;
-    if (restaurateur == "Without restaurateur")
+    if (restaurateur == "ND")
         return (confirm("Are you sure you want to create a restaurant without restaurateur?"));
     else
         return true;

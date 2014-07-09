@@ -13,6 +13,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
+    console.log("Test")
     if (res.app.settings['globals'].logged)
         res.redirect("/");
     else
