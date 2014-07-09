@@ -21,6 +21,7 @@ var schema = new mongoose.Schema({
     , phone: { type: String }
     , email: { type: String }
     , password: { type: String }
+    , restaurant: { type : mongoose.Schema.Types.ObjectId, required : false}
     }, { collection: 'usercollection' }
 );
 
@@ -34,7 +35,7 @@ schema.methods.getPermissions = function(params, callback) {
 
 schema.methods.getRestaurateurs = function(callback) {
     AccountType.findOne({name: "restaurateur"}, function(err, r) {
-        mongoose.model('usercollection').find({ accountType: r._id }, callback);
+        mongoose.model('usercollection').find({ accountType: r._id ,  restaurant : { $exists : false } }, callback);
     });
 };
 

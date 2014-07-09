@@ -7,15 +7,19 @@ var helper = require('../lib/helper');
 router.get('/', function(req, res) {
     User.find({ }, function (e, users) {
         Restaurant.find({ }, function (e,docs) {
-            for (var i = 0; i != docs.length; ++i) {
-                var r = docs[i].restaurateur;
-                var user = helper.getObjectFromId(users, r);
-                if (user != null) {
-                    r = user.username;
-                    console.log(r);
+            for (var i = 0; i < docs.length; ++i) {
+                r="None";
+                
+                for (var j = 0; j < users.length; ++j) {
+                    if(users[j].restaurant!=null){
+                        console.log(users[j].restaurant.toString() + " ?= "+docs[i]._id+"\n\n\n");
+                        if (users[j].restaurant.toString() == docs[i]._id) {
+                            r = users[j].username;
+                        }
+                    }
                 }
 
-                docs[i].restaurateur = r
+                docs[i].restaurateur = r;
             }
             
             res.render('restaurants/list', {
@@ -30,13 +34,13 @@ router.get('/', function(req, res) {
 
 router.get('/create', function(req, res) {
     var user = new User();
-    user.getRestaurateurs(function (err, users) {
+    user.getFreeRestaurateurs(function (err, users) {
         res.render('restaurants/create', {
             title: 'Pepito Pizzeria - Restaurants',
             header: 'Restaurants',
             active: 'resto',
             users: users
-        });
+        }, null);
     });
 });
 
@@ -46,18 +50,31 @@ router.post('/add', function (req, res) {
         , adress: req.body.address
         , postal_code: req.body.postal_code
         , description: req.body.description
-        , restaurateur: req.body.restaurateur
-    })
-    newRestaurant.save(function (err, newRestaurant) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        }
-        else {
-            res.location("/restaurants");
-			res.redirect("/restaurants");
-        }
     });
+
+   User.findOneAndUpdate(
+        { _id: req.body.restaurateur },
+        {
+            restaurant : newRestaurant._id
+        },
+        function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information in the database.");
+            }
+            else {
+                newRestaurant.save(function (err, newRestaurant) {
+                    if (err) {
+                        // If it failed, return error
+                        res.send("There was a problem adding the information to the database.");
+                    }
+                    else {
+                        res.location("/restaurants");
+                        res.redirect("/restaurants");
+                    }
+                });
+            }
+        });
 });
 
 router.post('/delete', function (req, res) {
@@ -76,7 +93,16 @@ router.post('/delete', function (req, res) {
 router.post('/update', function(req, res){
     var user = new User();
     user.getRestaurateurs(function (err, users) {
+
         Restaurant.findOne({ _id: req.body.restaurantId }).exec(function (err, docs) {
+            var currUser = "ND";
+
+            for (var j = 0; j < users.length; ++j) {
+                console.log(users[j].restaurant + "==" + docs._id);
+                if(users[j].restaurant != null && users[j].restaurant.toString() == docs._id.toString()){
+                    currUser = users[j]._id;
+                }
+            }
             res.render('restaurants/update', {
             	name : docs.name,
                 address : docs.address,
@@ -88,6 +114,7 @@ router.post('/update', function(req, res){
                 header: 'Modify '+docs.name,
                 active: 'resto',
                 restos: docs,
+                currUser: currUser,
                 users: users
             });
         });
@@ -101,19 +128,30 @@ router.post('/updateRestaurant', function(req, res){
             name: req.body.name,
          	address: req.body.address,
 		 	postal_code: req.body.postal_code,
-		 	description: req.body.description,
-		 	restaurateur: req.body.restaurateur
+		 	description: req.body.description
         },
         function (err, doc) {
-            if (err) {
-                // If it failed, return error
-                res.send("There was a problem updating the information in the database.");
-            }
-            else {
-                res.location("/restaurants");
-				res.redirect("/restaurants");
-            }
-        });
+            User.findOneAndUpdate(
+                {restaurant : req.body.restaurantId},
+                {$unset : {restaurant : ""}},
+                function (err, pudoc){
+                    User.findOneAndUpdate(
+                        { _id: req.body.restaurateur },
+                        {
+                            restaurant : doc._id
+                        },
+                        function (err, udoc) {
+                            if (err) {
+                               // If it failed, return error
+                               res.send("There was a problem updating the information in the database.");
+                           }
+                           else {
+                               res.location("/restaurants");
+                               res.redirect("/restaurants");
+                           }
+                    });
+            });
+    });
 });
 
 //Ajax request for validating if email address is used
