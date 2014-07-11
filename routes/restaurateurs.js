@@ -84,9 +84,9 @@ router.post('/add', function (req, res) {
                 res.send("There was a problem adding the information to the database.");
             }
             else {
-                res.location("/restaurateurs/");
+                res.location("/restaurateurs");
                 // And forward to success page
-                res.redirect("/restaurateurs/");
+                res.redirect("/restaurateurs");
             }
         });
     });
@@ -120,9 +120,9 @@ router.post('/updateRestaurateur', function (req, res) {
             }
             else {
                 // If it worked, set the header so the address bar doesn't still say /adduser
-                res.location("/restaurateurs/");
+                res.location("/restaurateurs");
                 // And forward to success page
-                res.redirect("/restaurateurs/");
+                res.redirect("/restaurateurs");
             }
         }
         );
@@ -145,9 +145,9 @@ router.post('/updateRestaurateur', function (req, res) {
             }
             else {
                 // If it worked, set the header so the address bar doesn't still say /adduser
-                res.location("/restaurateurs/");
+                res.location("/restaurateurs");
                 // And forward to success page
-                res.redirect("/restaurateurs/");
+                res.redirect("/restaurateurs");
             }
         }
         );
