@@ -35,6 +35,12 @@ schema.methods.getPermissions = function(params, callback) {
 
 schema.methods.getRestaurateurs = function(callback) {
     AccountType.findOne({name: "restaurateur"}, function(err, r) {
+        mongoose.model('usercollection').find({ accountType: r._id }, callback);
+    });
+};
+
+schema.methods.getFreeRestaurateurs = function(callback) {
+    AccountType.findOne({name: "restaurateur"}, function(err, r) {
         mongoose.model('usercollection').find({ accountType: r._id ,  restaurant : { $exists : false } }, callback);
     });
 };
