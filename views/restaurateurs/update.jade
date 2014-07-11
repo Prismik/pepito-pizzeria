@@ -17,12 +17,13 @@ block content
         label() Birthdate
         input#datepicker(type="text", name="birthdate", value=userbirthdate readonly)    
         br
-        label(for="inputUseraddress") Address
-        input#inputUseraddress(type="text", placeholder="Complete address", name="address", value=useraddress)
-        br
-        label(for="ipc") Postal Code
-        input#ipc(type="text", placeholder="Postal code", name="postal", value=postal_code)
-        br 
+        each adpc, i in useraddress
+            label(for="inputUseraddress") Address
+            input#inputUseraddress(type="text", placeholder="Complete address", name="address", value=adpc.address)
+            br
+            label(for="ipc") Postal Code
+            input#ipc(type="text", placeholder="Postal code", name="postal", value=adpc.postalCode)
+            br 
         label(for="inputUserPhone") Phone number
         input#inputUserPhone(type="text", placeholder="Phone number", name="phone", value=userphone)
         br

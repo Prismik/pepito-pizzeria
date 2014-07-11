@@ -143,7 +143,7 @@ router.post('/updateuser', function (req, res) {
             accountType: req.body.accountType,
             email: req.body.email,
             birthdate: req.body.birthdate,
-            address: req.body.arrAddr,
+            address: arrAddr,
             phone: req.body.phone
         },
         function (err, doc) {

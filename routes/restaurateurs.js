@@ -84,9 +84,9 @@ router.post('/add', function (req, res) {
                 res.send("There was a problem adding the information to the database.");
             }
             else {
-                res.location("/restaurateurs/");
+                res.location("/restaurateurs");
                 // And forward to success page
-                res.redirect("/restaurateurs/");
+                res.redirect("/restaurateurs");
             }
         });
     });
@@ -94,6 +94,14 @@ router.post('/add', function (req, res) {
 
 /* POST to Update User */
 router.post('/updateRestaurateur', function (req, res) {
+
+    var arrAddr = new Array();
+    if (typeof(req.body.address) == typeof("string"))
+        arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
+    else 
+        for (var i = 0; i < req.body.address.length; i++)
+            arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
+
     if (req.body.password=="") {
         var user = User.findOneAndUpdate(
         { _id: req.body.restaurateursId },
@@ -102,7 +110,7 @@ router.post('/updateRestaurateur', function (req, res) {
             accountType: req.body.accountType,
             email: req.body.email,
             birthdate: req.body.birthdate,
-            address: req.body.address,
+            address: arrAddr,
             phone: req.body.phone
         },
         function (err, doc) {
@@ -112,9 +120,9 @@ router.post('/updateRestaurateur', function (req, res) {
             }
             else {
                 // If it worked, set the header so the address bar doesn't still say /adduser
-                res.location("/restaurateurs/");
+                res.location("/restaurateurs");
                 // And forward to success page
-                res.redirect("/restaurateurs/");
+                res.redirect("/restaurateurs");
             }
         }
         );
@@ -126,7 +134,7 @@ router.post('/updateRestaurateur', function (req, res) {
             accountType: req.body.accountType,
             email: req.body.email,
             birthdate: req.body.birthdate,
-            address: req.body.address,
+            address: arrAddr,
             phone: req.body.phone,
             password: crypto.createHash('md5').update(req.body.password).digest('hex')
         },
@@ -137,9 +145,9 @@ router.post('/updateRestaurateur', function (req, res) {
             }
             else {
                 // If it worked, set the header so the address bar doesn't still say /adduser
-                res.location("/restaurateurs/");
+                res.location("/restaurateurs");
                 // And forward to success page
-                res.redirect("/restaurateurs/");
+                res.redirect("/restaurateurs");
             }
         }
         );
