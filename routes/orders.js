@@ -66,9 +66,10 @@ router.post('/getUserAddresses', function(req,res) {
 });
 
 router.post('/addAddressToCurrentUser', function(req,res) {
+
     User.update(
         { _id:req.session.uid },
-        { "$addToSet": { address:req.body.address } }
+        { "$addToSet": { address: {address: req.body.address, postalCode: req.body.postalcode} } } 
     );
 
     User.findOne({_id:req.session.uid},function(e,docs) {
@@ -107,10 +108,13 @@ router.post('/confirmOrder', function(req,res) {
 router.post('/sendOrder', function(req,res) {
     var order = req.body.order;
     order.customer = req.session.uid;
+    console.log(JSON.parse(order.address));
+
     var newOrder = new Order({
-        address: order.address,
+        address: JSON.parse(order.address),
         date: order.date,
-        order: order.order
+        order: order.order,
+        status: constants.STATUS_OPEN
     });
     
     newOrder.save(function (err, newUser) {
@@ -133,6 +137,37 @@ router.post('/changeDefaultAddress', function(req,res) {
     });
 
     res.send("202");
+});
+
+router.get('/list', function(req, res){
+    Order.find({},{},function(e,docs){
+        if (docs) {
+            res.render('orders/prepare', {
+                orderlist: docs,
+                active: 'prepareorder'
+            });
+        } else {
+            res.render('orders/prepare', {
+                error: 'Could not find any orders'
+            });
+        } 
+    });
+});
+
+router.post('/prepareOrder',function(req,res){
+    var orderid = req.body.id;
+
+    Order.findOneAndUpdate(
+        {_id:orderid},
+        {status: constants.STATUS_OPEN},
+        function (err, doc) {
+            if(err){
+                res.send("500");
+            }else{
+                res.send("200");
+            }
+        }
+    );
 });
 
 module.exports = router;

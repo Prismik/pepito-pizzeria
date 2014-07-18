@@ -3,9 +3,13 @@ var config = require('../config/' + env);
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-   address: { type: String },
+   address: { 
+            address: String,
+            postalCode: String
+        },
    date: { type: String },
-   order: [mongoose.Schema.Types.Mixed]
+   order: [mongoose.Schema.Types.Mixed],
+   status: { type: Number }
 }, { collection: 'orders' });
 
 var model = mongoose.model('orders', schema)
