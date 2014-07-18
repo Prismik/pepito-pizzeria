@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+    script(type='text/javascript' src='http://code.jquery.com/jquery-latest.min.js')
+    script(type='text/javascript' src='/javascripts/prepareOrder.js')
+
+    h1= "Prepare an order"
+
+    if (locals.error)
+        div#message.error
+            span= error
+    else
+        h2= "Orders selection"
+
+        table#magicienPoil
+            thead
+                tr
+                    th Address
+                    th Date
+                    th Status
+                    th Order
+                    th
+            tbody
+                each order, i in orderlist
+                    tr#poil
+                        td #{order.address}
+                        td #{order.date}
+                        td #{order.status}
+                        td 
+                            each plate, i in order.order
+                                "#{order.order[i].plate.name}" x #{order.order[i].quantity} <br>
+                        td
+                            img(class="changeStatusButton", elem=order._id, src="/images/pizza_right.png", width="28px")
+                    
