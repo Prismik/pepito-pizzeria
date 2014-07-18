@@ -35,6 +35,9 @@ html
           - if (locals.permissions && locals.permissions.contains('passOrder'))
             li#createorder
               a(href='/orders/create') Pass order
+          - if (locals.permissions && locals.permissions.contains('createMenu'))
+            li#createmenu
+              a(href='/menus/create') Create menu
           li#logout
             a(href='/logout') Logout
          
