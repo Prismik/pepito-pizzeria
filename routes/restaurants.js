@@ -52,29 +52,23 @@ router.post('/add', function (req, res) {
         , description: req.body.description
     });
 
-   User.findOneAndUpdate(
-        { _id: req.body.restaurateur },
+    User.findOneAndUpdate({ _id: req.body.restaurateur },
         {
             restaurant : newRestaurant._id
         },
         function (err, doc) {
-            if (err) {
+            newRestaurant.save(function (err, newRestaurant) {
+                if (err) {
                 // If it failed, return error
-                res.send("There was a problem adding the information in the database.");
+                res.send("There was a problem adding the information to the database.");
+                }
+                else {
+                    res.location("/restaurants");
+                    res.redirect("/restaurants");
+                }
             }
-            else {
-                newRestaurant.save(function (err, newRestaurant) {
-                    if (err) {
-                        // If it failed, return error
-                        res.send("There was a problem adding the information to the database.");
-                    }
-                    else {
-                        res.location("/restaurants");
-                        res.redirect("/restaurants");
-                    }
-                });
-            }
-        });
+        );
+    });
 });
 
 router.post('/delete', function (req, res) {
