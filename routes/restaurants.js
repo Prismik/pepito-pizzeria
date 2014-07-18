@@ -47,7 +47,7 @@ router.get('/create', function(req, res) {
 router.post('/add', function (req, res) {
     var newRestaurant = new Restaurant({
         name: req.body.name
-        , adress: req.body.address
+        , address: req.body.address
         , postal_code: req.body.postal_code
         , description: req.body.description
     });

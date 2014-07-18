@@ -37,7 +37,6 @@ router.get('/', function (req, res) {
 router.get('/create', function(req, res) {
     var Resto = new Restaurant();
     Resto.getFreeRestaurants(function (err, restaurants) {
-        console.log("-------------------> "+restaurants);
         res.render('restaurateurs/create', { 
             title: 'Pepito Pizzeria - Add New Restaurateur', 
             header: 'Create restaurateur',
@@ -84,6 +83,8 @@ router.post('/verifyEmail', function(req,res){
 /* POST to Add User Service */
 router.post('/add', function (req, res) {
     var arrAddr = new Array();
+    var resto = null;
+
     if (typeof(req.body.address) == typeof("string")) {
         arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
     }
@@ -93,8 +94,9 @@ router.post('/add', function (req, res) {
         }
     }
 
+    if (req.body.restaurant!="ND") {resto=req.body.restaurant;};
+
     AccountType.findOne({ name: "restaurateur"}, function (e, type) {
-        console.log(type);
         var newUser = new User({
             username: req.body.username
             , birthdate: req.body.birthdate
@@ -104,7 +106,7 @@ router.post('/add', function (req, res) {
             , phone: req.body.phone
             , email: req.body.email
             , password: crypto.createHash('md5').update(req.body.password).digest('hex')
-            , restaurant: req.body.restaurant
+            , restaurant: resto
             , accountType: type._id
         });
 
@@ -127,11 +129,14 @@ router.post('/add', function (req, res) {
 router.post('/updateRestaurateur', function (req, res) {
 
     var arrAddr = new Array();
+    var resto = null;
     if (typeof(req.body.address) == typeof("string"))
         arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
     else 
         for (var i = 0; i < req.body.address.length; i++)
             arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
+
+    if (req.body.restaurant!="ND") {resto=req.body.restaurant;};
 
     if (req.body.password=="") {
         var user = User.findOneAndUpdate(
@@ -143,7 +148,7 @@ router.post('/updateRestaurateur', function (req, res) {
             birthdate: req.body.birthdate,
             address: arrAddr,
             phone: req.body.phone,
-            restaurant: req.body.restaurant
+            restaurant: resto
         },
         function (err, doc) {
             if (err) {
