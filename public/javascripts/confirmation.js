@@ -7,9 +7,9 @@ function updateUserAddressList(){
             $('select[name="address"]').html("<option value>Select an address</option>");
             for (var i = 0; i < data.address.length; i++) {
                 if(i == data.defaultAddress)
-                    $('select[name="address"]').append("<option selected value='"+i+"'>"+data.address[i].address+", "+data.address[i].postalCode+"</option>");
+                    $('select[name="address"]').append("<option xaddress='"+data.address[i].address+"' xpostalcode='"+data.address[i].postalCode+"' selected value='"+i+"'>"+data.address[i].address+", "+data.address[i].postalCode+"</option>");
                 else
-                    $('select[name="address"]').append("<option value='"+i+"'>"+data.address[i].address+", "+data.address[i].postalCode+"</option>");
+                    $('select[name="address"]').append("<option xaddress='"+data.address[i].address+"' xpostalcode='"+data.address[i].postalCode+"' value='"+i+"'>"+data.address[i].address+", "+data.address[i].postalCode+"</option>");
             };
         }
     });
@@ -31,12 +31,13 @@ $(function() {
     });
 
     $( "#addAddress" ).click(function() {
-        var address=prompt("Please enter the new address","");
+        var address=prompt("Please enter the address","");
+        var postalCode=prompt("Please enter the postal code","");
 
-        if(address != "") {
+        if(address != "" && postalCode != "") {
 	        $.ajax({
 	            type: 'POST',
-	            data: {address:address},
+	            data: {address:address, postalcode: postalCode},
 	            url: 'addAddressToCurrentUser',
 	            dataType: 'text',
 	            success: function(data){
@@ -50,7 +51,7 @@ $(function() {
 
     $( "#send" ).click(function() {
         var outJson = {
-            address: $('select[name=address]').val(),
+            address: JSON.stringify({address:$('select[name=address] option:selected').attr("xaddress"), postalCode:$('select[name=address] option:selected').attr("xpostalCode")}),
             date: $('input[name=deliveryDate]').val(),
             order: jQuery.parseJSON( $('input[name="order"]').val())
         };
