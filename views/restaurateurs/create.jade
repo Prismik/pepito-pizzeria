@@ -49,6 +49,13 @@ block content
         span(id="messagePass")
         
         br
+
+        select#restaurant(name="restaurant")
+            option(value="ND") Without restaurant
+            each r, i in restaurants
+                option(value="#{r.id}") #{r.name}
+        
+        br
         
         script(type="text/javascript").
             validateLengthMin('inputUserName', 3, 'Please enter restaurateur\'s name');

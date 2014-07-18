@@ -16,6 +16,7 @@ block content
                 th Phone
                 th Birth date
                 th Address Complete
+                th Restaurant
                 th#manageOption
         tbody
             each user, i in userlist
@@ -28,6 +29,7 @@ block content
                         each adpc, i in user.address
                             | #{adpc.address} , #{adpc.postalCode}
                             br
+                    td #{user.restaurantName}
                     td#manageOption(style="width:60px;padding:0;")
                         form(style="display:inline;", action="restaurateurs/update", method="post")
                             input(type="hidden", name="restaurateursId", value="#{user._id}")

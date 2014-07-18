@@ -40,7 +40,14 @@ block content
         input#inputUserId(type="hidden", placeholder="userid", name="restaurateursId", value=userid)
         
         input(name="accountType", type="hidden",value=accountType)
-
+        br
+        label Assigned to 
+        select#restaurant(name="restaurant")
+            option(value="ND") Without restaurant
+            option(value="#{assignedRestaurant._id}", selected) #{assignedRestaurant.name}
+            each r, i in restaurants
+                option(value="#{r.id}") #{r.name}
+        br
         script(type="text/javascript").
             validateLengthMin('inputUserName', 3, 'Please, enter your name');
             validateLengthMin('inputUseraddress', 5, 'Please, enter an address');

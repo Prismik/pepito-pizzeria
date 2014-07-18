@@ -2,42 +2,72 @@ var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
 var User = require('../schema/user').User;
+var Restaurant = require('../schema/restaurant').Restaurant;
 var AccountType = require('../schema/accountType').AccountType;
 
 /* GET users listing. */
 router.get('/', function (req, res) {
     var user = new User();
     user.getRestaurateurs(function (err, users) {
-        res.render('restaurateurs/list', {
-            title: 'Pepito Pizzeria - Restaurateurs',
-            header: 'Restaurateurs',
-            active: 'restaurateurs',
-            userlist: users
+        Restaurant.find({ }, function (e,restos) {
+            for (var i = 0; i < users.length; ++i) {
+                r="None";
+                
+                if (users[i].restaurant!=null) {
+                    for (var j = restos.length - 1; j >= 0; j--) {
+                        if (restos[j]._id==users[i].restaurant.toString()) {
+                            r=restos[j].name;
+                        }; 
+                    };
+                };
+                users[i].restaurantName = r;
+            }
+            res.render('restaurateurs/list', {
+                title: 'Pepito Pizzeria - Restaurateurs',
+                header: 'Restaurateurs',
+                active: 'restaurateurs',
+                userlist: users
+            });
+        
         });
     });
 });
 
 /* GET New User page. */
 router.get('/create', function(req, res) {
-    res.render('restaurateurs/create', { title: 'Pepito Pizzeria - Add New Restaurateur' , header: 'Create restaurateur'});
+    var Resto = new Restaurant();
+    Resto.getFreeRestaurants(function (err, restaurants) {
+        console.log("-------------------> "+restaurants);
+        res.render('restaurateurs/create', { 
+            title: 'Pepito Pizzeria - Add New Restaurateur', 
+            header: 'Create restaurateur',
+            restaurants: restaurants
+        });
+    });
 });
 
 /* GET Manage User page. */
 router.post('/update', function (req, res) {
     user = User.findOne({ _id: req.body.restaurateursId }).exec(function (err, docs) {
-        res.render('restaurateurs/update', {
-            username : docs.username,
-            useremail : docs.email,
-            userbirthdate : docs.birthdate,
-            useraddress : docs.address,
-            postal : docs.postal,
-            userphone : docs.phone,
-            accountType: docs.accountType,
-            active: 'restaurateurs',
-            userid : docs._id
+        Restaurant.findOne({ _id: docs.restaurant }).exec(function (err, resto) {
+            var Resto = new Restaurant();
+            Resto.getFreeRestaurants(function (err, restaurants) {
+                res.render('restaurateurs/update', {
+                    username : docs.username,
+                    useremail : docs.email,
+                    userbirthdate : docs.birthdate,
+                    useraddress : docs.address,
+                    postal : docs.postal,
+                    userphone : docs.phone,
+                    accountType: docs.accountType,
+                    active: 'restaurateurs',
+                    userid : docs._id,
+                    restaurants: restaurants,
+                    assignedRestaurant: resto
+                });
+            });
         });
     });
-
 });
 
 //Ajax request for validating if email address is used
@@ -74,6 +104,7 @@ router.post('/add', function (req, res) {
             , phone: req.body.phone
             , email: req.body.email
             , password: crypto.createHash('md5').update(req.body.password).digest('hex')
+            , restaurant: req.body.restaurant
             , accountType: type._id
         });
 
@@ -111,7 +142,8 @@ router.post('/updateRestaurateur', function (req, res) {
             email: req.body.email,
             birthdate: req.body.birthdate,
             address: arrAddr,
-            phone: req.body.phone
+            phone: req.body.phone,
+            restaurant: req.body.restaurant
         },
         function (err, doc) {
             if (err) {
@@ -136,6 +168,7 @@ router.post('/updateRestaurateur', function (req, res) {
             birthdate: req.body.birthdate,
             address: arrAddr,
             phone: req.body.phone,
+            restaurant: req.body.restaurant,
             password: crypto.createHash('md5').update(req.body.password).digest('hex')
         },
         function (err, doc) {
