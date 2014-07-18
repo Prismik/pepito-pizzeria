@@ -139,11 +139,28 @@ router.post('/changeDefaultAddress', function(req,res) {
     res.send("202");
 });
 
-router.get('/list', function(req, res){
-    Order.find({},{},function(e,docs){
+router.get('/listOpen', function(req, res){
+    Order.find({status: constants.STATUS_OPEN},{},function(e,docs){
         if (docs) {
             res.render('orders/prepare', {
                 orderlist: docs,
+                list: "Open",
+                active: 'prepareorder'
+            });
+        } else {
+            res.render('orders/prepare', {
+                error: 'Could not find any orders'
+            });
+        } 
+    });
+});
+
+router.get('/listPreparation', function(req, res){
+    Order.find({status: constants.STATUS_PREPARATION},{},function(e,docs){
+        if (docs) {
+            res.render('orders/prepare', {
+                orderlist: docs,
+                list: "Preparation",
                 active: 'prepareorder'
             });
         } else {
@@ -159,7 +176,23 @@ router.post('/prepareOrder',function(req,res){
 
     Order.findOneAndUpdate(
         {_id:orderid},
-        {status: constants.STATUS_OPEN},
+        {status: constants.STATUS_PREPARATION},
+        function (err, doc) {
+            if(err){
+                res.send("500");
+            }else{
+                res.send("200");
+            }
+        }
+    );
+});
+
+router.post('/finishOrder',function(req,res){
+    var orderid = req.body.id;
+
+    Order.findOneAndUpdate(
+        {_id:orderid},
+        {status: constants.STATUS_READY},
         function (err, doc) {
             if(err){
                 res.send("500");
