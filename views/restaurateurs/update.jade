@@ -44,7 +44,9 @@ block content
         label Assigned to 
         select#restaurant(name="restaurant")
             option(value="ND") Without restaurant
-            option(value="#{assignedRestaurant._id}", selected) #{assignedRestaurant.name}
+            if assignedRestaurant != null
+                option(value="#{assignedRestaurant._id}", selected) #{assignedRestaurant.name}
+
             each r, i in restaurants
                 option(value="#{r.id}") #{r.name}
         br
