@@ -1,3 +1,4 @@
+//MOOVED TO validateForm.js => validate email
 $(document).ready(function() {
     $("#inputUserEmail").change(function() {
         var emailaddress = $("#inputUserEmail").val();
