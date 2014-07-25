@@ -14,6 +14,11 @@ $(document).ready(function() {
 	    	redirection = "/orders/listOpen";
 	    break;
 
+	    case "/listReady": 
+	    	actionUrl = "finishOrder";
+	    	redirection = "/orders/listOpen";
+	    break;
+
 	    default:
 	    	alert("Error");
 	    	return 0;

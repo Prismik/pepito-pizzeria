@@ -25,6 +25,7 @@ $(document).ready(function() {
                     });
                 }
             }); 
+            $('input[name="restaurantId"]').val($(this).val());
         } 
         else
             $('#plateSelection').fadeOut("slow");

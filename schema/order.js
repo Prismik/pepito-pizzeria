@@ -7,6 +7,7 @@ var schema = new mongoose.Schema({
             address: String,
             postalCode: String
         },
+   restaurantId: { type: mongoose.Schema.Types.ObjectId },
    date: { type: String },
    order: [mongoose.Schema.Types.Mixed],
    status: { type: Number }
