@@ -7,7 +7,7 @@ var AccountType = require('../schema/accountType').AccountType;
 
 var schema = new mongoose.Schema({
     name: { type: String }
-    , adress: { type: String }
+    , address: { type: String }
     , postal_code: { type: String }
     , description: { type: String }
     , menus: [mongoose.Schema.Types.ObjectId]
