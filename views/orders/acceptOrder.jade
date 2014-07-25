@@ -179,8 +179,8 @@ block content
                         td #{order.address.postalCode}
                         td #{order.date}
                         td 
-                            each plate, i in order.order
-                                "#{order.order[i].plate.name}" x #{order.order[i].quantity} <br>
+                          each plate, i in order.order
+                              "#{order.order[i].plate.name}" x #{order.order[i].quantity} <br>
                         td
                           input(type="radio" name="order" value=order.id)
 

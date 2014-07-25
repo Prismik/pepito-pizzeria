@@ -90,7 +90,6 @@ router.post('/confirmOrder', function(req,res) {
     var orderElements = [];
 
     orders.forEach(function(entry) {
-        console.log(entry);
         subtotal+=entry.quantity*entry.plate.price;
     });
 
@@ -110,7 +109,6 @@ router.post('/confirmOrder', function(req,res) {
 router.post('/sendOrder', function(req,res) {
     var order = req.body.order;
     order.customer = req.session.uid;
-    console.log(JSON.parse(order.address));
 
     var newOrder = new Order({
         address: JSON.parse(order.address),
@@ -224,7 +222,6 @@ router.post('/finishOrder',function(req,res){
 
 router.get('/acceptOrder', function(req,res){
     Order.find({status: constants.STATUS_READY},{},function(e,docs){
-        console.log(docs);
         res.render('orders/acceptOrder',{
             orderlist: docs,
         });
@@ -233,10 +230,22 @@ router.get('/acceptOrder', function(req,res){
 
 router.post('/getAddressesDelivery', function(req,res){
     var orderid = req.body.orderId;
+    var restAdd = null;
+    var cliAdd = null;
 
-    res.send({
-        restaurantAddress:"H8N 2T8",
-        clientAddress:"H7N 2X4"
+    Order.findOne({status: constants.STATUS_READY, _id: orderid},{},function(e,docs){
+       cliAdd = docs.address.address + ", " + docs.address.postalCode;
+        Restaurant.findOne({_id: docs.restaurantId},{},function(e2,docs2){
+            restAdd = docs2.address + ", " + docs2.postal_code;
+
+            console.log(cliAdd);
+            console.log(restAdd);
+
+            res.send({
+                restaurantAddress:restAdd,
+                clientAddress:cliAdd
+            });
+        });
     });
 });
 
