@@ -41,14 +41,32 @@ function validateEmail(inputId, errormessage){
 		var mail=document.getElementById(inputId).value;
 		var at=mail.indexOf("@");
 		var dot=mail.lastIndexOf(".");
+		document.getElementById("inputUserEmail").setCustomValidity("");
 		if (at<1 || dot<at+2 || dot+2>=mail.length)
-    		document.getElementById(inputId).setCustomValidity(errormessage);
+		{
+			document.getElementById(inputId).setCustomValidity(errormessage);
+		}
 		else
-    	    document.getElementById(inputId).setCustomValidity("");
-	};
-	
+		{
+			$(document).ready(function() {
+	    		$("#inputUserEmail").change(function() {
+		        	var emailaddress = $("#inputUserEmail").val();
+		        	$.ajax({
+			            type: 'POST',
+			            url: '/users/verifyEmail',
+			            data: {validateEmail:emailaddress},
+			            success: function(validation){
+			            	if(!validation)
+			            		document.getElementById("inputUserEmail").setCustomValidity("This email address is already used");
+		            	}
+		            });
+	        	});
+        	});
+        }
+    }
 	val();
 	document.getElementById(inputId).addEventListener("keyup", val, false);
+	document.getElementById(inputId).addEventListener("onchange", val, false);
 }
 
 function addAddressInput() {
