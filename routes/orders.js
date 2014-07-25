@@ -223,7 +223,21 @@ router.post('/finishOrder',function(req,res){
 });
 
 router.get('/acceptOrder', function(req,res){
-    res.render('orders/acceptOrder');
+    Order.find({status: constants.STATUS_READY},{},function(e,docs){
+        console.log(docs);
+        res.render('orders/acceptOrder',{
+            orderlist: docs,
+        });
+    });
+});
+
+router.post('/getAddressesDelivery', function(req,res){
+    var orderid = req.body.orderId;
+
+    res.send({
+        restaurantAddress:"H8N 2T8",
+        clientAddress:"H7N 2X4"
+    });
 });
 
 module.exports = router;
