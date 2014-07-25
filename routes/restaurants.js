@@ -135,14 +135,10 @@ router.post('/updateRestaurant', function(req, res){
                             restaurant : doc._id
                         },
                         function (err, udoc) {
-                            if (err) {
-                               // If it failed, return error
-                               res.send("There was a problem updating the information in the database.");
-                           }
-                           else {
+                            
                                res.location("/restaurants");
                                res.redirect("/restaurants");
-                           }
+                           
                     });
             });
     });
