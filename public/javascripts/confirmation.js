@@ -53,7 +53,8 @@ $(function() {
         var outJson = {
             address: JSON.stringify({address:$('select[name=address] option:selected').attr("xaddress"), postalCode:$('select[name=address] option:selected').attr("xpostalCode")}),
             date: $('input[name=deliveryDate]').val(),
-            order: jQuery.parseJSON( $('input[name="order"]').val())
+            order: jQuery.parseJSON( $('input[name="order"]').val()),
+            restaurantId: $('input[name="restaurantId"]').val()
         };
 
          $.ajax({

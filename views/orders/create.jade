@@ -64,4 +64,5 @@ block content
 
             form#submitForm(method="post", action="/orders/confirmOrder")
                 input(type="hidden", name="arrayOrder")
+                input(type="hidden", name="restaurantId")
                 button(type="submit")= "Order completed"
