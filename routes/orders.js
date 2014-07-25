@@ -83,6 +83,7 @@ router.post('/addAddressToCurrentUser', function(req,res) {
 
 router.post('/confirmOrder', function(req,res) {
     var orders = JSON.parse(req.body.arrayOrder);
+    var restaurantId = req.body.restaurantId;
 
     var subtotal = 0;
     var total = 0;
@@ -99,6 +100,7 @@ router.post('/confirmOrder', function(req,res) {
 
     res.render('orders/confirmation', {
         orderList: orders,
+        restaurantId: restaurantId,
         subtotal: subtotal,
         total: total,
         active: 'createorder'
@@ -114,7 +116,8 @@ router.post('/sendOrder', function(req,res) {
         address: JSON.parse(order.address),
         date: order.date,
         order: order.order,
-        status: constants.STATUS_OPEN
+        status: constants.STATUS_OPEN,
+        restaurantId: order.restaurantId,
     });
     
     newOrder.save(function (err, newUser) {
@@ -142,13 +145,13 @@ router.post('/changeDefaultAddress', function(req,res) {
 router.get('/listOpen', function(req, res){
     Order.find({status: constants.STATUS_OPEN},{},function(e,docs){
         if (docs) {
-            res.render('orders/prepare', {
+            res.render('orders/list', {
                 orderlist: docs,
                 list: "Open",
                 active: 'prepareorder'
             });
         } else {
-            res.render('orders/prepare', {
+            res.render('orders/list', {
                 error: 'Could not find any orders'
             });
         } 
@@ -158,13 +161,29 @@ router.get('/listOpen', function(req, res){
 router.get('/listPreparation', function(req, res){
     Order.find({status: constants.STATUS_PREPARATION},{},function(e,docs){
         if (docs) {
-            res.render('orders/prepare', {
+            res.render('orders/list', {
                 orderlist: docs,
                 list: "Preparation",
                 active: 'prepareorder'
             });
         } else {
-            res.render('orders/prepare', {
+            res.render('orders/list', {
+                error: 'Could not find any orders'
+            });
+        } 
+    });
+});
+
+router.get('/listReady', function(req, res){
+    Order.find({status: constants.STATUS_READY},{},function(e,docs){
+        if (docs) {
+            res.render('orders/list', {
+                orderlist: docs,
+                list: "Ready",
+                active: 'deliverorder'
+            });
+        } else {
+            res.render('orders/list', {
                 error: 'Could not find any orders'
             });
         } 
@@ -201,6 +220,10 @@ router.post('/finishOrder',function(req,res){
             }
         }
     );
+});
+
+router.get('/acceptOrder', function(req,res){
+    res.render('orders/acceptOrder');
 });
 
 module.exports = router;

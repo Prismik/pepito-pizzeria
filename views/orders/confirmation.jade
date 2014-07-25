@@ -34,6 +34,7 @@ block content
     h2= "Order informations"
 
     input(name="order", type="hidden",value=JSON.stringify(orderList))
+    input(name="restaurantId", type="hidden", value=restaurantId)
 
     label= "Addresse: "
     select(name="address")
