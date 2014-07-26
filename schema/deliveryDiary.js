@@ -5,10 +5,10 @@ var mongoose = require('mongoose');
 var schema = new mongoose.Schema({
     orderId: { type: mongoose.Schema.Types.ObjectId }
     , deliverManId: { type: mongoose.Schema.Types.ObjectId }
-    , deliveryDate: { type: string }
+    , deliveryDate: { type: String }
 }, { collection: 'deliveryDiary' })
 
 var model = mongoose.model('deliveryDiary', schema)
 module.exports = {
-    Plate: model
+    DeliveryDiary: model
 }

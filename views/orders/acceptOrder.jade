@@ -8,6 +8,7 @@ block content
 
     script.
         $(document).ready(function(){
+            $('div#orderList').hide();
             var currentAddress = null;
             var restaurantAddress = null;
             var clientAddress = null;
@@ -19,6 +20,7 @@ block content
                 lng: -73.5667,
             });
 
+            var markerBounds = new google.maps.LatLngBounds();
 
             $('#locateMeBtn').click(function(){
                 map.removeMarkers();
@@ -32,6 +34,9 @@ block content
                       infoWindow: {
                         content: '<p>Your current location</p>' }
                     });
+
+                    $('div#orderList').fadeIn("slow");
+
                     currentAddress = [position.coords.latitude,
                       position.coords.longitude];
                   },
@@ -60,14 +65,16 @@ block content
                         lng: lgtlon.lng()
                       });
 
+                      markerBounds.extend(lgtlon);
                       currentAddress = [lgtlon.lat(), lgtlon.lng()];
-
+                      $('div#orderList').fadeIn("slow");
                     }
                   }
                 });
             });
 
             $('input[name="order"]').change(function(){
+              map.removeMarkers();
               $.ajax({
                 type: 'POST',
                 data: {orderId:$(this).val()},
@@ -86,6 +93,7 @@ block content
                             lng: lgtlon.lng()
                           });
 
+                          markerBounds.extend(lgtlon);
                           restaurantAddress = [lgtlon.lat(), lgtlon.lng()];
                           
                           GMaps.geocode({
@@ -99,6 +107,7 @@ block content
                                   lng: lgtlon.lng()
                                 });
 
+                                markerBounds.extend(lgtlon);
                                 clientAddress = [lgtlon.lat(), lgtlon.lng()];
 
                                 map.drawRoute({
@@ -106,12 +115,13 @@ block content
                                   waypoints: [{location: new google.maps.LatLng(restaurantAddress[0],restaurantAddress[1]), stopover: true}],
                                   destination: clientAddress,
                                   travelMode: 'driving',
-                                  strokeColor: '#131540',
+                                  strokeColor: 'red',
                                   strokeOpacity: 0.6,
                                   strokeWeight: 6
                                 });
+
                                 map.getRoutes({
-                                    origin: currentAddress,
+                                  origin: currentAddress,
                                   waypoints: [{location: new google.maps.LatLng(restaurantAddress[0],restaurantAddress[1]), stopover: true}],
                                   destination: clientAddress,
                                     callback: function (e) {
@@ -128,12 +138,11 @@ block content
                                         var seconds = time % 60;
 
                                         $('p#routeInformation').html("It would take approximately " + hours + " hours " + " and " + minutes + " minutes to make this delivery. <br>The distance is " + distance/1000 + "km.");
+                                        
+                                        map.fitBounds(markerBounds);
+                                        
                                     }
                                 });
-
-                                console.log(currentAddress);
-                                console.log(clientAddress);
-                                console.log(restaurantAddress);
                               }else{
                                 alert("Invalid client address")
                               }
@@ -148,6 +157,23 @@ block content
                 },
               });
             });
+  
+          $("#deliverOrderBtn").click(function(){
+            $.ajax({
+                type: 'POST',
+                data: {orderId:$('input[name="order"]').val()},
+                url: 'acceptDelivery',
+                dataType: 'text',
+                success: function(data){
+                  if(data == "200"){
+                    alert('The order is now your responsability');
+                    location.reload();
+                  }else if(data == "404"){
+                    alert('An other delivary man already took this order')
+                  }
+                }
+              });
+          });
         });
 
     h1= "Accept order"
@@ -161,10 +187,10 @@ block content
 
     p#routeInformation
 
-    h2="Available orders"
-    p="Chose the order you want to deliver"
     div#orderList
-      table#magicienPoil
+      h2="Available orders"
+      p="Chose the order you want to deliver"
+      table(style="width:100%")
             thead
                 tr
                     th Address
@@ -183,5 +209,6 @@ block content
                               "#{order.order[i].plate.name}" x #{order.order[i].quantity} <br>
                         td
                           input(type="radio" name="order" value=order.id)
-
+      
+      button#deliverOrderBtn()="Deliver this order"
                 

@@ -8,6 +8,7 @@ var Restaurant = require('../schema/restaurant').Restaurant;
 var Menu = require('../schema/menu').Menu;
 var Plate = require('../schema/plate').Plate;
 var User = require('../schema/user').User;
+var DeliveryDiary = require('../schema/deliveryDiary').DeliveryDiary;
 
 router.get('/', function(req, res) {
     
@@ -237,15 +238,47 @@ router.post('/getAddressesDelivery', function(req,res){
        cliAdd = docs.address.address + ", " + docs.address.postalCode;
         Restaurant.findOne({_id: docs.restaurantId},{},function(e2,docs2){
             restAdd = docs2.address + ", " + docs2.postal_code;
-
-            console.log(cliAdd);
-            console.log(restAdd);
-
             res.send({
                 restaurantAddress:restAdd,
                 clientAddress:cliAdd
             });
         });
+    });
+});
+
+router.post('/acceptDelivery', function(req,res){
+    var orderid = req.body.orderId;
+
+    Order.findOne({_id: orderid},{},function(e,docs){
+       if(docs.status != constants.STATUS_READY){
+            res.send("404");
+            return 0;
+       }else{
+            var newDeliveryDiary = new DeliveryDiary({
+                orderId: orderid
+                , deliverManId: req.session.uid
+                , deliveryDate: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') 
+            });
+            
+            newDeliveryDiary.save(function (err, newUser) {
+                if (err){
+                    console.log(err);
+                    res.send("500");
+                }else{
+                    Order.findOneAndUpdate(
+                        {_id:orderid},
+                        {status: constants.STATUS_CLOSED},
+                        function (err, doc) {
+                            if(err){
+                                res.send("500");
+                            }else{
+                                res.send("200");
+                            }
+                        }
+                    );
+                }
+            });
+       }
     });
 });
 
