@@ -7,6 +7,9 @@ var nothing = function nothing(err, doc12) {
 }
 
 exports.up = function(db, next) {
+    var doc01 = new ObjectID();
+    var doc02 = new ObjectID();
+    var doc0 = new ObjectID();
     var doc1 = new ObjectID();
     var doc2 = new ObjectID();
     var doc3 = new ObjectID();
@@ -16,7 +19,8 @@ exports.up = function(db, next) {
     var doc6 = new ObjectID();
     var doc7 = new ObjectID();
     var doc8 = new ObjectID();
-    
+    var doc9 = new ObjectID();
+
     var doc10 = new ObjectID();
     var doc11 = new ObjectID();
     var doc12 = new ObjectID();
@@ -53,7 +57,6 @@ exports.up = function(db, next) {
         ]
     }];
 
-
     var plate_docs  = [{
             _id: doc13,
             name: "All dressed",
@@ -85,8 +88,11 @@ exports.up = function(db, next) {
     restaurants.insert(restaurant_docs, nothing);
 
     var permission_docs = [
+        { _id: doc01, name: 'prepareCommand' }, 
+        { _id: doc0, name: 'manageMenu' }, 
         { _id: doc1, name: 'manageUser' }, 
         { _id: doc2, name: 'manageRestaurant' }, 
+        { _id: doc02, name: 'manageRestaurateur' },
         { _id: doc3, name: 'passOrder'},
         { _id: doc4, name: 'handleDelivery'}
     ];
@@ -98,15 +104,19 @@ exports.up = function(db, next) {
     }, {
         _id: doc6,
         name: 'restaurateur',
-        rights: [doc2]
+        rights: [doc01, doc0]
     }, {
         _id: doc7,
         name: 'admin',
-        rights: [doc1, doc2, doc3]
+        rights: [doc01, doc0, doc1, doc2, doc02, doc3, doc4]
     }, {
         _id: doc8,
         name: 'deliveryMan',
         rights: [doc4]
+    }, {
+        _id: doc9,
+        name: 'entrepreneur',
+        rights: [doc2, doc02]
     }];
 
     var permissions = mongodb.Collection(db, 'permissions');
@@ -115,6 +125,7 @@ exports.up = function(db, next) {
     accountType.insert(accountType_docs, nothing);
 
     var userDocs = [{
+        username: 'Johny Cash',
         accountType: doc8,
         birthdate: '1980/12/12',
         address: [
@@ -125,6 +136,7 @@ exports.up = function(db, next) {
         email: 'deliveryGuy@email.com',
         password: crypto.createHash('md5').update('deliveryGuy').digest('hex')
     }, {
+        username: 'Renard Thénardier',
         accountType: doc7,
         birthdate: '1980/12/12',
         address: [
@@ -135,6 +147,7 @@ exports.up = function(db, next) {
         email: 'admin@email.com',
         password: crypto.createHash('md5').update('admin').digest('hex')
     }, {
+        username: 'Romuald Rémillard',
         accountType: doc5,
         birthdate: '1982/07/06',
         address: [
@@ -145,6 +158,7 @@ exports.up = function(db, next) {
         email: 'user@email.com',
         password: crypto.createHash('md5').update('user').digest('hex')
     }, {
+        username: 'Samson Sonsam',
         accountType: doc6,
         birthdate: '1972/01/10',
         address: [
@@ -155,6 +169,17 @@ exports.up = function(db, next) {
         email: 'restaurateur@email.com',
         password: crypto.createHash('md5').update('restaurateur').digest('hex'),
         restaurant: doc11
+    }, {
+        username: 'Tommy Connard',
+        accountType: doc9,
+        birthdate: '1971/11/08',
+        address: [
+            { address: '12 rue Connard', postalCode:'K3Q 1HF' },
+            { address: '21 rue Connard', postalCode:'K0H 5BN' }
+        ],
+        phone: '450-222-4983',
+        email: 'entrepreneur@email.com',
+        password: crypto.createHash('md5').update('entrepreneur').digest('hex')
     }]
 
     var users = mongodb.Collection(db, 'usercollection');
