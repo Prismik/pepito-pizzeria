@@ -35,7 +35,7 @@ app.set('view engine', 'jade');
 // General setup
 app.set('globals', { logged: false });
 
-app.use(favicon());
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());

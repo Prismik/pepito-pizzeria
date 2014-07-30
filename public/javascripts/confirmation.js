@@ -34,19 +34,30 @@ $(function() {
         var address=prompt("Please enter the address","");
         var postalCode=prompt("Please enter the postal code","");
 
-        if(address != "" && postalCode != "") {
-	        $.ajax({
-	            type: 'POST',
-	            data: {address:address, postalcode: postalCode},
-	            url: 'addAddressToCurrentUser',
-	            dataType: 'text',
-	            success: function(data){
-	                updateUserAddressList();
-	            },
-	        }); 
-        }
-    	else
-    		alert("Invalid address");
+        GMaps.geocode({
+                  address: address + ", "+postalCode,
+                  callback: function(results, status) {
+                    if (status != 'OK' && 
+                        results[0].address_components[7].long_name.replace(/\s/g, '') == postalCode.replace(/\s/g, '')) {
+                        alert("The provided address/postal code does not exist");
+                        return 0;
+                    }else{
+                        if(address != "" && postalCode != "") {
+                            $.ajax({
+                                type: 'POST',
+                                data: {address:address, postalcode: postalCode},
+                                url: 'addAddressToCurrentUser',
+                                dataType: 'text',
+                                success: function(data){
+                                    updateUserAddressList();
+                                },
+                            }); 
+                        }
+                        else
+                            alert("The address and the postal code are required");
+                    }
+                }
+            });
     });
 
     $( "#send" ).click(function() {
