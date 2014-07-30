@@ -68,18 +68,22 @@ router.post('/getUserAddresses', function(req,res) {
 
 router.post('/addAddressToCurrentUser', function(req,res) {
 
-    User.update(
+    console.log("Address: "+req.body.address);
+    console.log("PostalCode: "+req.body.postalcode);
+
+    User.findOneAndUpdate(
         { _id:req.session.uid },
-        { "$addToSet": { address: {address: req.body.address, postalCode: req.body.postalcode} } } 
-    );
-
-    User.findOne({_id:req.session.uid},function(e,docs) {
-        if (docs != null) {
-            User.update({_id:req.session.uid},{"$set":{defaultAddress:docs.address.length-1}});
+        { "$addToSet": { address: {address: req.body.address, postalCode: req.body.postalcode} } },
+        function(e,docs) {
+            if(!e){
+                 User.findOne({_id:req.session.uid},function(e,docs) {
+                    if (docs != null) {
+                        User.update({_id:req.session.uid},{"$set":{defaultAddress:docs.address.length-1}},function(e,docs){res.send("200");});
+                    }
+                });
+            }
         }
-    });
-
-    res.send("200");
+    );
 });
 
 router.post('/confirmOrder', function(req,res) {
@@ -133,12 +137,12 @@ router.post('/sendOrder', function(req,res) {
 });
 
 router.post('/changeDefaultAddress', function(req,res) {
-    User.findOne({_id:req.session.uid},function(e,docs) {
-        if(docs != null)
-            User.update({_id:req.session.uid},{"$set":{defaultAddress:req.body.address}});
-    });
 
-    res.send("202");
+    User.findOne({_id:req.session.uid},function(e,docs) {
+        if (docs != null) {
+            User.update({_id:req.session.uid},{"$set":{defaultAddress:req.body.address}},function(e,docs){res.send("200");});
+        }
+    });
 });
 
 router.get('/listOpen', function(req, res){
