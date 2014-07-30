@@ -46,27 +46,44 @@ function validateEmail(inputId, errormessage){
 		{
 			document.getElementById(inputId).setCustomValidity(errormessage);
 		}
-		else
-		{
-			$(document).ready(function() {
-	    		$("#inputUserEmail").change(function() {
-		        	var emailaddress = $("#inputUserEmail").val();
-		        	$.ajax({
-			            type: 'POST',
-			            url: '/users/verifyEmail',
-			            data: {validateEmail:emailaddress},
-			            success: function(validation){
-			            	if(!validation)
-			            		document.getElementById("inputUserEmail").setCustomValidity("This email address is already used");
-		            	}
-		            });
-	        	});
-        	});
-        }
+
+    	var emailaddress = $("#inputUserEmail").val();
+    	$.ajax({
+            type: 'POST',
+            url: '/users/verifyEmail',
+            data: {validateEmail:emailaddress},
+            success: function(validation){
+            	if(!validation)
+            		document.getElementById("inputUserEmail").setCustomValidity("This email address is already used");
+        	}
+    	});
+        
     }
 	val();
 	document.getElementById(inputId).addEventListener("keyup", val, false);
 	document.getElementById(inputId).addEventListener("onchange", val, false);
+}
+
+function validateAddress(addressInputId, postalCodeInputId){
+	var val = function(e) {
+		var addressInput = document.getElementById(addressInputId).value+", "+document.getElementById(postalCodeInputId).value;
+		GMaps.geocode({
+			address: addressInput,
+			callback: function(results, status) {
+		  		if (status == 'OK') {
+		  			document.getElementById(addressInputId).setCustomValidity("");
+		  			console.log("GOOOD");
+				}else{
+					document.getElementById(addressInputId).setCustomValidity("This address with this postal code is not recognized");
+					console.log("BAD");
+				}
+			}
+		});
+	}
+	
+	val();
+	document.getElementById(postalCodeInputId).addEventListener("keyup", val, false);
+	document.getElementById(addressInputId).addEventListener("keyup", val, false);
 }
 
 function addAddressInput() {
