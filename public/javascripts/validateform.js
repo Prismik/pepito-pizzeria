@@ -7,7 +7,7 @@ function validateLengthMin(inputId, validationValue, errormessage){
 	};
 	
 	val();
-	document.getElementById(inputId).addEventListener("keyup", val, false);
+	document.getElementById(inputId).addEventListener("change", val, false);
 }
 
 function validateRegex(inputId, regex, errormessage){
@@ -20,7 +20,7 @@ function validateRegex(inputId, regex, errormessage){
 	};
 
 	val();
-	document.getElementById(inputId).addEventListener("keyup",val, false);
+	document.getElementById(inputId).addEventListener("change",val, false);
 }
 
 function validatePassword(passwordId1, passwordId2, errormessage){
@@ -32,8 +32,8 @@ function validatePassword(passwordId1, passwordId2, errormessage){
 	}
 
 	val();
-	document.getElementById(passwordId1).addEventListener("keyup", val, false);
-	document.getElementById(passwordId2).addEventListener("keyup", val, false);
+	document.getElementById(passwordId1).addEventListener("change", val, false);
+	document.getElementById(passwordId2).addEventListener("change", val, false);
 }
 
 function validateEmail(inputId, errormessage){
@@ -60,8 +60,7 @@ function validateEmail(inputId, errormessage){
         
     }
 	val();
-	document.getElementById(inputId).addEventListener("keyup", val, false);
-	document.getElementById(inputId).addEventListener("onchange", val, false);
+	document.getElementById(inputId).addEventListener("change", val, false);
 }
 
 function validateAddress(addressInputId, postalCodeInputId){
@@ -70,20 +69,25 @@ function validateAddress(addressInputId, postalCodeInputId){
 		GMaps.geocode({
 			address: addressInput,
 			callback: function(results, status) {
+				console.log(results);
 		  		if (status == 'OK') {
-		  			document.getElementById(addressInputId).setCustomValidity("");
-		  			console.log("GOOOD");
+		  			if (results[0]['types'][0] == "street_address") {
+document.getElementById(addressInputId).setCustomValidity("");
+document.getElementById(addressInputId).value=results[0]['address_components'][0]['long_name']+" "
++results[0]['address_components'][1]['long_name']+", "+results[0]['address_components'][4]['long_name']+", "
++results[0]['address_components'][2]['long_name'];
+		  			}
+		  			
 				}else{
 					document.getElementById(addressInputId).setCustomValidity("This address with this postal code is not recognized");
-					console.log("BAD");
 				}
 			}
 		});
 	}
 	
 	val();
-	document.getElementById(postalCodeInputId).addEventListener("keyup", val, false);
-	document.getElementById(addressInputId).addEventListener("keyup", val, false);
+	document.getElementById(postalCodeInputId).addEventListener("change", val, false);
+	document.getElementById(addressInputId).addEventListener("change", val, false);
 }
 
 function addAddressInput() {
