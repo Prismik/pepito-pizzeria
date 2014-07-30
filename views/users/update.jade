@@ -7,6 +7,9 @@ block content
     script(src="//code.jquery.com/ui/1.10.4/jquery-ui.js")
     script(type="text/javascript" src="/javascripts/validateform.js")
     script(type="text/javascript" src="/javascripts/datepicker.js")
+    script(type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true")
+    script(type="text/javascript" src="/javascripts/gmaps.js")
+    script(type="text/javascript" src="/javascripts/datepicker.js")
 
     h1 Manage account
     form#formAddUser(name="adduser",method="post",action="updateuser")
@@ -66,7 +69,7 @@ block content
 
         script(type="text/javascript").
             validateLengthMin('inputUserName', 3, 'Please, enter your name');
-            validateLengthMin('inputUseraddress', 5, 'Please, enter an address');
+            validateAddress('inputUseraddress', 'inputUserPostalCode');
             validateRegex('inputUserPhone', '^([0-9\(\)\/\+ \-]*)$', 'Please, enter a valid phone number');
             validatePassword('password', 'password2', 'Passwords dont match');
             
