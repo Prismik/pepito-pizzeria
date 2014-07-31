@@ -32,8 +32,8 @@ exports.up = function(db, next) {
     var restaurant_docs = [{
         _id: doc11,
         name: "Pepito Pizzeria",
-        address: "378 Jackson street",
-        postal_code: "J2Z 1B6",
+        address: "65 Rue St Zotique E",
+        postal_code: "H2S 1K6",
         description: "Epic pizza restaurant",
         menus: [
             doc10,
@@ -88,23 +88,23 @@ exports.up = function(db, next) {
     restaurants.insert(restaurant_docs, nothing);
 
     var permission_docs = [
-        { _id: doc01, name: 'prepareCommand' }, 
-        { _id: doc0, name: 'manageMenu' }, 
-        { _id: doc1, name: 'manageUser' }, 
-        { _id: doc2, name: 'manageRestaurant' }, 
+        { _id: doc01, name: 'manageAccount' }, 
+        { _id: doc0, name: 'createOrder' }, 
+        { _id: doc1, name: 'createMenu' }, 
+        { _id: doc2, name: 'prepareOrder' }, 
         { _id: doc02, name: 'manageRestaurateur' },
-        { _id: doc3, name: 'passOrder'},
-        { _id: doc4, name: 'handleDelivery'}
+        { _id: doc3, name: 'manageRestaurant'},
+        { _id: doc4, name: 'acceptOrder'}
     ];
 
     var accountType_docs = [{
         _id: doc5,
         name: 'client',
-        rights: [doc3]
+        rights: [doc01, doc0]
     }, {
         _id: doc6,
         name: 'restaurateur',
-        rights: [doc01, doc0]
+        rights: [doc1, doc2]
     }, {
         _id: doc7,
         name: 'admin',
@@ -116,7 +116,7 @@ exports.up = function(db, next) {
     }, {
         _id: doc9,
         name: 'entrepreneur',
-        rights: [doc2, doc02]
+        rights: [doc02, doc3]
     }];
 
     var permissions = mongodb.Collection(db, 'permissions');
@@ -129,8 +129,8 @@ exports.up = function(db, next) {
         accountType: doc8,
         birthdate: '1980/12/12',
         address: [
-            { address: '12 rue Du Miasme', postalCode:'H2X 3EB' },
-            { address: '21 rue Du Miasme', postalCode:'H4Z 8JG' }
+            { address: '3811 Rue de Mentana', postalCode:'H2L 3R7' },
+            { address: '6205 Rue Mignault Montréal', postalCode:'H1M 1Y9' }
         ],
         phone: '450-556-0554',
         email: 'deliveryGuy@email.com',
@@ -140,8 +140,8 @@ exports.up = function(db, next) {
         accountType: doc7,
         birthdate: '1980/12/12',
         address: [
-            { address: '12 rue Dulac', postalCode:'J2A 3RB' },
-            { address: '21 rue Dulac', postalCode:'J4C 8JK' }
+            { address: '5291 Rue Louis-Francoeur', postalCode:'H1G 3B3' },
+            { address: '1 Mont Royal E', postalCode:'H2T 1N4' }
         ],
         phone: '450-626-0924',
         email: 'admin@email.com',
@@ -151,8 +151,8 @@ exports.up = function(db, next) {
         accountType: doc5,
         birthdate: '1982/07/06',
         address: [
-            { address: '12 rue Pontmercy', postalCode:'J3H 1IP' },
-            { address: '21 rue Pontmercy', postalCode:'J0Q 5VX' }
+            { address: '554 23e Av', postalCode:'H8S 3V2' },
+            { address: '7655 Bd Roi Rene', postalCode:'H1K 3G7' }
         ],
         phone: '450-346-2837',
         email: 'user@email.com',
@@ -162,8 +162,8 @@ exports.up = function(db, next) {
         accountType: doc6,
         birthdate: '1972/01/10',
         address: [
-            { address: '12 rue Waterloo', postalCode:'K3Q 1HF' },
-            { address: '21 rue Waterloo', postalCode:'K0H 5BN' }
+            { address: '432 Avenue Wood', postalCode:'H3Y 3J3' },
+            { address: '7485 Boulevard Lasalle', postalCode:'H8P 1X2' }
         ],
         phone: '450-171-4983',
         email: 'restaurateur@email.com',
@@ -174,8 +174,8 @@ exports.up = function(db, next) {
         accountType: doc9,
         birthdate: '1971/11/08',
         address: [
-            { address: '12 rue Connard', postalCode:'K3Q 1HF' },
-            { address: '21 rue Connard', postalCode:'K0H 5BN' }
+            { address: '1509 Dollard Ave', postalCode:'H8N 1T3' },
+            { address: '4801 Rue de Verdun', postalCode:'H4G 1N2' }
         ],
         phone: '450-222-4983',
         email: 'entrepreneur@email.com',
