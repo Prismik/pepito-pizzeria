@@ -73,24 +73,29 @@ We have created several roles to make it easy for you to test the app.
 **Admin**
 
 > Username: admin@email.com
+
 > Password: admin
 
 **Delivery guy**
 
 > Username: deliveryGuy@email.com
+
 > Password: deliveryGuy
 
 **Entrepreneur**
 
 > Username: entrepreneur@email.com
+
 > Password: entrepreneur
 
 **Restaurateur**
 
 > Username: restaurateur@email.com
+
 > Password: restaurateur
 
 **User**
 
 > Username: user@email.com
+
 > Password: user
