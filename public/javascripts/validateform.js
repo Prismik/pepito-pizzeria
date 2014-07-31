@@ -7,7 +7,7 @@ function validateLengthMin(inputId, validationValue, errormessage){
 	};
 	
 	val();
-	document.getElementById(inputId).addEventListener("keyup", val, false);
+	document.getElementById(inputId).addEventListener("change", val, false);
 }
 
 function validateRegex(inputId, regex, errormessage){
@@ -20,7 +20,7 @@ function validateRegex(inputId, regex, errormessage){
 	};
 
 	val();
-	document.getElementById(inputId).addEventListener("keyup",val, false);
+	document.getElementById(inputId).addEventListener("change",val, false);
 }
 
 function validatePassword(passwordId1, passwordId2, errormessage){
@@ -32,8 +32,8 @@ function validatePassword(passwordId1, passwordId2, errormessage){
 	}
 
 	val();
-	document.getElementById(passwordId1).addEventListener("keyup", val, false);
-	document.getElementById(passwordId2).addEventListener("keyup", val, false);
+	document.getElementById(passwordId1).addEventListener("change", val, false);
+	document.getElementById(passwordId2).addEventListener("change", val, false);
 }
 
 function validateEmail(inputId, errormessage){
@@ -46,27 +46,48 @@ function validateEmail(inputId, errormessage){
 		{
 			document.getElementById(inputId).setCustomValidity(errormessage);
 		}
-		else
-		{
-			$(document).ready(function() {
-	    		$("#inputUserEmail").change(function() {
-		        	var emailaddress = $("#inputUserEmail").val();
-		        	$.ajax({
-			            type: 'POST',
-			            url: '/users/verifyEmail',
-			            data: {validateEmail:emailaddress},
-			            success: function(validation){
-			            	if(!validation)
-			            		document.getElementById("inputUserEmail").setCustomValidity("This email address is already used");
-		            	}
-		            });
-	        	});
-        	});
-        }
+
+    	var emailaddress = $("#inputUserEmail").val();
+    	$.ajax({
+            type: 'POST',
+            url: '/users/verifyEmail',
+            data: {validateEmail:emailaddress},
+            success: function(validation){
+            	if(!validation)
+            		document.getElementById("inputUserEmail").setCustomValidity("This email address is already used");
+        	}
+    	});
+        
     }
 	val();
-	document.getElementById(inputId).addEventListener("keyup", val, false);
-	document.getElementById(inputId).addEventListener("onchange", val, false);
+	document.getElementById(inputId).addEventListener("change", val, false);
+}
+
+function validateAddress(addressInputId, postalCodeInputId){
+	var val = function(e) {
+		var addressInput = document.getElementById(addressInputId).value+", "+document.getElementById(postalCodeInputId).value;
+		GMaps.geocode({
+			address: addressInput,
+			callback: function(results, status) {
+				console.log(results);
+		  		if (status == 'OK') {
+		  			if (results[0]['types'][0] == "street_address") {
+document.getElementById(addressInputId).setCustomValidity("");
+document.getElementById(addressInputId).value=results[0]['address_components'][0]['long_name']+" "
++results[0]['address_components'][1]['long_name']+", "+results[0]['address_components'][4]['long_name']+", "
++results[0]['address_components'][2]['long_name'];
+		  			}
+		  			
+				}else{
+					document.getElementById(addressInputId).setCustomValidity("This address with this postal code is not recognized");
+				}
+			}
+		});
+	}
+	
+	val();
+	document.getElementById(postalCodeInputId).addEventListener("change", val, false);
+	document.getElementById(addressInputId).addEventListener("change", val, false);
 }
 
 function addAddressInput() {
