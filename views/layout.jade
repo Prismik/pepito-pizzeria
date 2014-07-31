@@ -17,31 +17,35 @@ html
 
       unless (authRequired)
         ul.menu
-          li.first#home
-            a(href='/') Home
-          li#account
-            a(href='/users/update') My Account
-          - if (locals.permissions && locals.permissions.contains('manageUser'))
-            li#perms
-              a(href='/permissions') Permissions
-          - if (locals.permissions && locals.permissions.contains('manageUser'))
-            li#listuser
-              a(href='/users') Users
-          - if (locals.permissions && locals.permissions.contains('manageRestaurant'))
-            li#resto
-              a(href='/restaurants') Restaurants 
+          //clients
+          - if (locals.permissions && locals.permissions.contains('manageAccount'))
+            li#account
+              a(href='/users/update') Manage account
+          - if (locals.permissions && locals.permissions.contains('createOrder'))
+            li#createorder
+                a(href='/orders/create') Pass order
+
+          //restaurateurs
+          - if (locals.permissions && locals.permissions.contains('createMenu'))
+            li#createmenu
+                a(href='/menus/create') Menu
+          - if (locals.permissions && locals.permissions.contains('prepareOrder'))
+            li#prepareorder
+                a(href='/orders/listOpen') Prepare order
+
+          //entrepreneurs
           - if (locals.permissions && locals.permissions.contains('manageRestaurateur'))
             li#restaurateurs
-              a(href='/restaurateurs') Restaurateurs
-          - if (locals.permissions && locals.permissions.contains('passOrder'))
-            li#createorder
-              a(href='/orders/create') Pass order
-          - if (locals.permissions && locals.permissions.contains('handleDelivery'))
-            li#acceptOrder
-              a(href='/orders/accept') Accept order
-          - if (locals.permissions && locals.permissions.contains('manageMenu'))
-            li#createmenu
-              a(href='/menus/create') Menu
+                a(href='/restaurateurs') Manage restaurateur
+          - if (locals.permissions && locals.permissions.contains('manageRestaurant'))
+            li#resto
+                a(href='/restaurants') Restaurants 
+
+          //livreurs
+          - if (locals.permissions && locals.permissions.contains('acceptOrder'))
+            li#acceptDelivery
+              a(href='/orders/acceptOrder') Accept delivery
+
           li#logout
             a(href='/logout') Logout
          
