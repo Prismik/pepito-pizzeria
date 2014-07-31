@@ -21,6 +21,7 @@ You will need to install MongoDB and several modules in order to make the app wo
 We will show you what commands to run and from where in order to have a working local version of the application.
 
 **$** Stands for the terminal command prompt
+
 **>** Stands for the mongo command prompt
     # Initialise the repo
     $ git clone [url from github] 
@@ -64,3 +65,32 @@ We will show you what commands to run and from where in order to have a working 
     # run the Application Setup once before.
     $ mongod
     $ npm start
+
+## Connect to the app
+
+We have created several roles to make it easy for you to test the app.
+
+**Admin**
+
+> Username: admin@email.com
+> Password: admin
+
+**Delivery guy**
+
+> Username: deliveryGuy@email.com
+> Password: deliveryGuy
+
+**Entrepreneur**
+
+> Username: entrepreneur@email.com
+> Password: entrepreneur
+
+**Restaurateur**
+
+> Username: restaurateur@email.com
+> Password: restaurateur
+
+**User**
+
+> Username: user@email.com
+> Password: user
