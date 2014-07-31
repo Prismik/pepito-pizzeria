@@ -84,7 +84,7 @@ block content
         br
         script(type="text/javascript").
             validateLengthMin('inputUserName', 3, 'Please, enter your name');
-            validateAddress('inputUseraddress', 5, 'Please, enter an address');
+            validateAddress('inputUseraddress', 'inputUserPostalCode');
             validateRegex('inputUserPhone', '^([0-9\(\)\/\+ \-]*)$', 'Please, enter a valid phone number');
             validatePassword('password', 'password2', 'Passwords dont match');
             
