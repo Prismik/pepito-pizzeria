@@ -1,0 +1,28 @@
+extends layout
+
+block content
+    div.loginPage
+        - if (locals.error)
+            div#message.error
+                span= error
+        
+        - if (locals.success)
+            div#message.success
+                span= success
+
+        div.loginBox
+            div.header
+                h1= header
+
+            div.footer
+                form#formLogin.center(name="login",method="post",action="authenticate")
+                    input#inputUsername(type="text", placeholder="Email", name="email")
+                    br
+                    input#inputUserPassword(type="password", placeholder="Password", name="password")
+                    br
+                    button.sexybutton.left(type="submit") Login
+
+                
+                
+                form#formRegister.center(name="login",action="/register")
+                    button.sexybutton(type="submit") Register

@@ -1,0 +1,272 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/**
+ * General
+ */
+.left   { float: left;      }
+.right  { float: right;     }
+.center { margin: 0 auto;   }
+textarea { 
+    min-width: 250px; 
+    min-height: 150px;
+}
+header {
+    background-color: #292929;
+    height: 60px;
+    -webkit-box-shadow: 0px 3px 13px 0px rgba(50, 50, 50, 0.75);
+       -moz-box-shadow: 0px 3px 13px 0px rgba(50, 50, 50, 0.75);
+            box-shadow: 0px 3px 13px 0px rgba(50, 50, 50, 0.75);
+}
+
+div.content, footer{
+    margin: 0 auto;
+    width: 1000px;
+}
+
+footer{
+    font-size: 10px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+header ul{
+    margin: 0px;
+    padding: 0px;
+    float: right;
+}
+
+header li{
+    display: inline-block;
+    padding: 21px 10px 0px 10px;
+    margin-right: 10px;
+    height: 38px;
+    cursor: pointer;
+    transition: .4s;
+}
+
+header li:hover{
+    background-color: rgba(255,255,255,0.25);
+    height: 39px;
+}
+
+header li:hover a {
+    color: #FF5F69;
+    transition: .5s;
+}
+
+header li.active {
+    border-bottom: 2px solid #FF5F69;
+}
+
+header li.active:hover {
+    height: 38px;
+}
+
+header li>a{
+    text-decoration: none;
+    color: white;
+    padding: 20px 0px 20px 0px;
+}
+
+header .title{
+    margin: 10px 10px 0px 60px;
+    padding: 0px 10px 0px 35px;
+    height: 50px;
+    display: block;
+    float: left;
+    color: white;
+    background: url(../images/pizza_slice.png) no-repeat scroll 0px 1px;
+    background-size: 32px 32px;
+    cursor: pointer;
+}
+
+header .title>span{
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+input, textarea, select {
+    color: #555;
+    padding: 3px 3px 3px 8px;
+    margin-top: 2px;
+    margin-right: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #e5e5e5;
+    background: #fbfbfb;
+    outline: 0;
+    -webkit-box-shadow: inset 1px 1px 2px rgba(200,200,200,0.2);
+    box-shadow: inset 1px 1px 2px rgba(200,200,200,0.2);
+    font: normal 12px/24px Arial, Helvetica, sans-serif;
+}
+
+/***
+ * Login
+ */
+ .loginPage {
+    text-align:center;
+    margin: 0 auto;
+    width: 300px;
+}
+
+.loginBox {
+    border: solid 1px #EBEBEB;
+    width: 300px;
+    margin-top: 80px;
+ }
+
+.loginBox .header {
+    background-color: #EAEAEA;
+    margin: 0;
+    padding: 20px 0px 0px 20px;
+    border-bottom: solid 1px #DFDFDF;
+}
+.loginBox h1 {
+    position: relative;
+    left: -67px;
+    margin-top: 0px;
+    line-height: 15px;
+    color: #5C5C5C !important;
+}
+
+.loginBox .footer { padding: 30px; }
+
+#formLogin    { width: 200px; }
+#formRegister { width: 237px; }
+
+.loginBox input {
+    height: 30px;
+    width: 160px;
+    padding-left: 35px;
+    margin-bottom: 8px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
+.loginBox button { margin-right: 10px; }
+.loginBox input[type="text"] {
+     background: url(../images/pizza_pencil.png) no-repeat scroll 0px 1px;
+     background-size:32px 32px;
+     padding-left:35px;
+}
+.loginBox input[type="password"] {
+     background: url(../images/pizza_lock.png) no-repeat scroll 0px 1px;
+     background-size:32px 32px;
+     padding-left:35px;
+}
+div.loginfo {
+    padding: 3px 0px 3px 35px;
+    width: 100%;
+    background-color: rgba(0,0,0,0.1);
+    font-size: 10px;
+    font-style: italic;
+}
+
+/***
+ * Messages
+ */
+div#message {
+    margin:auto;
+    width: 200px;
+    padding: 15px;
+    margin-top: 10px 0px 20px 0px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #3d3d3d;
+}
+
+#message.error {
+    background-color: #FFC2DA;
+    border: 1px solid #DB4848;
+}
+
+#message.warning {
+    background-color: #FAECAF;
+    border: 1px solid #D6B318;
+}
+
+#message.success {
+    background-color: #ADFFAD;
+    border: 1px solid #1FFF1F;
+}
+
+/***
+ * Buttons
+ */
+ button.sexybutton {
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    min-width: 90px;
+    font-size: 14px;
+    color: #5f5f5f;
+    padding: 8px 12px;
+    background-color: #f6f6f6;
+    border: 1px solid #e0e0e0;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
+ button.sexybutton:hover{
+    background-color: #e6e6e6;
+ }
+
+ label{
+    font-style: none;
+    font-size: 13px;
+    display: inline-block;
+    min-width: 120px;
+ }
+
+/***
+ * Tables
+ */
+table {
+    border-collapse: collapse;
+    width: 90%;
+}
+
+table th {
+    background-color: #5A5A5A;
+    color: #E1E1E1;
+    padding: 5px 10px;
+    border: 1px solid black;
+    text-align: left;
+}
+
+table tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+table tr:nth-child(odd) {
+    background-color: #E1E1E1;
+}
+
+table td {
+    padding: 7px 10px;
+    text-align: left;
+    border-right: 1px solid #515151;
+    border-left: 1px solid #515151;
+}
+
+table {
+    border-bottom: 1px solid black;
+}
+
+.ui-datepicker-trigger{
+    margin-bottom: -8px;
+    cursor: pointer;
+    width: 25px;
+}
+
+.multipleSelect{
+    min-width: 250px;
+    padding: 5px 10px;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}

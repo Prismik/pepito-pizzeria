@@ -1,0 +1,54 @@
+extends ../layout
+
+block content
+
+    script(type="text/javascript" src="/javascripts/confirmation.js")
+    script(type="text/javascript" src="/javascripts/datepicker.js")
+    link(rel="stylesheet", href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css")
+    script(src="//code.jquery.com/jquery-1.10.2.js")
+    script(src="//code.jquery.com/ui/1.10.4/jquery-ui.js")
+    script(type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true")
+    script(type="text/javascript" src="/javascripts/gmaps.js")
+
+    h1= "Confirm order"
+
+    table#order
+        thead
+            tr 
+                th Plate
+                th Quantity
+                th Unit price
+                th Price
+        tbody
+            each entry, i in orderList
+                tr
+                    td #{entry.plate.name}
+                    td #{entry.quantity}
+                    td #{entry.plate.price}$
+                    td= (entry.plate.price*entry.quantity).toFixed(2)+"$"
+            tr  
+                td(colspan=3)= "Sub"
+                td= subtotal.toFixed(2)+"$"
+            tr  
+                td(colspan=3)= "Total"
+                td= total.toFixed(2)+"$"
+
+    h2= "Order informations"
+
+    input(name="order", type="hidden",value=JSON.stringify(orderList))
+    input(name="restaurantId", type="hidden", value=restaurantId)
+
+    label= "Addresse: "
+    select(name="address")
+        option(value='')='Select an address'
+
+    button(id="addAddress").sexybutton= "New address"
+
+    br
+
+    label= "Date: "
+    input#datepicker(type="text", name="deliveryDate", placeholder="click icon" readonly)
+
+    br
+
+    button(id="send").sexybutton= "Send order"

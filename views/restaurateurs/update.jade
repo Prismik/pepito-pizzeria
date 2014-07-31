@@ -1,0 +1,60 @@
+extends ../layout
+
+block content
+
+    link(rel="stylesheet", href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css")
+    script(src="//code.jquery.com/jquery-1.10.2.js")
+    script(src="//code.jquery.com/ui/1.10.4/jquery-ui.js")
+    script(type="text/javascript" src="/javascripts/validateform.js")
+    script(type="text/javascript" src="/javascripts/datepicker.js")
+
+    h1 Manage account
+    form#formAddUser(name="adduser",method="post",action="updateRestaurateur")
+    
+        label(for="inputUserName") Complete name
+        input#inputUserName(type="text", placeholder="Complete name", name="username", value=username)
+        br
+        label() Birthdate
+        input#datepicker(type="text", name="birthdate", value=userbirthdate readonly)    
+        br
+        each adpc, i in useraddress
+            label(for="inputUseraddress") Address
+            input#inputUseraddress(type="text", placeholder="Complete address", name="address", value=adpc.address)
+            br
+            label(for="ipc") Postal Code
+            input#ipc(type="text", placeholder="Postal code", name="postal", value=adpc.postalCode)
+            br 
+        label(for="inputUserPhone") Phone number
+        input#inputUserPhone(type="text", placeholder="Phone number", name="phone", value=userphone)
+        br
+        label(for="inputUserEmail") Email
+        input#inputUserEmail(type="email", placeholder="Email", name="email", value=useremail readonly)
+        br
+        label(for="password") Password
+        input#password(type="password", placeholder="Password", name="password")
+        br
+        label(for="password2") Password (again)
+        input#password2(type="password", placeholder="Password (again)", name="userpassword2")
+        br
+        label
+        input#inputUserId(type="hidden", placeholder="userid", name="restaurateursId", value=userid)
+        
+        input(name="accountType", type="hidden",value=accountType)
+        br
+        label Assigned to 
+        select#restaurant(name="restaurant")
+            option(value="ND") Without restaurant
+            if assignedRestaurant != null
+                option(value="#{assignedRestaurant._id}", selected) #{assignedRestaurant.name}
+
+            each r, i in restaurants
+                option(value="#{r.id}") #{r.name}
+        br
+        script(type="text/javascript").
+            validateLengthMin('inputUserName', 3, 'Please, enter your name');
+            validateLengthMin('inputUseraddress', 5, 'Please, enter an address');
+            validateRegex('inputUserPhone', '^([0-9\(\)\/\+ \-]*)$', 'Please, enter a valid phone number');
+            validatePassword('password', 'password2', 'Passwords dont match');
+            
+        
+        button#btnSubmit.sexybutton(type="submit") submit

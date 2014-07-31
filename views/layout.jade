@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="//code.jquery.com/jquery-1.10.2.js")
+    <!--script(src="/javascripts/jquery.js")-->
+
+    script.
+      var active_tab= !{JSON.stringify(active)}
+
+    script(src="/javascripts/active.js")
+  body
+    header
+      div.title
+          span= "Pepito Pizzeria"
+
+      unless (authRequired)
+        ul.menu
+          //clients
+          - if (locals.permissions && locals.permissions.contains('manageAccount'))
+            li#account
+              a(href='/users/update') Manage account
+          - if (locals.permissions && locals.permissions.contains('createOrder'))
+            li#createorder
+                a(href='/orders/create') Pass order
+
+          //restaurateurs
+          - if (locals.permissions && locals.permissions.contains('createMenu'))
+            li#createmenu
+                a(href='/menus/create') Menu
+          - if (locals.permissions && locals.permissions.contains('prepareOrder'))
+            li#prepareorder
+                a(href='/orders/listOpen') Prepare order
+
+          //entrepreneurs
+          - if (locals.permissions && locals.permissions.contains('manageRestaurateur'))
+            li#restaurateurs
+                a(href='/restaurateurs') Manage restaurateur
+          - if (locals.permissions && locals.permissions.contains('manageRestaurant'))
+            li#resto
+                a(href='/restaurants') Restaurants 
+
+          //livreurs
+          - if (locals.permissions && locals.permissions.contains('acceptOrder'))
+            li#acceptDelivery
+              a(href='/orders/acceptOrder') Accept delivery
+
+          li#logout
+            a(href='/logout') Logout
+         
+    div.content
+      block content
+
+    footer
+      p Copyright © 2014 Pepito-Pizzeria. All rights reserved.

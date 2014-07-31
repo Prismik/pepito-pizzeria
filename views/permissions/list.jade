@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+    script(type='text/javascript' src='/javascripts/permissions.js')
+    h1= header
+    textarea#permissions
+        each perm, i in perms
+            | #{perm.name}&#13;&#10;
+
+    table 
+        thead
+            th Account type
+            th permissions
+        tbody
+            each acc, i in accs
+                tr.account
+                    td(id="#{acc._id}") #{acc.name}
+                    td
+                        div.accPermissions
+                            each perm, i in perms
+                                label(for="#{perm._id}") 
+                                input(type="checkbox" value="#{perm._id}" done="false") 
+                                | #{perm.name}
+                            script(type="text/javascript").
+                                initPerms(!{JSON.stringify(acc.rights)});
+    
+    button.sexybutton(type="submit" id="updatePerms") Update

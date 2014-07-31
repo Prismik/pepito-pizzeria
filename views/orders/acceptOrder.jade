@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+    script(type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true")
+    script(type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js")
+    script(type="text/javascript" src="/javascripts/gmaps.js")
+    script(type="text/javascript" src="/javascripts/acceptOrder.js")
+
+    h1= "Accept order"
+    h2= "Location"
+    p= "Choose your current location"
+    input(id="addressInpt" placeholder="Address, postal code")
+    button(id="sendLocationBtn")= "Send location"
+    span="or"
+    button(id="locateMeBtn")= "Locate me!"
+    div#map_canvas(style= "width:100%; height:500px; margin-top: 10px")
+
+    p#routeInformation
+
+    div#orderList
+      h2="Available orders"
+      p="Chose the order you want to deliver"
+      table(style="width:100%")
+            thead
+                tr
+                    th Address
+                    th Postal Code
+                    th Date
+                    th Order
+                    th
+            tbody
+              each order, i in orderlist
+                    tr#poil
+                        td #{order.address.address}
+                        td #{order.address.postalCode}
+                        td #{order.date}
+                        td 
+                          each plate, i in order.order
+                              "#{order.order[i].plate.name}" x #{order.order[i].quantity} <br>
+                        td
+                          input(type="radio" name="order" value=order.id)
+      
+      button#deliverOrderBtn()="Deliver this order"
+                

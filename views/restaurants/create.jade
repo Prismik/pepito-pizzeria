@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  script(type="text/javascript" src="/javascripts/restaurants.js")
+  script(type="text/javascript").
+        verifyRestaurantAddress();
+
+  h1= header
+
+  form(name="addrestaurant",method="post", action="add", onSubmit="if(!checkRestaurateur()){return false;}")
+        input(type="text", placeholder="name", name="name", required)
+        input#restaurantAddress(type="text", placeholder="address", name="address", required)
+        input(type="text", placeholder="A1B 2C3", name="postal_code", required)
+        input(type="text", placeholder="description", name="description", required)
+        br
+        br
+        label Assigned restaurateur: 
+        select#restaurateur(name="restaurateur")
+            option(value="ND") Without restaurateur
+            each r, i in users
+                option(value="#{r.id}") #{r.username}
+        br
+        br
+        button.sexybutton(type="submit") Create
+
