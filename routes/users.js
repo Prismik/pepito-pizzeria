@@ -129,15 +129,19 @@ router.post('/add', function (req, res) {
 router.post('/updateuser', function (req, res) {
     var arrAddr = new Array();
 
+    var id = req.body.restaurateursId || req.session.uid;
+
     if (typeof(req.body.address) == typeof("string"))
         arrAddr[0] = { address: req.body.address, postalCode: req.body.postal }
     else 
         for (var i = 0; i < req.body.address.length; i++)
             arrAddr[i] = { address: req.body.address[i], postalCode: req.body.postal[i] };
 
+    console.log(arrAddr);
+
     if (req.body.password=="") {
         var user = User.findOneAndUpdate(
-        { _id: req.body.restaurateursId },
+        { _id: id},
         {
             username: req.body.username,
             accountType: req.body.accountType,
