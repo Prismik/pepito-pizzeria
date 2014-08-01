@@ -69,8 +69,8 @@ router.post('/authenticate', function (req, res) {
 
             console.log(userEmail + ' is now logged')
 
-            res.location("/users");
-            res.redirect("/users");
+            res.location("/");
+            res.redirect("/");
         } else {
             console.log('Bad credentials');
 
